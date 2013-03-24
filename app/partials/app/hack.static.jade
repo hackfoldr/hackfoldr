@@ -1,0 +1,9 @@
+.hackfolder(ng-controller='HackFolder', resize)
+    ul(ui-sortable='sortableOptions', ng-model='docs')
+        li(ng-repeat='doc in docs')
+            .link(ng-click='activate(doc)')
+                {{doc.type}} - {{doc.name || doc.id}}
+    .pad-container(ng-style='{height: height-49}',ng-click="debug(element)")
+        article.pad(ng-repeat='(key, iframe) in iframes',ng-show='currentIframe == key')
+            span.docmode(ng-show="iframe.doc.type == 'gdoc' && iframe.mode != 'edit'",ng-click="activate(iframe.doc, true)") edit
+            iframe.embed(ng-src='{{iframe.src}}')
