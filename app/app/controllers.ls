@@ -11,12 +11,12 @@ angular.module 'app.controllers' []
     else
       ''
 .controller HackFolderCtrl: <[$scope $routeParams HackFolder]> ++ ($scope, $routeParams, HackFolder) ->
-  console.log $routeParams
+  console?log $routeParams
   # XXX turn iframes cache into a service
   $scope <<< do
     hasViewMode: -> it.match /g(doc|present|draw)/
     sortableOptions: do
-      update: -> console.log \notyetupdated
+      update: -> console?log \notyetupdated
     iframes: HackFolder.iframes
     docs: HackFolder.docs
     activate: HackFolder.activate
@@ -26,7 +26,7 @@ angular.module 'app.controllers' []
     $scope.$watch 'docId' (docId) -> HackFolder.activate docId
 
   $scope.hackId = if $routeParams.hackId => that else 's8r4l008sk'
-  console.log $scope.hackId
+  console?log $scope.hackId
   $scope.docId = $routeParams.docId if $routeParams.docId
 
 .directive 'resize' <[$window]> ++ ($window) ->
@@ -64,7 +64,7 @@ angular.module 'app.controllers' []
       | \ethercalc =>
           "http://ethercalc.com/#id"
 
-      console.log \activate id, iframes[id]
+      console?log \activate id, iframes[id]
       if iframes[id]
           that <<< {src, mode}
       else
@@ -105,6 +105,6 @@ angular.module 'app.controllers' []
             type: \hackpad
             id: that.1
             title: title
-        | otherwise => console.log \unrecognized url
+        | otherwise => console?log \unrecognized url
       docs.splice 0, -1, ...(entries.filter -> it?)
       cb docs
