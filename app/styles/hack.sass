@@ -4,7 +4,13 @@
   display: -webkit-flex
   display: flex
   ul
-    width: 150px
+    margin: 10px 10px 10px 18px
+    width: 240px
+    border-right: 1px solid #999
+    border-radius: 32px
+    li:first-child
+      margin: 5px 0 15px -3px
+      font-weight: 700
     li
       list-style: none
       cursor: pointer
@@ -34,8 +40,16 @@
       .docmode
         position: absolute
         top: 0px
-        left: 0px
+        left: 50%
+        width: 20%
+        margin-left: -10%
+        text-align: center
         z-index: 9999
-        border: 3px solid gray
+        border-bottom: 1px solid #999
+        border-radius: 0px
+        border-bottom-left-radius: 15px
+        border-bottom-right-radius: 15px
+        box-shadow: 0px 2px 16px #f4f4f4
+        color: #f9b394
         padding: 3px
         cursor: pointer
