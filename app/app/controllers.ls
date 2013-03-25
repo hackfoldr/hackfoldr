@@ -24,6 +24,8 @@ angular.module 'app.controllers' []
         * type: \gdoc
           id: '12a_zHq_ooEv_9R2o3awIaBbDfzl89WB1COSPjVlQwGM'
           name: \場地資訊
+        * type: \ethercalc
+          id: '3du-holohak'
 
     $scope.iframes = {}
     $scope.debug = (element) ->
@@ -35,6 +37,8 @@ angular.module 'app.controllers' []
             "https://docs.google.com/document/d/#id/#mode"
         | \hackpad =>
             "https://hackpad.com/#id"
+        | \ethercalc =>
+            "http://ethercalc.com/#id"
 
         if $scope.iframes[id]
             that <<< {src, mode}
