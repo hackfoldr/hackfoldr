@@ -6969,38 +6969,3 @@ a.label:hover, a.badge:hover {
         color: #e98344;
         padding: 3px;
         cursor: pointer; }
-
-@font-face {
-  font-family: Batch;
-  src: url("../fonts/batch-icons-webfont.eot");
-  src: url("../fonts/batch-icons-webfont.eot?#iefix") format("embedded-opentype"), url("../fonts/batch-icons-webfont.woff") format("woff"), url("../fonts/batch-icons-webfont.ttf") format("truetype");
-  font-weight: normal;
-  font-style: normal; }
-
-@media -sass-debug-info{filename{}line{font-family:\0000366}}
-.icon-gdoc:before {
-  content: "\f13c"; }
-
-@media -sass-debug-info{filename{}line{font-family:\0000369}}
-.icon-gsheet:before {
-  content: "\f026"; }
-
-@media -sass-debug-info{filename{}line{font-family:\0000372}}
-.icon-gdraw:before {
-  content: "\f137"; }
-
-@media -sass-debug-info{filename{}line{font-family:\0000375}}
-.icon-gpresent:before {
-  content: "\f0A8"; }
-
-@media -sass-debug-info{filename{}line{font-family:\0000378}}
-.icon-hackpad:before {
-  content: "\f13D"; }
-
-@media -sass-debug-info{filename{}line{font-family:\0000381}}
-.icon-ethercalc:before {
-  content: "\f0DD"; }
-
-@media -sass-debug-info{filename{}line{font-family:\0000384}}
-.icon {
-  font-size: 1.5em; }

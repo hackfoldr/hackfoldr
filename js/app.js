@@ -113,14 +113,16 @@ angular.module('app.controllers', []).controller({
 }).controller({
   HackFolderCtrl: ['$scope', '$routeParams', 'HackFolder'].concat(function($scope, $routeParams, HackFolder){
     var that;
-    console.log($routeParams);
+    if (typeof console != 'undefined' && console !== null) {
+      console.log($routeParams);
+    }
     import$($scope, {
       hasViewMode: function(it){
         return it.match(/g(doc|present|draw)/);
       },
       sortableOptions: {
         update: function(){
-          return console.log('notyetupdated');
+          return typeof console != 'undefined' && console !== null ? console.log('notyetupdated') : void 8;
         }
       },
       iframes: HackFolder.iframes,
@@ -135,7 +137,9 @@ angular.module('app.controllers', []).controller({
       });
     });
     $scope.hackId = (that = $routeParams.hackId) ? that : 's8r4l008sk';
-    console.log($scope.hackId);
+    if (typeof console != 'undefined' && console !== null) {
+      console.log($scope.hackId);
+    }
     if ($routeParams.docId) {
       return $scope.docId = $routeParams.docId;
     }
@@ -192,7 +196,9 @@ angular.module('app.controllers', []).controller({
             return "http://ethercalc.com/" + id;
           }
         }());
-        console.log('activate', id, iframes[id]);
+        if (typeof console != 'undefined' && console !== null) {
+          console.log('activate', id, iframes[id]);
+        }
         if (that = iframes[id]) {
           return that.src = src, that.mode = mode, that;
         } else {
@@ -210,7 +216,7 @@ angular.module('app.controllers', []).controller({
         return $http.get("http://www.ethercalc.com/_/" + id + "/csv").success(function(csv){
           var entries, res$, i$, ref$, len$, line, ref1$, url, title, rest, that;
           hackId = id;
-          docs.splice(0, -1);
+          docs.length = 0;
           res$ = [];
           for (i$ = 0, len$ = (ref$ = csv.split(/\n/)).length; i$ < len$; ++i$) {
             line = ref$[i$];
@@ -260,7 +266,7 @@ angular.module('app.controllers', []).controller({
                 });
                 break;
               default:
-                res$.push(console.log('unrecognized', url));
+                res$.push(typeof console != 'undefined' && console !== null ? console.log('unrecognized', url) : void 8);
               }
             }
           }
