@@ -2,7 +2,7 @@
 <div ng-controller="HackFolder" resize="resize" class="hackfolder">
   <ul ui-sortable="sortableOptions" ng-model="docs">
     <li ng-repeat="doc in docs">
-      <div ng-click="activate(doc)" class="link">{{doc.type}} - {{doc.name || doc.id}}</div>
+      <div ng-click="activate(doc)" class="link">{{doc.type}} - {{doc.title || doc.id}}</div>
     </li>
   </ul>
   <div ng-style="{height: height-49}" ng-click="debug(element)" class="pad-container">
