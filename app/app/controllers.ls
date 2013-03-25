@@ -10,22 +10,9 @@ angular.module 'app.controllers' []
       'active'
     else
       ''
-.controller HackFolder: <[$scope]> ++ ($scope) ->
+.controller HackFolder: <[$scope $routeParams $http]> ++ ($scope, $routeParams, $http) ->
     $scope.sortableOptions = do
         update: -> console.log \updated
-
-    $scope.docs =
-        * type: \gdoc
-          id: '1_7j4epy9S9f0-EHifVsy8tWv-tTGlkDSjjmWDfqrl1s'
-          name: \README
-        * type: \hackpad
-          id: 'BfddbG2JBOi'
-          name: \ly-api
-        * type: \gdoc
-          id: '12a_zHq_ooEv_9R2o3awIaBbDfzl89WB1COSPjVlQwGM'
-          name: \場地資訊
-        * type: \ethercalc
-          id: '3du-holohak'
 
     $scope.iframes = {}
     $scope.debug = (element) ->
@@ -45,6 +32,32 @@ angular.module 'app.controllers' []
         else
             $scope.iframes[id] = {src, doc, mode}
         $scope.currentIframe = id
+
+    $routeParams.hackId = 's8r4l008sk' unless $routeParams.hackId
+    console.log \requ, $routeParams.hackId
+    csv <- $http.get "http://www.ethercalc.com/_/#{$routeParams.hackId}/csv"
+    .success
+    console.log csv
+
+    docs = for line in csv.split /\n/ when line
+        [url, title, ...rest] = line.split /,/
+        console.log url, title
+        match url
+        | // ^https?:\/\/www\.ethercalc\.com/(.*) //
+            type: \ethercalc
+            id: that.1
+            title: title
+        | // https:\/\/docs\.google\.com/document/(?:d/)?([^/]+)/ //
+            type: \gdoc
+            id: that.1
+            title: title
+        | // https:\/\/hackpad\.com/(?:.*)-([\w]+) //
+            type: \hackpad
+            id: that.1
+            title: title
+        | otherwise => console.log \unrecognized url
+    console.log docs
+    $scope.docs = docs.filter -> it?
 
 .directive 'resize' <[$window]> ++ ($window) ->
   (scope) ->
