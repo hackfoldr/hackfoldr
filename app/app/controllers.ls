@@ -76,7 +76,7 @@ angular.module 'app.controllers' []
       .success
 
       hackId := id
-      docs.splice 0, -1
+      docs.length = 0
 
       entries = for line in csv.split /\n/ when line
         [url, title, ...rest] = line.split /,/
