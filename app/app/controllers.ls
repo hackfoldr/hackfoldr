@@ -101,7 +101,7 @@ angular.module 'app.controllers' []
             type: \gpresent
             id: that.1
             title: title
-        | // https:\/\/hackpad\.com/(?:.*)-([\w]+) //
+        | // https?:\/\/hackpad\.com/(?:.*?)-([\w]+)(\#.*)?$ //
             type: \hackpad
             id: that.1
             title: title
