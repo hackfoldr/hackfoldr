@@ -11,13 +11,18 @@ angular.module 'app.controllers' []
     else
       ''
 .controller HackFolder: <[$scope $routeParams $http]> ++ ($scope, $routeParams, $http) ->
-    $scope.sortableOptions = do
+  # XXX turn iframes cache into a service
+  unless $scope.iframes
+    $scope <<< do
+      hasViewMode: -> it.match /g(doc|present|draw)/
+      sortableOptions: do
         update: -> console.log \updated
 
-    $scope.iframes = {}
-    $scope.debug = (element) ->
+      iframes: {}
+      debug: (element) ->
         console.log @, $scope, element
-    $scope.activate = ({type,id}:doc, edit=false) ->
+      activate: (id, edit=false) ->
+        [{type}:doc] = [d for d in $scope.docs when d.id is id]
         mode = if edit => \edit else \view
         src = match type
         | \gdoc =>
@@ -41,11 +46,11 @@ angular.module 'app.controllers' []
             $scope.iframes[id] = {src, doc, mode}
         $scope.currentIframe = id
 
-    $routeParams.hackId = 's8r4l008sk' unless $routeParams.hackId
-    csv <- $http.get "http://www.ethercalc.com/_/#{$routeParams.hackId}/csv"
-    .success
+    $scope.$watch 'hackId' ->
+      csv <- $http.get "http://www.ethercalc.com/_/#{$scope.hackId}/csv"
+      .success
 
-    docs = for line in csv.split /\n/ when line
+      docs = for line in csv.split /\n/ when line
         [url, title, ...rest] = line.split /,/
         match url
         | // ^https?:\/\/www\.ethercalc\.com/(.*) //
@@ -73,7 +78,14 @@ angular.module 'app.controllers' []
             id: that.1
             title: title
         | otherwise => console.log \unrecognized url
-    $scope.docs = docs.filter -> it?
+      $scope.docs = docs.filter -> it?
+      console.log \act $scope.docId
+      $scope.$watch 'docId' (docId) -> $scope.activate docId
+
+    $scope.hackId = $routeParams.hackId ? 's8r4l008sk'
+    if $routeParams.docId
+      $scope.docId = $routeParams.docId
+
 
 .directive 'resize' <[$window]> ++ ($window) ->
   (scope) ->

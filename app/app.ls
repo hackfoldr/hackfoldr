@@ -7,6 +7,7 @@ App = angular.module \app <[ui ngCookies ngResource app.controllers scroll]>
 App.config <[$routeProvider $locationProvider]> ++ ($routeProvider, $locationProvider, config) ->
   $routeProvider
     .when \/:hackId templateUrl: \/partials/app/hack.html
+    .when \/:hackId/:docId templateUrl: \/partials/app/hack.html
     .when \/about templateUrl: \/partials/app/about.html
     # Catch all
     .otherwise redirectTo: \/
