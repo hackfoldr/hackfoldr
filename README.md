@@ -7,8 +7,7 @@ Organize gdoc and hackpad documents for hackathons.
 
 We need a way to organize many dynamic documents before and during hackathon.
 
-The shared folder feature in google docs comes very close to what we want, but
-as every document is opened in edit mode, it soon becomes unusable.
+The shared folder feature in google docs comes very close to what we want, but as every document is opened in edit mode, it soon becomes unusable.  It is also impossible to sort the items and we had to use numberical prefix to achieve that.
 
 Hackpad collections are great too, but we also want to include spreadsheets as one of the items.
 
@@ -24,6 +23,11 @@ For example, with an index like http://ethercalc.org/g0v-hackath2n, you'll get h
 * google drawing
 * hackpad
 * ethercalc
+
+# Install
+
+    % npm i
+    % ./node_modules/.bin/brunch w -s
 
 # CC0 1.0 Universal
 
