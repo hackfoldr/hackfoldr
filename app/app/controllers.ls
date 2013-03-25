@@ -22,6 +22,14 @@ angular.module 'app.controllers' []
         src = match type
         | \gdoc =>
             "https://docs.google.com/document/d/#id/#mode"
+        | \gsheet =>
+            "https://docs.google.com/spreadsheet/ccc?key=#id"
+        | \gpresent =>
+            "https://docs.google.com/presentation/d/#id/#mode"
+        | \gdraw =>
+            "https://docs.google.com/drawings/d/#id/#mode"
+        | \gsheet =>
+            "https://docs.google.com/spreadsheet/ccc?key=#id"
         | \hackpad =>
             "https://hackpad.com/#id"
         | \ethercalc =>
@@ -34,14 +42,11 @@ angular.module 'app.controllers' []
         $scope.currentIframe = id
 
     $routeParams.hackId = 's8r4l008sk' unless $routeParams.hackId
-    console.log \requ, $routeParams.hackId
     csv <- $http.get "http://www.ethercalc.com/_/#{$routeParams.hackId}/csv"
     .success
-    console.log csv
 
     docs = for line in csv.split /\n/ when line
         [url, title, ...rest] = line.split /,/
-        console.log url, title
         match url
         | // ^https?:\/\/www\.ethercalc\.com/(.*) //
             type: \ethercalc
@@ -51,12 +56,23 @@ angular.module 'app.controllers' []
             type: \gdoc
             id: that.1
             title: title
+        | // https:\/\/docs\.google\.com/spreadsheet/ccc\?key=([^/?&]+) //
+            type: \gsheet
+            id: that.1
+            title: title
+        | // https:\/\/docs\.google\.com/drawings/(?:d/)?([^/]+)/ //
+            type: \gdraw
+            id: that.1
+            title: title
+        | // https:\/\/docs\.google\.com/presentation/(?:d/)?([^/]+)/ //
+            type: \gpresent
+            id: that.1
+            title: title
         | // https:\/\/hackpad\.com/(?:.*)-([\w]+) //
             type: \hackpad
             id: that.1
             title: title
         | otherwise => console.log \unrecognized url
-    console.log docs
     $scope.docs = docs.filter -> it?
 
 .directive 'resize' <[$window]> ++ ($window) ->

@@ -5,5 +5,5 @@
                 {{doc.type}} - {{doc.title || doc.id}}
     .pad-container(ng-style='{height: height-49}',ng-click="debug(element)")
         article.pad(ng-repeat='(key, iframe) in iframes',ng-show='currentIframe == key')
-            span.docmode(ng-show="iframe.doc.type == 'gdoc' && iframe.mode != 'edit'",ng-click="activate(iframe.doc, true)") edit
+            span.docmode(ng-show="iframe.doc.type.match(/g(doc|draw|present/)) && iframe.mode != 'edit'",ng-click="activate(iframe.doc, true)") edit
             iframe.embed(ng-src='{{iframe.src}}')
