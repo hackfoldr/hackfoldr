@@ -10,47 +10,75 @@ angular.module 'app.controllers' []
       'active'
     else
       ''
-.controller HackFolder: <[$scope $routeParams $http]> ++ ($scope, $routeParams, $http) ->
+.controller HackFolderCtrl: <[$scope $routeParams HackFolder]> ++ ($scope, $routeParams, HackFolder) ->
+  console.log $routeParams
   # XXX turn iframes cache into a service
-  unless $scope.iframes
-    $scope <<< do
-      hasViewMode: -> it.match /g(doc|present|draw)/
-      sortableOptions: do
-        update: -> console.log \updated
+  $scope <<< do
+    hasViewMode: -> it.match /g(doc|present|draw)/
+    sortableOptions: do
+      update: -> console.log \notyetupdated
+    iframes: HackFolder.iframes
+    docs: HackFolder.docs
+    activate: HackFolder.activate
 
-      iframes: {}
-      debug: (element) ->
-        console.log @, $scope, element
-      activate: (id, edit=false) ->
-        [{type}:doc] = [d for d in $scope.docs when d.id is id]
-        mode = if edit => \edit else \view
-        src = match type
-        | \gdoc =>
-            "https://docs.google.com/document/d/#id/#mode"
-        | \gsheet =>
-            "https://docs.google.com/spreadsheet/ccc?key=#id"
-        | \gpresent =>
-            "https://docs.google.com/presentation/d/#id/#mode"
-        | \gdraw =>
-            "https://docs.google.com/drawings/d/#id/#mode"
-        | \gsheet =>
-            "https://docs.google.com/spreadsheet/ccc?key=#id"
-        | \hackpad =>
-            "https://hackpad.com/#id"
-        | \ethercalc =>
-            "http://ethercalc.com/#id"
+  $scope.$watch 'hackId' (hackId) ->
+    <- HackFolder.getIndex hackId, false
+    $scope.$watch 'docId' (docId) -> HackFolder.activate docId
 
-        if $scope.iframes[id]
-            that <<< {src, mode}
-        else
-            $scope.iframes[id] = {src, doc, mode}
-        $scope.currentIframe = id
+  $scope.hackId = if $routeParams.hackId => that else 's8r4l008sk'
+  console.log $scope.hackId
+  $scope.docId = $routeParams.docId if $routeParams.docId
 
-    $scope.$watch 'hackId' ->
-      csv <- $http.get "http://www.ethercalc.com/_/#{$scope.hackId}/csv"
+.directive 'resize' <[$window]> ++ ($window) ->
+  (scope) ->
+    scope.width = $window.innerWidth
+    scope.height = $window.innerHeight
+    angular.element $window .bind 'resize' ->
+      scope.$apply ->
+        scope.width = $window.innerWidth
+        scope.height = $window.innerHeight
+
+.factory HackFolder: <[$http]> ++ ($http) ->
+  iframes = {}
+  docs = []
+  var hackId
+  do
+    iframes: iframes
+    docs: docs
+    activate: (id, edit=false) ->
+      [{type}:doc] = [d for d in docs when d.id is id]
+      mode = if edit => \edit else \view
+      src = match type
+      | \gdoc =>
+          "https://docs.google.com/document/d/#id/#mode"
+      | \gsheet =>
+          "https://docs.google.com/spreadsheet/ccc?key=#id"
+      | \gpresent =>
+          "https://docs.google.com/presentation/d/#id/#mode"
+      | \gdraw =>
+          "https://docs.google.com/drawings/d/#id/#mode"
+      | \gsheet =>
+          "https://docs.google.com/spreadsheet/ccc?key=#id"
+      | \hackpad =>
+          "https://hackpad.com/#id"
+      | \ethercalc =>
+          "http://ethercalc.com/#id"
+
+      console.log \activate id, iframes[id]
+      if iframes[id]
+          that <<< {src, mode}
+      else
+          iframes[id] = {src, doc, mode}
+
+    getIndex: (id, force, cb) ->
+      return cb docs if hackId is id and !force
+      csv <- $http.get "http://www.ethercalc.com/_/#{id}/csv"
       .success
 
-      docs = for line in csv.split /\n/ when line
+      hackId := id
+      docs.splice 0, -1
+
+      entries = for line in csv.split /\n/ when line
         [url, title, ...rest] = line.split /,/
         match url
         | // ^https?:\/\/www\.ethercalc\.com/(.*) //
@@ -78,20 +106,5 @@ angular.module 'app.controllers' []
             id: that.1
             title: title
         | otherwise => console.log \unrecognized url
-      $scope.docs = docs.filter -> it?
-      console.log \act $scope.docId
-      $scope.$watch 'docId' (docId) -> $scope.activate docId
-
-    $scope.hackId = $routeParams.hackId ? 's8r4l008sk'
-    if $routeParams.docId
-      $scope.docId = $routeParams.docId
-
-
-.directive 'resize' <[$window]> ++ ($window) ->
-  (scope) ->
-    scope.width = $window.innerWidth
-    scope.height = $window.innerHeight
-    angular.element $window .bind 'resize' ->
-      scope.$apply ->
-        scope.width = $window.innerWidth
-        scope.height = $window.innerHeight
+      docs.splice 0, -1, ...(entries.filter -> it?)
+      cb docs
