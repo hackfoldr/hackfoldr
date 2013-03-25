@@ -94,7 +94,7 @@ window.App = App;
 }).call(this);
 
 (function() {
-  var slice$ = [].slice;
+  var slice$ = [].slice, replace$ = ''.replace;
 angular.module('app.controllers', []).controller({
   AppCtrl: ['$scope', '$location', '$resource', '$rootScope'].concat(function(s, $location, $resource, $rootScope){
     s.$location = $location;
@@ -222,6 +222,7 @@ angular.module('app.controllers', []).controller({
             line = ref$[i$];
             if (line) {
               ref1$ = line.split(/,/), url = ref1$[0], title = ref1$[1], rest = slice$.call(ref1$, 2);
+              title = replace$.call(title, /"/g, '');
               switch (ref1$ = [url], false) {
               case !(that = /^https?:\/\/www\.ethercalc\.com\/(.*)/.exec(ref1$[0])):
                 res$.push({
