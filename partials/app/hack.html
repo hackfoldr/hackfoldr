@@ -1,12 +1,10 @@
 
-<div ng-controller="HackFolder" resize="resize" class="hackfolder">
+<div ng-controller="HackFolderCtrl" resize="resize" class="hackfolder">
   <ul ui-sortable="sortableOptions" ng-model="docs">
-    <li ng-repeat="doc in docs">
-      <div ng-click="activate(doc)" class="link">{{doc.type}} - {{doc.title || doc.id}}</div>
-    </li>
+    <li ng-repeat="doc in docs"><a ng-href="/#/{{hackId}}/{{doc.id}}" class="link">{{doc.type}} - {{doc.title || doc.id}}</a></li>
   </ul>
-  <div ng-style="{height: height-49}" ng-click="debug(element)" class="pad-container">
-    <article ng-repeat="(key, iframe) in iframes" ng-show="currentIframe == key" class="pad"><span ng-show="iframe.doc.type == 'gdoc' &amp;&amp; iframe.mode != 'edit'" ng-click="activate(iframe.doc, true)" class="docmode">edit</span>
+  <div ng-style="{height: height-49}" class="pad-container">
+    <article ng-repeat="(key, iframe) in iframes" ng-show="docId == key" class="pad"><span ng-show="hasViewMode(iframe.doc.type) &amp;&amp; iframe.mode != 'edit'" ng-click="activate(iframe.doc.id, true)" class="docmode">edit</span>
       <iframe ng-src="{{iframe.src}}" class="embed"></iframe>
     </article>
   </div>
