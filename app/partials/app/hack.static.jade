@@ -3,7 +3,7 @@
       li: big &#xbb; {{hackId}} &#xab;
       li(ng-repeat='doc in docs',style="margin:5px 10px 5px 5px;")
         a.link(ng-href='/#/{{hackId}}/{{doc.id}}')
-          img(src="img/{{doc.type}}.png")
+          img(ng-src="img/{{doc.type}}.png")
           |  {{doc.title || doc.id}}
     .pad-container(ng-style='{height: height-49}')
       article.pad(ng-repeat='(key, iframe) in iframes',ng-show='docId == key')
