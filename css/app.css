@@ -6915,34 +6915,57 @@ a.label:hover, a.badge:hover {
 .hackfolder {
   display: -webkit-flex;
   display: flex; }
-@media -sass-debug-info{filename{}line{font-family:\0000310}}
-  .hackfolder .link img {
-    width: 16px;
-    height: 16px; }
-@media -sass-debug-info{filename{}line{font-family:\0000314}}
+@media -sass-debug-info{filename{}line{font-family:\000039}}
+  .hackfolder .link {
+    width: 100%;
+    display: block; }
+@media -sass-debug-info{filename{}line{font-family:\0000312}}
+    .hackfolder .link img {
+      width: 16px;
+      height: 16px; }
+@media -sass-debug-info{filename{}line{font-family:\0000315}}
+    .hackfolder .link:hover {
+      background: #eeeeff; }
+@media -sass-debug-info{filename{}line{font-family:\0000318}}
   .hackfolder .index {
-    margin: 54px 10px 10px 18px;
+    margin: 54px 10px 10px 0px;
     border-right: 1px solid #999999;
-    border-radius: 32px; }
-@media -sass-debug-info{filename{}line{font-family:\0000319}}
+    border-radius: 32px;
+    cursor: w-resize;
+    transition: margin-left 0.5s;
+    -moz-transition: margin-left 0.5s;
+    -webkit-transition: margin-left 0.5s;
+    -o-transition: margin-left 0.5s; }
+@media -sass-debug-info{filename{}line{font-family:\0000328}}
+    .hackfolder .index.collapsed {
+      margin-left: -240px;
+      cursor: e-resize; }
+@media -sass-debug-info{filename{}line{font-family:\0000332}}
+    .hackfolder .index big {
+      padding-left: 10px; }
+@media -sass-debug-info{filename{}line{font-family:\0000335}}
   .hackfolder ul {
-    width: 240px; }
-@media -sass-debug-info{filename{}line{font-family:\0000321}}
+    width: 216px;
+    margin-left: 20px;
+    margin-right: 20px; }
+@media -sass-debug-info{filename{}line{font-family:\0000339}}
     .hackfolder ul li:first-child {
-      margin: 5px 0 15px -3px;
+      padding: 5px 0 15px -3px;
+      margin: 0;
+      margin-top: 5px;
       font-weight: 700; }
-@media -sass-debug-info{filename{}line{font-family:\0000324}}
+@media -sass-debug-info{filename{}line{font-family:\0000344}}
     .hackfolder ul li {
       list-style: none;
       cursor: pointer; }
-@media -sass-debug-info{filename{}line{font-family:\0000328}}
+@media -sass-debug-info{filename{}line{font-family:\0000348}}
   .hackfolder .pad-container {
     position: relative;
     height: 700px;
     display: -webkit-flex;
     display: flex;
     width: 100%; }
-@media -sass-debug-info{filename{}line{font-family:\0000334}}
+@media -sass-debug-info{filename{}line{font-family:\0000354}}
     .hackfolder .pad-container article {
       position: absolute;
       top: 44px;
@@ -6950,7 +6973,7 @@ a.label:hover, a.badge:hover {
       height: 100%;
       width: 100%;
       overflow: auto; }
-@media -sass-debug-info{filename{}line{font-family:\0000342}}
+@media -sass-debug-info{filename{}line{font-family:\0000362}}
       .hackfolder .pad-container article iframe.embed {
         position: absolute;
         top: 0px;
@@ -6958,7 +6981,7 @@ a.label:hover, a.badge:hover {
         height: 100%;
         width: 100%;
         border: 0; }
-@media -sass-debug-info{filename{}line{font-family:\0000350}}
+@media -sass-debug-info{filename{}line{font-family:\0000370}}
       .hackfolder .pad-container article .docmode {
         position: absolute;
         top: 0px;

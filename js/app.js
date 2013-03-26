@@ -130,6 +130,9 @@ angular.module('app.controllers', []).controller({
       activate: HackFolder.activate,
       reload: function(hackId){
         return HackFolder.getIndex(hackId, true, function(){});
+      },
+      toggleIndex: function(){
+        return $('.index').toggleClass('collapsed');
       }
     });
     $scope.$watch('hackId', function(hackId){
