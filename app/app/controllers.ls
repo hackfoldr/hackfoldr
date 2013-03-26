@@ -26,8 +26,7 @@ angular.module 'app.controllers' []
     $scope.$watch 'docId' (docId) -> HackFolder.activate docId
 
   $scope.hackId = if $routeParams.hackId => that else 's8r4l008sk'
-  console?log $scope.hackId
-  $scope.docId = $routeParams.docId if $routeParams.docId
+  $scope.docId = encodeURIComponent $routeParams.docId if $routeParams.docId
 
 .directive 'resize' <[$window]> ++ ($window) ->
   (scope) ->
@@ -63,8 +62,8 @@ angular.module 'app.controllers' []
           "https://hackpad.com/#id"
       | \ethercalc =>
           "http://ethercalc.com/#id"
+      | \url => decodeURIComponent decodeURIComponent id
 
-      console?log \activate id, iframes[id]
       if iframes[id]
           that <<< {src, mode}
       else
@@ -105,6 +104,10 @@ angular.module 'app.controllers' []
         | // https?:\/\/hackpad\.com/(?:.*?)-([\w]+)(\#.*)?$ //
             type: \hackpad
             id: that.1
+            title: title
+        | // ^https?:\/\/ //
+            type: \url
+            id: encodeURIComponent encodeURIComponent url
             title: title
         | otherwise => console?log \unrecognized url
       docs.splice 0, -1, ...(entries.filter -> it?)
