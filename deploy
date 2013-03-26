@@ -1,0 +1,8 @@
+#!/bin/sh
+git fetch origin
+git branch -f gh-pages origin/gh-pages
+rm -rf _public
+git clone -s . -b gh-pages _public
+./node_modules/.bin/brunch b -m
+cd _public
+git commit -a -m 'regen' && git push origin gh-pages
