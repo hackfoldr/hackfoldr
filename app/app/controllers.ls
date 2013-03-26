@@ -62,7 +62,7 @@ angular.module 'app.controllers' []
       | \hackpad =>
           "https://hackpad.com/#id"
       | \ethercalc =>
-          "http://ethercalc.com/#id"
+          "http://ethercalc.org/#id"
       | \url => decodeURIComponent decodeURIComponent id
 
       if iframes[id]
@@ -72,7 +72,7 @@ angular.module 'app.controllers' []
 
     getIndex: (id, force, cb) ->
       return cb docs if hackId is id and !force
-      csv <- $http.get "http://www.ethercalc.com/_/#{id}/csv"
+      csv <- $http.get "http://www.ethercalc.org/_/#{id}/csv"
       .success
 
       hackId := id
@@ -81,19 +81,25 @@ angular.module 'app.controllers' []
       entries = for line in csv.split /\n/ when line
         [url, title, ...rest] = line.split /,/
         title -= /"/g
-        entry = { url, title, id: url.1 } <<< match url
-        | // ^https?:\/\/www\.ethercalc\.com/(.*) //
+        entry = { url, title } <<< match url
+        | // ^https?:\/\/www\.ethercalc\.(?:com|org)/(.*) //
             type: \ethercalc
+            id: that.1
         | // https:\/\/docs\.google\.com/document/(?:d/)?([^/]+)/ //
             type: \gdoc
+            id: that.1
         | // https:\/\/docs\.google\.com/spreadsheet/ccc\?key=([^/?&]+) //
             type: \gsheet
+            id: that.1
         | // https:\/\/docs\.google\.com/drawings/(?:d/)?([^/]+)/ //
             type: \gdraw
+            id: that.1
         | // https:\/\/docs\.google\.com/presentation/(?:d/)?([^/]+)/ //
             type: \gpresent
+            id: that.1
         | // https?:\/\/hackpad\.com/(?:.*?)-([\w]+)(\#.*)?$ //
             type: \hackpad
+            id: that.1
         | // ^https?:\/\/ //
             type: \url
             id: encodeURIComponent encodeURIComponent url
