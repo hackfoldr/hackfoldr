@@ -21,6 +21,7 @@ angular.module 'app.controllers' []
     docs: HackFolder.docs
     activate: HackFolder.activate
     reload: (hackId) -> HackFolder.getIndex hackId, true ->
+    toggleIndex: -> $('.index').toggleClass('collapsed')
 
   $scope.$watch 'hackId' (hackId) ->
     <- HackFolder.getIndex hackId, false

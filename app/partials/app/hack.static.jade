@@ -1,12 +1,12 @@
 .hackfolder(ng-controller='HackFolderCtrl', resize)
-    .index
+    .index(ng-click="toggleIndex()")
       big 
         &#xbb; 
         a.indexlink(ng-href="http://ethercalc.org/{{hackId}}",target="_blank") {{hackId}} 
         &#xab;  
       small: a.reload(ng-click="reload(hackId)") &#x21BA;
       ul(ui-sortable='sortableOptions', ng-model='docs')
-        li(ng-repeat='doc in docs',style="margin:5px 10px 5px 5px;")
+        li(ng-repeat='doc in docs',style="margin: 0; padding: 2px 5px;")
           a.link(ng-href='/#/{{hackId}}/{{doc.id}}',ng-class="{{doc.type}}")
             img(ng-src="{{doc.icon}}")
             |  {{doc.title || doc.id}}
