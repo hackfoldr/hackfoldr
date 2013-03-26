@@ -1,5 +1,5 @@
 .hackfolder(ng-controller='HackFolderCtrl', resize)
-    .index(ng-click="toggleIndex()")
+    .index(ng-class="{collapsed: collapsed}", ng-click="collapsed=!collapsed")
       big 
         &#xbb; 
         a.indexlink(ng-href="http://ethercalc.org/{{hackId}}",target="_blank") {{hackId}} 
