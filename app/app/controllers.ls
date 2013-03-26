@@ -20,6 +20,7 @@ angular.module 'app.controllers' []
     iframes: HackFolder.iframes
     docs: HackFolder.docs
     activate: HackFolder.activate
+    reload: (hackId) -> HackFolder.getIndex hackId, true ->
 
   $scope.$watch 'hackId' (hackId) ->
     <- HackFolder.getIndex hackId, false
