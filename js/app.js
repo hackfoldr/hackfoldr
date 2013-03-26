@@ -213,18 +213,19 @@ angular.module('app.controllers', []).controller({
           return cb(docs);
         }
         return $http.get("http://www.ethercalc.com/_/" + id + "/csv").success(function(csv){
-          var entries, res$, i$, ref$, len$, line, that, ref1$, url, title, rest, entry;
+          var entries, res$, i$, ref$, len$, line, ref1$, url, title, rest, entry;
           hackId = id;
           docs.length = 0;
           res$ = [];
           for (i$ = 0, len$ = (ref$ = csv.split(/\n/)).length; i$ < len$; ++i$) {
             line = ref$[i$];
-            if (that = line) {
+            if (line) {
               ref1$ = line.split(/,/), url = ref1$[0], title = ref1$[1], rest = slice$.call(ref1$, 2);
               title = replace$.call(title, /"/g, '');
               entry = import$({
+                url: url,
                 title: title,
-                id: that[1]
+                id: url[1]
               }, (fn$()));
               entry.icon == null && (entry.icon = "img/" + entry.type + ".png");
               res$.push(entry);
