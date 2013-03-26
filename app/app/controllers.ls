@@ -81,35 +81,25 @@ angular.module 'app.controllers' []
       entries = for line in csv.split /\n/ when line
         [url, title, ...rest] = line.split /,/
         title -= /"/g
-        match url
+        entry = { title, id: that.1 } <<< match url
         | // ^https?:\/\/www\.ethercalc\.com/(.*) //
             type: \ethercalc
-            id: that.1
-            title: title
         | // https:\/\/docs\.google\.com/document/(?:d/)?([^/]+)/ //
             type: \gdoc
-            id: that.1
-            title: title
         | // https:\/\/docs\.google\.com/spreadsheet/ccc\?key=([^/?&]+) //
             type: \gsheet
-            id: that.1
-            title: title
         | // https:\/\/docs\.google\.com/drawings/(?:d/)?([^/]+)/ //
             type: \gdraw
-            id: that.1
-            title: title
         | // https:\/\/docs\.google\.com/presentation/(?:d/)?([^/]+)/ //
             type: \gpresent
-            id: that.1
-            title: title
         | // https?:\/\/hackpad\.com/(?:.*?)-([\w]+)(\#.*)?$ //
             type: \hackpad
-            id: that.1
-            title: title
         | // ^https?:\/\/ //
             type: \url
             id: encodeURIComponent encodeURIComponent url
-            title: title
+            icon: "http://g.etfv.co/#{ encodeURIComponent url }"
         | otherwise => console?log \unrecognized url
+        entry.icon ?= "img/#{ entry.type }.png"
+        entry
       docs.splice 0, -1, ...(entries.filter -> it?)
       cb docs

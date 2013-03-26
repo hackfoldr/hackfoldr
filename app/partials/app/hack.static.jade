@@ -8,7 +8,7 @@
       ul(ui-sortable='sortableOptions', ng-model='docs')
         li(ng-repeat='doc in docs',style="margin:5px 10px 5px 5px;")
           a.link(ng-href='/#/{{hackId}}/{{doc.id}}',ng-class="{{doc.type}}")
-            img(ng-src="img/{{doc.type}}.png")
+            img(ng-src="{{doc.icon}}")
             |  {{doc.title || doc.id}}
     .pad-container(ng-style='{height: height-49}')
       article.pad(ng-repeat='(key, iframe) in iframes',ng-show='docId == key')
