@@ -4,7 +4,7 @@
     <big>
        
       &#xbb; <a ng-href="http://ethercalc.org/{{hackId}}" target="_blank" class="indexlink">{{hackId}} </a>&#xab;  
-    </big><small><a ng-click="reload(hackId)" class="reload">reload</a></small>
+    </big><small><a ng-click="reload(hackId)" class="reload">&#x21BA;</a></small>
     <ul ui-sortable="sortableOptions" ng-model="docs">
       <li ng-repeat="doc in docs" style="margin:5px 10px 5px 5px;"><a ng-href="/#/{{hackId}}/{{doc.id}}" ng-class="{{doc.type}}" class="link"><img ng-src="{{doc.icon}}"/> {{doc.title || doc.id}}</a></li>
     </ul>
