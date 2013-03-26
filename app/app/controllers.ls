@@ -11,7 +11,6 @@ angular.module 'app.controllers' []
     else
       ''
 .controller HackFolderCtrl: <[$scope $routeParams HackFolder]> ++ ($scope, $routeParams, HackFolder) ->
-  console?log $routeParams
   # XXX turn iframes cache into a service
   $scope <<< do
     hasViewMode: -> it.match /g(doc|present|draw)/
@@ -20,6 +19,7 @@ angular.module 'app.controllers' []
     iframes: HackFolder.iframes
     docs: HackFolder.docs
     activate: HackFolder.activate
+    HackFolder: HackFolder
     reload: (hackId) -> HackFolder.getIndex hackId, true ->
 
   $scope.$watch 'hackId' (hackId) ->
@@ -39,12 +39,21 @@ angular.module 'app.controllers' []
         scope.width = $window.innerWidth
         scope.height = $window.innerHeight
 
+.directive \ngxNoclick ->
+  ($scope, element, attrs) ->
+    $ element .click -> console.log \preventdefault @; it.preventDefault!; false
+
+.directive \ngxFinal ->
+  ($scope, element, attrs) ->
+    $ element .click -> console.log \final @; it.stopPropagation();
+
 .factory HackFolder: <[$http]> ++ ($http) ->
   iframes = {}
   docs = []
   var hackId
   do
     iframes: iframes
+    collapsed: false
     docs: docs
     activate: (id, edit=false) ->
       [{type}:doc] = [d for d in docs when d.id is id]
