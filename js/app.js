@@ -193,7 +193,7 @@ angular.module('app.controllers', []).controller({
           case 'hackpad' !== ref$[0]:
             return "https://hackpad.com/" + id;
           case 'ethercalc' !== ref$[0]:
-            return "http://ethercalc.com/" + id;
+            return "http://ethercalc.org/" + id;
           case 'url' !== ref$[0]:
             return decodeURIComponent(decodeURIComponent(id));
           }
@@ -212,8 +212,8 @@ angular.module('app.controllers', []).controller({
         if (hackId === id && !force) {
           return cb(docs);
         }
-        return $http.get("http://www.ethercalc.com/_/" + id + "/csv").success(function(csv){
-          var entries, res$, i$, ref$, len$, line, ref1$, url, title, rest, entry;
+        return $http.get("http://www.ethercalc.org/_/" + id + "/csv").success(function(csv){
+          var entries, res$, i$, ref$, len$, line, ref1$, url, title, rest, entry, that;
           hackId = id;
           docs.length = 0;
           res$ = [];
@@ -224,8 +224,7 @@ angular.module('app.controllers', []).controller({
               title = replace$.call(title, /"/g, '');
               entry = import$({
                 url: url,
-                title: title,
-                id: url[1]
+                title: title
               }, (fn$()));
               entry.icon == null && (entry.icon = "img/" + entry.type + ".png");
               res$.push(entry);
@@ -239,29 +238,35 @@ angular.module('app.controllers', []).controller({
           function fn$(){
             var ref$;
             switch (ref$ = [url], false) {
-            case !/^https?:\/\/www\.ethercalc\.com\/(.*)/.test(ref$[0]):
+            case !(that = /^https?:\/\/www\.ethercalc\.(?:com|org)\/(.*)/.exec(ref$[0])):
               return {
-                type: 'ethercalc'
+                type: 'ethercalc',
+                id: that[1]
               };
-            case !/https:\/\/docs\.google\.com\/document\/(?:d\/)?([^\/]+)\//.test(ref$[0]):
+            case !(that = /https:\/\/docs\.google\.com\/document\/(?:d\/)?([^\/]+)\//.exec(ref$[0])):
               return {
-                type: 'gdoc'
+                type: 'gdoc',
+                id: that[1]
               };
-            case !/https:\/\/docs\.google\.com\/spreadsheet\/ccc\?key=([^\/?&]+)/.test(ref$[0]):
+            case !(that = /https:\/\/docs\.google\.com\/spreadsheet\/ccc\?key=([^\/?&]+)/.exec(ref$[0])):
               return {
-                type: 'gsheet'
+                type: 'gsheet',
+                id: that[1]
               };
-            case !/https:\/\/docs\.google\.com\/drawings\/(?:d\/)?([^\/]+)\//.test(ref$[0]):
+            case !(that = /https:\/\/docs\.google\.com\/drawings\/(?:d\/)?([^\/]+)\//.exec(ref$[0])):
               return {
-                type: 'gdraw'
+                type: 'gdraw',
+                id: that[1]
               };
-            case !/https:\/\/docs\.google\.com\/presentation\/(?:d\/)?([^\/]+)\//.test(ref$[0]):
+            case !(that = /https:\/\/docs\.google\.com\/presentation\/(?:d\/)?([^\/]+)\//.exec(ref$[0])):
               return {
-                type: 'gpresent'
+                type: 'gpresent',
+                id: that[1]
               };
-            case !/https?:\/\/hackpad\.com\/(?:.*?)-([\w]+)(\#.*)?$/.test(ref$[0]):
+            case !(that = /https?:\/\/hackpad\.com\/(?:.*?)-([\w]+)(\#.*)?$/.exec(ref$[0])):
               return {
-                type: 'hackpad'
+                type: 'hackpad',
+                id: that[1]
               };
             case !/^https?:\/\//.test(ref$[0]):
               return {
