@@ -2,7 +2,7 @@
     .index(ng-class="{collapsed: HackFolder.collapsed}", ng-click="HackFolder.collapsed=!HackFolder.collapsed")
       big 
         &#xbb; 
-        a.indexlink(ng-href="http://ethercalc.org/{{hackId}}",target="_blank") {{hackId}} 
+        a.indexlink(ng-href="http://ethercalc.org/{{hackId}}",target="_blank",ngx-final) {{hackId}} 
         &#xab;  
       small: a.reload(ng-click="reload(hackId)",ngx-noclick) &#x21BA;
       ul(ui-sortable='sortableOptions', ng-model='docs')
