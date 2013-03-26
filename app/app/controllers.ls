@@ -25,7 +25,7 @@ angular.module 'app.controllers' []
   $scope.$watch 'hackId' (hackId) ->
     <- HackFolder.getIndex hackId, false
     $scope.$watch 'docId' (docId) -> HackFolder.activate docId
-    if !$scope.docId => $scope.docId = HackFolder.docs.0?id or null
+    if !$scope.docId => $scope.docId = HackFolder.docs.0?id
 
   $scope.hackId = if $routeParams.hackId => that else 's8r4l008sk'
   $scope.docId = encodeURIComponent $routeParams.docId if $routeParams.docId
