@@ -81,7 +81,7 @@ angular.module 'app.controllers' []
       entries = for line in csv.split /\n/ when line
         [url, title, ...rest] = line.split /,/
         title -= /"/g
-        entry = { title, id: that.1 } <<< match url
+        entry = { url, title, id: url.1 } <<< match url
         | // ^https?:\/\/www\.ethercalc\.com/(.*) //
             type: \ethercalc
         | // https:\/\/docs\.google\.com/document/(?:d/)?([^/]+)/ //
