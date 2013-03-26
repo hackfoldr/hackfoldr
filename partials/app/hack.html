@@ -1,10 +1,10 @@
 
 <div ng-controller="HackFolderCtrl" resize="resize" class="hackfolder">
   <ul ui-sortable="sortableOptions" ng-model="docs">
-    <li>
-      <big>&#xbb; {{hackId}} &#xab;</big>
-    </li>
-    <li ng-repeat="doc in docs" style="margin:5px 10px 5px 5px;"><a ng-href="/#/{{hackId}}/{{doc.id}}" class="link"><img src="img/{{doc.type}}.png"/> {{doc.title || doc.id}}</a></li>
+    <div class="index">
+      <big>&#xbb; <a ng-href="http://ethercalc.org/{{hackId}}" target="_blank" class="indexlink">{{hackId}} </a>&#xab;<a ng-click="reload(hackId)" class="reload">reload</a></big>
+    </div>
+    <li ng-repeat="doc in docs" style="margin:5px 10px 5px 5px;"><a ng-href="/#/{{hackId}}/{{doc.id}}" ng-class="{{doc.type}}" class="link"><img ng-src="img/{{doc.type}}.png"/> {{doc.title || doc.id}}</a></li>
   </ul>
   <div ng-style="{height: height-49}" class="pad-container">
     <article ng-repeat="(key, iframe) in iframes" ng-show="docId == key" class="pad"><span ng-show="hasViewMode(iframe.doc.type) &amp;&amp; iframe.mode != 'edit'" ng-click="activate(iframe.doc.id, true)" class="docmode">edit</span>
