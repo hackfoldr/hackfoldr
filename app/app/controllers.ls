@@ -113,10 +113,10 @@ angular.module 'app.controllers' <[ui.state]>
         | // https?:\/\/hackpad\.com/(?:.*?)-([\w]+)(\#.*)?$ //
             type: \hackpad
             id: that.1
-        | // ^https?:\/\/ //
+        | // ^(https?:\/\/[^/]+) //
             type: \url
             id: encodeURIComponent encodeURIComponent url
-            icon: "http://g.etfv.co/#{ encodeURIComponent url }"
+            icon: "http://g.etfv.co/#{ that.1 }"
         | otherwise => console?log \unrecognized url
         entry.icon ?= "img/#{ entry.type }.png"
         entry
