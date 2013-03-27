@@ -138,7 +138,5 @@ angular.module 'app.controllers' <[ui.state]>
         else
           last-parent = i
           entry
-      console.log tree, nested
       tree.splice 0, tree.length, ...(nested.filter -> it?)
-      console.log tree
       cb docs
