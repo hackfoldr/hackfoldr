@@ -2,9 +2,8 @@
 
 angular.module('scroll', []).value('$anchorScroll', angular.noop)
 
-App = angular.module \app <[ui ngCookies ngResource app.controllers ui.state]>
-
-App.config <[$stateProvider $routeProvider $urlRouterProvider]> ++ ($stateProvider, $routeProvider, $urlRouterProvider) ->
+angular.module \app <[ui ngCookies ngResource app.controllers ui.state]>
+.config <[$stateProvider $urlRouterProvider]> ++ ($stateProvider, $urlRouterProvider) ->
   $stateProvider
     .state 'about' do
       url: '/about'
@@ -15,6 +14,10 @@ App.config <[$stateProvider $routeProvider $urlRouterProvider]> ++ ($stateProvid
       controller: \HackFolderCtrl
     .state 'hack.doc' do
       url: '/{docId}'
+
+  $urlRouterProvider
+    .otherwise('/g0v-hackath2n')
+
 .run <[$rootScope $state $stateParams]> ++ ($rootScope, $state, $stateParams) ->
   $rootScope.$state = $state
   $rootScope.$stateParam = $stateParams
