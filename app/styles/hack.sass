@@ -32,6 +32,8 @@
       img
         position: absolute
         left: 5px
+      li
+        margin-right: -20px
 
     big
       padding-left: 10px
@@ -40,14 +42,18 @@
     width: 216px
     margin-left: 10px
     margin-right: 20px
-    li:first-child
-      padding: 5px 0 15px -3px
-      margin: 0
-      margin-top: 5px
-      font-weight: 700
     li
       list-style: none
       cursor: pointer
+      margin: 0
+      padding: 2px 5px
+      &:first-child
+        padding: 5px 0 15px -3px
+        margin-top: 5px
+        font-weight: 700
+      &.active
+        background: orange
+
 
   .pad-container
     position: relative
