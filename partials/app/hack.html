@@ -1,12 +1,9 @@
 
 <div xng-controller="HackFolderCtrl" resize="resize" class="hackfolder">
   <div ng-class="{collapsed: HackFolder.collapsed}" ng-click="HackFolder.collapsed=!HackFolder.collapsed" class="index">
-    <big>
-       
-      &#xbb; <a ng-href="http://ethercalc.org/{{hackId}}" target="_blank" ngx-final="ngx-final" class="indexlink">{{hackId}} </a>&#xab;  
-    </big><small><a ng-click="reload(hackId)" ngx-noclick="ngx-noclick" class="reload">&#x21BA;</a></small>
+    <div class="hackid"><i class="icon-home"></i>&nbsp;<a ng-href="http://ethercalc.org/{{hackId}}" target="_blank" ngx-final="ngx-final" class="indexlink">{{hackId}} </a><small><a ng-click="reload(hackId)" ngx-noclick="ngx-noclick" class="reload">&#x21BA;</a></small></div>
     <ul ui-sortable="sortableOptions" ng-model="docs">
-      <li ng-repeat="doc in docs" style="margin: 0; padding: 2px 5px;" ng-bind-title="{{doc.title || doc.id}}" ngx-noclick="ngx-noclick"><a ng-href="/#/{{hackId}}/{{doc.id}}" ngx-final="ngx-final" class="link"><img ng-src="{{doc.icon}}" title="{{doc.title || doc.id}}"/>{{doc.title || doc.id}}</a></li>
+      <li ng-repeat="doc in docs" ng-bind-title="{{doc.title || doc.id}}" ngx-noclick="ngx-noclick"><a ng-href="/#/{{hackId}}/{{doc.id}}" ngx-final="ngx-final" class="link"><img ng-src="{{doc.icon}}" title="{{doc.title || doc.id}}"/>{{doc.title || doc.id}}</a></li>
     </ul>
   </div>
   <div ng-style="{height: height-49}" class="pad-container">
