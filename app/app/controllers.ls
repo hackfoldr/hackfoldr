@@ -1,4 +1,4 @@
-angular.module 'app.controllers' []
+angular.module 'app.controllers' <[ui.state]>
 .controller AppCtrl: <[$scope $location $resource $rootScope]> ++ (s, $location, $resource, $rootScope) ->
 
   s <<< {$location}
@@ -10,7 +10,7 @@ angular.module 'app.controllers' []
       'active'
     else
       ''
-.controller HackFolderCtrl: <[$scope $routeParams HackFolder]> ++ ($scope, $routeParams, HackFolder) ->
+.controller HackFolderCtrl: <[$scope $state HackFolder]> ++ ($scope, $state, HackFolder) ->
   # XXX turn iframes cache into a service
   $scope <<< do
     hasViewMode: -> it.match /g(doc|present|draw)/
@@ -24,11 +24,14 @@ angular.module 'app.controllers' []
 
   $scope.$watch 'hackId' (hackId) ->
     <- HackFolder.getIndex hackId, false
-    $scope.$watch 'docId' (docId) -> HackFolder.activate docId
-    if !$scope.docId => $scope.docId = HackFolder.docs.0?id
+    $scope.$watch 'docId' (docId) -> HackFolder.activate docId if docId
+    unless $scope.docId
+      if HackFolder.docs.0?id
+        $state.transitionTo 'hack.doc', { docId: that, hackId: $scope.hackId }
 
-  $scope.hackId = if $routeParams.hackId => that else 's8r4l008sk'
-  $scope.docId = encodeURIComponent $routeParams.docId if $routeParams.docId
+  $scope.hackId = if $state.params.hackId => that else 's8r4l008sk'
+  $scope.$watch '$state.params.docId' (docId) ->
+    $scope.docId = encodeURIComponent encodeURIComponent docId if docId
 
 .directive 'resize' <[$window]> ++ ($window) ->
   (scope) ->
@@ -56,6 +59,7 @@ angular.module 'app.controllers' []
     collapsed: false
     docs: docs
     activate: (id, edit=false) ->
+      console.log \activate id, docs
       [{type}:doc] = [d for d in docs when d.id is id]
       mode = if edit => \edit else \view
       src = match type
