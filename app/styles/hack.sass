@@ -1,3 +1,5 @@
+@import "compass/css3/box"
+
 body
   font-size: 15px
   background: url(/img/tiles.png)
@@ -27,9 +29,8 @@ a
   top: 42px
 
 .hackfolder
-  display: -webkit-flex
-  display: flex
-
+  width: 100%
+  +display-box
   .link
     width: 100%
     display: block
@@ -41,6 +42,7 @@ a
   .index
     margin: 14px 0px 10px 0px
     cursor: w-resize
+    +box-flex(1)
     transition: margin-left 0.5s
     -moz-transition: margin-left 0.5s
     -webkit-transition: margin-left 0.5s
@@ -99,9 +101,7 @@ a
 
   .pad-container
     position: relative
-    display: -webkit-flex
-    display: flex
-    width: 100%
+    +box-flex(20)
     border-left: 1px solid #999
     article
 
