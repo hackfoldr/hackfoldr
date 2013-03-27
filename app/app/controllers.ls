@@ -109,7 +109,7 @@ angular.module 'app.controllers' <[ui.state]>
         | // https:\/\/docs\.google\.com/presentation/(?:d/)?([^/]+)/ //
             type: \gpresent
             id: that.1
-        | // https?:\/\/hackpad\.com/(?:.*?)-([\w]+)(\#.*)?$ //
+        | // https?:\/\/hackpad\.com/(?:.*?-)?([\w]+)(\#.*)?$ //
             type: \hackpad
             id: that.1
         | // ^(https?:\/\/[^/]+) //
