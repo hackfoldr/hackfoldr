@@ -62,6 +62,9 @@ angular.module 'app.controllers' <[ui.state]>
     tree: tree
     activate: (id, edit=false) ->
       [{type}:doc] = [d for d in docs when d.id is id]
+      for t in tree
+        if t?children?map (.id)
+          t.collapsed = false if id in that
       mode = if edit => \edit else \view
       src = match type
       | \gdoc =>
