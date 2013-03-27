@@ -2,17 +2,19 @@
 
 angular.module('scroll', []).value('$anchorScroll', angular.noop)
 
-App = angular.module \app <[ui ngCookies ngResource app.controllers scroll]>
+App = angular.module \app <[ui ngCookies ngResource app.controllers ui.state]>
 
-App.config <[$routeProvider $locationProvider]> ++ ($routeProvider, $locationProvider, config) ->
-  $routeProvider
-    .when \/:hackId templateUrl: \/partials/app/hack.html
-    .when \/:hackId/:docId templateUrl: \/partials/app/hack.html
-    .when \/about templateUrl: \/partials/app/about.html
-    # Catch all
-    .otherwise redirectTo: \/
-
-  # Without serve side support html5 must be disabled.
-  $locationProvider.html5Mode false
-
-window.App = App
+App.config <[$stateProvider $routeProvider $urlRouterProvider]> ++ ($stateProvider, $routeProvider, $urlRouterProvider) ->
+  $stateProvider
+    .state 'about' do
+      url: '/about'
+      templateUrl: '/partials/app/about.html'
+    .state 'hack' do
+      url: '/{hackId}'
+      templateUrl: '/partials/app/hack.html'
+      controller: \HackFolderCtrl
+    .state 'hack.doc' do
+      url: '/{docId}'
+.run <[$rootScope $state $stateParams]> ++ ($rootScope, $state, $stateParams) ->
+  $rootScope.$state = $state
+  $rootScope.$stateParam = $stateParams

@@ -6,7 +6,7 @@ html(lang='en')
     meta(name='viewport', content='width=device-width, initial-scale=1.0')
     meta(name='description', content='')
     meta(name='author', content='')
-    title(ng-bind-template='{{pageTitle}}')
+    title(ng-bind='$state.current.name') hack.g0v.tw
     link(rel='stylesheet', href='/css/app.css')
     //if lte IE 7
       script(src='http://cdnjs.cloudflare.com/ajax/libs/json2/20110223/json2.js')
@@ -36,5 +36,5 @@ html(lang='en')
             .nav-collapse
               div(ng-include="'/partials/app/nav.html'")
       .main-content
-        div(ng-view)
+        div(ui-view)
       .push
