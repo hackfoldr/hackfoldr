@@ -41,11 +41,11 @@ angular.module 'app.controllers' []
 
 .directive \ngxNoclick ->
   ($scope, element, attrs) ->
-    $ element .click -> console.log \preventdefault @; it.preventDefault!; false
+    $ element .click -> it.preventDefault!; false
 
 .directive \ngxFinal ->
   ($scope, element, attrs) ->
-    $ element .click -> console.log \final @; it.stopPropagation();
+    $ element .click -> it.stopPropagation();
 
 .factory HackFolder: <[$http]> ++ ($http) ->
   iframes = {}
