@@ -59,7 +59,6 @@ angular.module 'app.controllers' <[ui.state]>
     collapsed: false
     docs: docs
     activate: (id, edit=false) ->
-      console.log \activate id, docs
       [{type}:doc] = [d for d in docs when d.id is id]
       mode = if edit => \edit else \view
       src = match type
