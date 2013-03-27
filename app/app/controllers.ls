@@ -11,7 +11,6 @@ angular.module 'app.controllers' <[ui.state]>
     else
       ''
 .controller HackFolderCtrl: <[$scope $state HackFolder]> ++ ($scope, $state, HackFolder) ->
-  # XXX turn iframes cache into a service
   $scope <<< do
     hasViewMode: -> it.match /g(doc|present|draw)/
     sortableOptions: do
