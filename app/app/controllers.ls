@@ -126,8 +126,8 @@ angular.module 'app.controllers' <[ui.state]>
         | otherwise => console?log \unrecognized url
         entry.icon ?= "img/#{ entry.type }.png"
         entry
+      docs.splice 0, docs.length, ...(entries.filter -> it?)
       last-parent = 0
-      docs.splice 0, -1, ...(entries.filter -> it?)
       nested = for entry, i in docs when i > 0
         if entry.indent
           entries[last-parent]
@@ -138,5 +138,5 @@ angular.module 'app.controllers' <[ui.state]>
         else
           last-parent = i
           entry
-      tree.splice 0, -1, ...(nested.filter -> it?)
+      tree.splice 0, tree.length, ...(nested.filter -> it?)
       cb docs
