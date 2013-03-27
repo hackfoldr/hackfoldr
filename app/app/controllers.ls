@@ -128,8 +128,8 @@ angular.module 'app.controllers' <[ui.state]>
         entry
       docs.splice 0, docs.length, ...(entries.filter -> it?)
       last-parent = 0
-      nested = for entry, i in docs when i > 0
-        if entry.indent
+      nested = for entry, i in docs
+        if i > 0 and entry.indent
           entries[last-parent]
             ..children ?= []
             ..children.push entry
@@ -138,5 +138,7 @@ angular.module 'app.controllers' <[ui.state]>
         else
           last-parent = i
           entry
+      console.log tree, nested
       tree.splice 0, tree.length, ...(nested.filter -> it?)
+      console.log tree
       cb docs
