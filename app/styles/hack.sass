@@ -81,7 +81,7 @@ a
       li
         margin-top: 1px
         padding: 2px 5px 2px 11px
-        height: 1.2em
+        min-height: 1.2em
         font-size: 16px
         &:hover
           background: rgba(255,255,255,0.7)
@@ -93,6 +93,7 @@ a
     margin-left: 10px
     margin-right: 20px
     li
+      position: relative
       list-style: none
       cursor: pointer
       margin: 0
@@ -101,8 +102,15 @@ a
         padding: 5px 0 15px -3px
         margin-top: 5px
         font-weight: 700
-      &.active
+      &.active > .entry
         background: orange
+        margin-left: -30px
+        margin-right: -20px
+        padding-left: 30px
+      span.collapser
+        position: absolute
+        right: 5px
+        top: 0px
 
 
   .pad-container

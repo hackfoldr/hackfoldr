@@ -17,6 +17,7 @@ angular.module 'app.controllers' <[ui.state]>
       update: -> console?log \notyetupdated
     iframes: HackFolder.iframes
     docs: HackFolder.docs
+    tree: HackFolder.tree
     activate: HackFolder.activate
     HackFolder: HackFolder
     reload: (hackId) -> HackFolder.getIndex hackId, true ->
@@ -52,11 +53,13 @@ angular.module 'app.controllers' <[ui.state]>
 .factory HackFolder: <[$http]> ++ ($http) ->
   iframes = {}
   docs = []
+  tree = []
   var hackId
   do
     iframes: iframes
     collapsed: false
     docs: docs
+    tree: tree
     activate: (id, edit=false) ->
       [{type}:doc] = [d for d in docs when d.id is id]
       mode = if edit => \edit else \view
@@ -93,7 +96,8 @@ angular.module 'app.controllers' <[ui.state]>
       entries = for line in csv.split /\n/ when line
         [url, title, ...rest] = line.split /,/
         title -= /"/g
-        entry = { url, title } <<< match url
+        [_, prefix, url] = url.match /^"?(\s*)(\S+)"?$/
+        entry = { url, title, indent: prefix.length } <<< match url
         | // ^https?:\/\/www\.ethercalc\.(?:com|org)/(.*) //
             type: \ethercalc
             id: that.1
@@ -119,5 +123,17 @@ angular.module 'app.controllers' <[ui.state]>
         | otherwise => console?log \unrecognized url
         entry.icon ?= "img/#{ entry.type }.png"
         entry
+      last-parent = 0
       docs.splice 0, -1, ...(entries.filter -> it?)
+      nested = for entry, i in docs when i > 0
+        if entry.indent
+          entries[last-parent]
+            ..children ?= []
+            ..children.push entry
+            ..collapsed = true
+          null
+        else
+          last-parent = i
+          entry
+      tree.splice 0, -1, ...(nested.filter -> it?)
       cb docs
