@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width">
     <meta name="description" content="">
     <meta name="author" content="">
-    <title ng-bind-template="{{pageTitle}}"></title>
+    <title ng-bind="$state.current.name">hack.g0v.tw</title>
     <link rel="stylesheet" href="/css/app.css"><!--[if lte IE 7]>
     <script src="http://cdnjs.cloudflare.com/ajax/libs/json2/20110223/json2.js"></script><![endif]--><!--[if lte IE 8]>
     <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
@@ -34,7 +34,7 @@
         </div>
       </div>
       <div class="main-content">
-        <div ng-view></div>
+        <div ui-view></div>
       </div>
       <div class="push"></div>
     </div>
