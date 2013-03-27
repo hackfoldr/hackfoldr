@@ -3,7 +3,6 @@ angular.module 'app.controllers' <[ui.state]>
 
   s <<< {$location}
   s.$watch '$location.path()' (activeNavId or '/') ->
-    console.log \hi
     s <<< {activeNavId}
 
   s.getClass = (id) ->
