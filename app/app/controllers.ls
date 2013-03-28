@@ -80,7 +80,7 @@ angular.module 'app.controllers' <[ui.state]>
       | \hackpad =>
           "https://hackpad.com/#id"
       | \ethercalc =>
-          "http://ethercalc.org/#id"
+          "https://ethercalc.org/#id"
       | \url => decodeURIComponent decodeURIComponent id
 
       if iframes[id]
@@ -90,7 +90,7 @@ angular.module 'app.controllers' <[ui.state]>
 
     getIndex: (id, force, cb) ->
       return cb docs if hackId is id and !force
-      csv <- $http.get "http://www.ethercalc.org/_/#{id}/csv"
+      csv <- $http.get "https://www.ethercalc.org/_/#{id}/csv"
       .success
 
       hackId := id
