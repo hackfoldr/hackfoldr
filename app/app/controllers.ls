@@ -20,6 +20,7 @@ angular.module 'app.controllers' <[ui.state]>
     tree: HackFolder.tree
     activate: HackFolder.activate
     HackFolder: HackFolder
+    debug: -> console?log it
     reload: (hackId) -> HackFolder.getIndex hackId, true ->
 
   $scope.$watch 'hackId' (hackId) ->
@@ -49,6 +50,13 @@ angular.module 'app.controllers' <[ui.state]>
 .directive \ngxFinal ->
   ($scope, element, attrs) ->
     $ element .click -> it.stopPropagation();
+
+.directive \ngxLoad <[$parse]> ++ ($parse) ->
+  link: ($scope, element, attrs) ->
+    onLoad = $parse(attrs.ngxLoad)
+    $ element .load ->
+      {location} = @contentWindow
+      (onLoad $scope) location
 
 .factory HackFolder: <[$http]> ++ ($http) ->
   iframes = {}
