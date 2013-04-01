@@ -16,7 +16,7 @@ angular.module \app <[ui ngCookies ngResource app.controllers ui.state]>
       url: '/{docId}'
 
   $urlRouterProvider
-    .otherwise('/hackfoldr')
+    .otherwise('/g0v-hackath2n')
 
 .run <[$rootScope $state $stateParams]> ++ ($rootScope, $state, $stateParams) ->
   $rootScope.$state = $state
