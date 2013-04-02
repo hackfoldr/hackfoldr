@@ -115,6 +115,7 @@ angular.module 'app.controllers' <[ui.state]>
               if title
                 folder-title = title
                 title = null
+            title: title
             type: \dummy
             id: \dummy
         | // ^https?:\/\/www\.ethercalc\.(?:com|org)/(.*) //
@@ -140,7 +141,8 @@ angular.module 'app.controllers' <[ui.state]>
             id: encodeURIComponent encodeURIComponent url
             icon: "http://g.etfv.co/#{ that.1 }"
         | otherwise => console?log \unrecognized url
-        if entry.type is \dummy and !title?length
+
+        if entry.type is \dummy and !entry.title?length
           null
         else
           {icon: "img/#{ entry.type }.png"} <<< entry
@@ -149,7 +151,7 @@ angular.module 'app.controllers' <[ui.state]>
       last-parent = 0
       nested = for entry, i in docs
         if i > 0 and entry.indent
-          entries[last-parent]
+          docs[last-parent]
             ..children ?= []
             ..children.push entry
             ..collapsed = true
