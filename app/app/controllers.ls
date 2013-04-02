@@ -62,7 +62,7 @@ angular.module 'app.controllers' <[ui.state]>
   docs = []
   tree = []
   var hackId
-  do
+  self = do
     iframes: iframes
     collapsed: false
     docs: docs
@@ -104,12 +104,17 @@ angular.module 'app.controllers' <[ui.state]>
       hackId := id
       docs.length = 0
 
+      var folder-title
       entries = for line in csv.split /\n/ when line
         [url, title, ...rest] = line.split /,/
         title -= /"/g
         [_, prefix, url] = url.match /^"?(\s*)(\S+)?"?$/
         entry = { url, title, indent: prefix.length } <<< match url
         | void
+            unless folder-title
+              if title
+                folder-title = title
+                title = null
             type: \dummy
             id: \dummy
         | // ^https?:\/\/www\.ethercalc\.(?:com|org)/(.*) //
@@ -135,8 +140,11 @@ angular.module 'app.controllers' <[ui.state]>
             id: encodeURIComponent encodeURIComponent url
             icon: "http://g.etfv.co/#{ that.1 }"
         | otherwise => console?log \unrecognized url
-        entry.icon ?= "img/#{ entry.type }.png"
-        entry
+        if entry.type is \dummy and !title?length
+          null
+        else
+          {icon: "img/#{ entry.type }.png"} <<< entry
+
       docs.splice 0, docs.length, ...(entries.filter -> it?)
       last-parent = 0
       nested = for entry, i in docs
@@ -150,4 +158,5 @@ angular.module 'app.controllers' <[ui.state]>
           last-parent = i
           entry
       tree.splice 0, tree.length, ...(nested.filter -> it?)
+      self.folder-title = folder-title
       cb docs
