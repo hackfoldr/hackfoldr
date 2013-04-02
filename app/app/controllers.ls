@@ -20,11 +20,12 @@ angular.module 'app.controllers' <[ui.state]>
     tree: HackFolder.tree
     activate: HackFolder.activate
     HackFolder: HackFolder
-    onIframeLoad: (doc) -> ->
-      {location} = @contentWindow
-      console?log \location location, doc.id
-      # XXX: parse the location, if the id is different, prompt for creating a
-      # new entry.  also detect for first iframe load
+    iframeCallback: (doc) -> (status) -> $scope.$apply ->
+      console?log \iframecb status, doc
+      if status is \fail
+        doc.noiframe = true
+      else
+        doc.noiframe = false
 
     debug: -> console?log it, @
     reload: (hackId) -> HackFolder.getIndex hackId, true ->
@@ -48,6 +49,21 @@ angular.module 'app.controllers' <[ui.state]>
       scope.$apply ->
         scope.width = $window.innerWidth
         scope.height = $window.innerHeight
+
+.directive 'ngxIframe' <[$parse]> ++ ($parse) ->
+  link: ($scope, element, attrs) ->
+    cb = ($parse attrs.ngxIframe) $scope
+    var fail
+    $ element .load ->
+      clearTimeout fail
+      cb \ok
+
+    <- (fail = setTimeout _, 1000ms)
+    href = try element[0].contentWindow.location.href
+    if href is \about:blank
+      cb \fail
+    else
+      # access denied, meaning the iframe is loaded. wait for .load to fire
 
 .directive \ngxNoclick ->
   ($scope, element, attrs) ->
