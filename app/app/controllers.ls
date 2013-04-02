@@ -53,18 +53,28 @@ angular.module 'app.controllers' <[ui.state]>
 .directive 'ngxIframe' <[$parse]> ++ ($parse) ->
   link: ($scope, element, attrs) ->
     cb = ($parse attrs.ngxIframe) $scope
+    dispatch = (iframe) ->
+      href = try if $.browser.mozilla
+        console.log \dispatch iframe.location
+        iframe.location
+      else
+        iframe.location.href
+
+      console.log href
+      if href ~= \about:blank
+        console.log \raah
+        cb \fail
+      else
+        cb \ok
+        # access denied, meaning the iframe is loaded. wait for .load to fire
+
     var fail
     $ element .load ->
       clearTimeout fail
-      cb \ok
+      dispatch @contentWindow
 
     <- (fail = setTimeout _, 1000ms)
-    href = try element[0].contentWindow.location.href
-    if href is \about:blank
-      cb \fail
-    else
-      # access denied, meaning the iframe is loaded. wait for .load to fire
-
+    dispatch element[0].contentWindow
 .directive \ngxNoclick ->
   ($scope, element, attrs) ->
     $ element .click -> it.preventDefault!; false
