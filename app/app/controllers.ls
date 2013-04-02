@@ -89,6 +89,7 @@ angular.module 'app.controllers' <[ui.state]>
       | \ethercalc =>
           "https://ethercalc.org/#id"
       | \url => decodeURIComponent decodeURIComponent id
+      | otherwise => ''
 
       if iframes[id]
           that <<< {src, mode}
@@ -106,8 +107,11 @@ angular.module 'app.controllers' <[ui.state]>
       entries = for line in csv.split /\n/ when line
         [url, title, ...rest] = line.split /,/
         title -= /"/g
-        [_, prefix, url] = url.match /^"?(\s*)(\S+)"?$/
+        [_, prefix, url] = url.match /^"?(\s*)(\S+)?"?$/
         entry = { url, title, indent: prefix.length } <<< match url
+        | void
+            type: \dummy
+            id: \dummy
         | // ^https?:\/\/www\.ethercalc\.(?:com|org)/(.*) //
             type: \ethercalc
             id: that.1
