@@ -107,7 +107,7 @@ angular.module 'app.controllers' <[ui.state]>
       var folder-title
       entries = for line in csv.split /\n/ when line
         [url, title, ...rest] = line.split /,/
-        title -= /"/g
+        title -= /^"|"$/g
         [_, prefix, url] = url.match /^"?(\s*)(\S+)?"?$/
         entry = { url, title, indent: prefix.length } <<< match url
         | void
