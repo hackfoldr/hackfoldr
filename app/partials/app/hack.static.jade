@@ -23,6 +23,7 @@
                   a.link(ng-href='/#/{{hackId}}/{{doc.id}}',ngx-final,ui-if="doc.type != 'dummy'")
                     img(ng-src="{{doc.icon}}",title="{{doc.title || doc.id}}")
                     span.expanded-content {{doc.title || doc.id}}
+                  span.label(ng-repeat='tag in doc.tags',class="label-{{tag.class}}") {{tag.content}}
     .pad-container(ng-style='{height: height-49}')
       article.pad(ng-repeat='(key, iframe) in iframes',ng-show='docId == key')
         span.docmode(ng-show="hasViewMode(iframe.doc.type) && iframe.mode != 'edit'",ng-click="activate(iframe.doc.id, true)") edit
