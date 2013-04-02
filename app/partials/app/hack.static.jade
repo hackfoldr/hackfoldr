@@ -1,23 +1,27 @@
-.hackfolder(resize)
+.hackfolder(resize,ng-cloak)
     .index(ng-class="{collapsed: collapsed}", ng-click="collapsed=!collapsed")
       div.hackid
         i.icon-home
         &nbsp;
-        a.indexlink.expanded-content(ng-href="http://ethercalc.org/{{hackId}}",target="_blank",ngx-final) {{hackId}} 
+        a.indexlink.expanded-content(ng-href="http://ethercalc.org/{{hackId}}",target="_blank",ngx-final) {{HackFolder.folderTitle || hackId}} 
         small: a.reload(ng-click="reload(hackId)",ngx-noclick) &#x21BA;
       ul(ui-sortable='sortableOptions', ng-model='tree')
         li(ng-repeat='doc in tree', ng-title="{{doc.title || doc.id}}",ngx-noclick,ng-class='{active: doc.id == docId}')
           .entry
-            a.link(ng-href='/#/{{hackId}}/{{doc.id}}',ngx-final)
+            span(ui-if="doc.type == 'dummy'")
+              span.expanded-content {{doc.title || doc.id}}
+            a.link(ng-href='/#/{{hackId}}/{{doc.id}}',ngx-final,ui-if="doc.type != 'dummy'")
               img(ng-src="{{doc.icon}}",title="{{doc.title || doc.id}}")
               span.expanded-content {{doc.title || doc.id}}
             span.collapser(ui-if='doc.children',ng-class='{collapsed: doc.collapsed}',ng-click='doc.collapsed=!doc.collapsed') {{ {"true": "&#x25B8;", "false": "&#x25BE;"}[!!doc.collapsed] }}
           ul(ui-if='doc.children && !doc.collapsed',ui-sortable='sortableOptions', ng-model='doc.children')
             li(ng-repeat='doc in doc.children', ng-title="{{doc.title || doc.id}}",ngx-noclick,ng-class='{active: doc.id == docId}')
               .entry
-                a.link(ng-href='/#/{{hackId}}/{{doc.id}}',ngx-final)
-                  img(ng-src="{{doc.icon}}",title="{{doc.title || doc.id}}")
-                  span.expanded-content {{doc.title || doc.id}}
+                  span(ui-if="doc.type == 'dummy'")
+                    span.expanded-content {{doc.title || doc.id}}
+                  a.link(ng-href='/#/{{hackId}}/{{doc.id}}',ngx-final,ui-if="doc.type != 'dummy'")
+                    img(ng-src="{{doc.icon}}",title="{{doc.title || doc.id}}")
+                    span.expanded-content {{doc.title || doc.id}}
     .pad-container(ng-style='{height: height-49}')
       article.pad(ng-repeat='(key, iframe) in iframes',ng-show='docId == key')
         span.docmode(ng-show="hasViewMode(iframe.doc.type) && iframe.mode != 'edit'",ng-click="activate(iframe.doc.id, true)") edit

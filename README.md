@@ -32,7 +32,7 @@ For example, with an index like http://ethercalc.org/g0v-hackath2n, you'll get h
 # CC0 1.0 Universal
 
 To the extent possible under law, Chia-liang Kao has waived all copyright
-and related or neighboring rights to hack.g0v.tw.
+and related or neighboring rights to hackfoldr.
 
 This work is published from Taiwan.
 
