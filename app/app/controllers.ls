@@ -147,11 +147,12 @@ angular.module 'app.controllers' <[ui.state]>
         if entry.type is \dummy and !entry.title?length
           null
         else
-          entry.tags = (entry.opts?tags ? []) ++ tags?split \, .filter -> it.length
-          entry.tags .= map (tag) ->
-            [_, content, c, ...rest] = tag.match /^(.*?)(?::(.*))?$/
-            {content, class: c ? 'warning'}
-          {icon: "img/#{ entry.type }.png"} <<< entry
+          {icon: "img/#{ entry.type }.png"} <<< entry <<< do
+            tags: (entry.opts?tags ? []) ++ ((tags?split \,) ? [])
+              .filter -> it.length
+              .map (tag) ->
+                [_, content, c, ...rest] = tag.match /^(.*?)(?::(.*))?$/
+                {content, class: c ? 'warning'}
 
       docs.splice 0, docs.length, ...(entries.filter -> it?)
       last-parent = 0
