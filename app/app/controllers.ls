@@ -64,14 +64,13 @@ angular.module 'app.controllers' <[ui.state]>
   var hackId
   self = do
     iframes: iframes
-    collapsed: false
     docs: docs
     tree: tree
     activate: (id, edit=false) ->
       [{type}:doc] = [d for d in docs when d.id is id]
       for t in tree
         if t?children?map (.id)
-          t.collapsed = false if id in that
+          t.expand = true if id in that
       mode = if edit => \edit else \view
       src = match type
       | \gdoc =>
@@ -106,10 +105,13 @@ angular.module 'app.controllers' <[ui.state]>
 
       var folder-title
       entries = for line in csv.split /\n/ when line
-        [url, title, ...rest] = line.split /,/
+        [url, title, opts, tags, ...rest] = line.split /,/
         title -= /^"|"$/g
+        opts -= /^"|"$/g if opts
+        opts.=replace /""/g '"' if opts
+        tags -= /^"|"$/g if tags
         [_, prefix, url] = url.match /^"?(\s*)(\S+)?"?$/
-        entry = { url, title, indent: prefix.length } <<< match url
+        entry = { url, title, indent: prefix.length, opts: try JSON.parse opts ? '{}' } <<< match url
         | void
             unless folder-title
               if title
@@ -153,12 +155,11 @@ angular.module 'app.controllers' <[ui.state]>
         if i > 0 and entry.indent
           docs[last-parent]
             ..children ?= []
-            ..children.push entry
-            ..collapsed = true
+              ..push entry
           null
         else
           last-parent = i
-          entry
+          entry <<< {expand: entry.opts?expand ? false}
       tree.splice 0, tree.length, ...(nested.filter -> it?)
       self.folder-title = folder-title
       cb docs

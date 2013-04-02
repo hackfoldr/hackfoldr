@@ -13,8 +13,8 @@
             a.link(ng-href='/#/{{hackId}}/{{doc.id}}',ngx-final,ui-if="doc.type != 'dummy'")
               img(ng-src="{{doc.icon}}",title="{{doc.title || doc.id}}")
               span.expanded-content {{doc.title || doc.id}}
-            span.collapser(ui-if='doc.children',ng-class='{collapsed: doc.collapsed}',ng-click='doc.collapsed=!doc.collapsed') {{ {"true": "&#x25B8;", "false": "&#x25BE;"}[!!doc.collapsed] }}
-          ul(ui-if='doc.children && !doc.collapsed',ui-sortable='sortableOptions', ng-model='doc.children')
+            span.collapser(ui-if='doc.children',ng-class='{collapsed: !doc.expand}',ng-click='doc.expand=!doc.expand') {{ {"true": "&#x25B8;", "false": "&#x25BE;"}[!doc.expand] }}
+          ul(ui-if='doc.children && doc.expand',ui-sortable='sortableOptions', ng-model='doc.children')
             li(ng-repeat='doc in doc.children', ng-title="{{doc.title || doc.id}}",ngx-noclick,ng-class='{active: doc.id == docId}')
               .entry
                   span(ui-if="doc.type == 'dummy'")
