@@ -1,10 +1,12 @@
 #!/bin/sh
-git pull || exit -1
-git branch -f gh-pages origin/gh-pages
+upstream=$1
+: ${upstream:=origin}
+git pull $upstream master || exit -1
+git branch -f gh-pages $upstream/gh-pages
 rm -rf _public
 git clone -s . -b gh-pages _public
 ./node_modules/.bin/brunch b -m
 cd _public
 git add -A . && git commit -a -m 'regen' && git push origin gh-pages
 cd ..
-git push origin gh-pages
+git push $upstream gh-pages

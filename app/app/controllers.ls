@@ -20,11 +20,12 @@ angular.module 'app.controllers' <[ui.state]>
     tree: HackFolder.tree
     activate: HackFolder.activate
     HackFolder: HackFolder
-    onIframeLoad: (doc) -> ->
-      {location} = @contentWindow
-      console?log \location location, doc.id
-      # XXX: parse the location, if the id is different, prompt for creating a
-      # new entry.  also detect for first iframe load
+    iframeCallback: (doc) -> (status) -> $scope.$apply ->
+      console?log \iframecb status, doc
+      if status is \fail
+        doc.noiframe = true
+      else
+        doc.noiframe = false
 
     debug: -> console?log it, @
     reload: (hackId) -> HackFolder.getIndex hackId, true ->
@@ -49,6 +50,31 @@ angular.module 'app.controllers' <[ui.state]>
         scope.width = $window.innerWidth
         scope.height = $window.innerHeight
 
+.directive 'ngxIframe' <[$parse]> ++ ($parse) ->
+  link: ($scope, element, attrs) ->
+    cb = ($parse attrs.ngxIframe) $scope
+    dispatch = (iframe) ->
+      href = try if $.browser.mozilla
+        console.log \dispatch iframe.location
+        iframe.location
+      else
+        iframe.location.href
+
+      console.log href
+      if href ~= \about:blank
+        console.log \raah
+        cb \fail
+      else
+        cb \ok
+        # access denied, meaning the iframe is loaded. wait for .load to fire
+
+    var fail
+    $ element .load ->
+      clearTimeout fail
+      dispatch @contentWindow
+
+    <- (fail = setTimeout _, 1000ms)
+    dispatch element[0].contentWindow
 .directive \ngxNoclick ->
   ($scope, element, attrs) ->
     $ element .click -> it.preventDefault!; false
@@ -147,11 +173,12 @@ angular.module 'app.controllers' <[ui.state]>
         if entry.type is \dummy and !entry.title?length
           null
         else
-          entry.tags = (entry.opts?tags ? []) ++ tags?split \, .filter -> it.length
-          entry.tags .= map (tag) ->
-            [_, content, c, ...rest] = tag.match /^(.*?)(?::(.*))?$/
-            {content, class: c ? 'warning'}
-          {icon: "img/#{ entry.type }.png"} <<< entry
+          {icon: "img/#{ entry.type }.png"} <<< entry <<< do
+            tags: (entry.opts?tags ? []) ++ ((tags?split \,) ? [])
+              .filter -> it.length
+              .map (tag) ->
+                [_, content, c, ...rest] = tag.match /^(.*?)(?::(.*))?$/
+                {content, class: c ? 'warning'}
 
       docs.splice 0, docs.length, ...(entries.filter -> it?)
       last-parent = 0

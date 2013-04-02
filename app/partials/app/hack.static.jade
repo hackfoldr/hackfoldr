@@ -26,4 +26,9 @@
     .pad-container(ng-style='{height: height-49}')
       article.pad(ng-repeat='(key, iframe) in iframes',ng-show='docId == key')
         span.docmode(ng-show="hasViewMode(iframe.doc.type) && iframe.mode != 'edit'",ng-click="activate(iframe.doc.id, true)") edit
-        iframe.embed(ng-src='{{iframe.src}}',ui-jq="load",ui-options="onIframeLoad(iframe.doc)")
+        .noiframe(ui-if="iframe.doc.noiframe") This site does not appear to allow iframe.  Open the link in new window: 
+          br
+          span.link
+            img(ng-src="{{iframe.doc.icon}}",title="{{iframe.doc.title || iframe.doc.id}}")
+            a(ng-href="{{iframe.src}}",target="{{iframe.doc.id}}") {{iframe.src}}
+        iframe.embed(ng-show='!iframe.doc.noiframe',ng-src='{{iframe.src}}',ngx-iframe="iframeCallback(iframe.doc)")
