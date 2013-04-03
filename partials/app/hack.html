@@ -7,7 +7,7 @@
         <div class="entry"><span ui-if="doc.type == 'dummy'"><span class="expanded-content">{{doc.title || doc.id}}</span></span><a ng-href="/#/{{hackId}}/{{doc.id}}" ngx-final="ngx-final" ui-if="doc.type != 'dummy'" class="link"><img ng-src="{{doc.icon}}" title="{{doc.title || doc.id}}"/><span class="expanded-content">{{doc.title || doc.id}}</span></a><span ng-repeat="tag in doc.tags" class="label label-{{tag.class}}">{{tag.content}}</span><span ui-if="doc.children" ng-class="{collapsed: !doc.expand}" ng-click="doc.expand=!doc.expand" class="collapser">{{ {"true": "&#x25B8;", "false": "&#x25BE;"}[!doc.expand] }}</span></div>
         <ul ui-if="doc.children &amp;&amp; doc.expand" ui-sortable="sortableOptions" ng-model="doc.children">
           <li ng-repeat="doc in doc.children" ng-title="{{doc.title || doc.id}}" ngx-noclick="ngx-noclick" ng-class="{active: doc.id == docId}">
-            <div class="entry"><span ui-if="doc.type == 'dummy'"><span class="expanded-content">{{doc.title || doc.id}}</span></span><a ng-href="/#/{{hackId}}/{{doc.id}}" ngx-final="ngx-final" ui-if="doc.type != 'dummy'" class="link"><img ng-src="{{doc.icon}}" title="{{doc.title || doc.id}}"/><span class="expanded-content">{{doc.title || doc.id}}</span></a></div>
+            <div class="entry"><span ui-if="doc.type == 'dummy'"><span class="expanded-content">{{doc.title || doc.id}}</span></span><a ng-href="/#/{{hackId}}/{{doc.id}}" ngx-final="ngx-final" ui-if="doc.type != 'dummy'" class="link"><img ng-src="{{doc.icon}}" title="{{doc.title || doc.id}}"/><span class="expanded-content">{{doc.title || doc.id}}</span></a><span ng-repeat="tag in doc.tags" class="label label-{{tag.class}}">{{tag.content}}</span></div>
           </li>
         </ul>
       </li>
