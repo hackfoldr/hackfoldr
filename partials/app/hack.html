@@ -15,6 +15,9 @@
   </div>
   <div ng-style="{height: height-49}" class="pad-container">
     <article ng-repeat="(key, iframe) in iframes" ng-show="docId == key" class="pad"><span ng-show="hasViewMode(iframe.doc.type) &amp;&amp; iframe.mode != 'edit'" ng-click="activate(iframe.doc.id, true)" class="docmode">edit</span>
+      <div ui-if="iframe.doc.iframeunsure" class="noiframe unsure">Open the link in new window: <br/><span class="link"><img ng-src="{{iframe.doc.icon}}" title="{{iframe.doc.title || iframe.doc.id}}"/><a ng-href="{{iframe.src}}" target="{{iframe.doc.id}}">{{iframe.src}}</a></span>
+        <div ng-click="iframe.doc.iframeunsure = false" class="icon icon-close">&#x274c;</div>
+      </div>
       <div ui-if="iframe.doc.noiframe" class="noiframe">This site does not appear to allow iframe.  Open the link in new window: <br/><span class="link"><img ng-src="{{iframe.doc.icon}}" title="{{iframe.doc.title || iframe.doc.id}}"/><a ng-href="{{iframe.src}}" target="{{iframe.doc.id}}">{{iframe.src}}</a></span></div>
       <iframe ng-show="!iframe.doc.noiframe" ng-src="{{iframe.src}}" ngx-iframe="iframeCallback(iframe.doc)" class="embed"></iframe>
     </article>
