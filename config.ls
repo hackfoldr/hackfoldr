@@ -34,7 +34,10 @@ exports.config =
   # minify: true
   plugins:
     jade:
-      pretty: yes
+      options:
+        pretty: yes
+      locals:
+        segmentio: '8s9jmbv9q5'
     static_jade:
       extension: '.static.jade'
       path: [ /^app/ ]
