@@ -26,6 +26,7 @@ angular.module 'app.controllers' <[ui.state]>
         doc.noiframe = true
       else
         doc.noiframe = false
+      doc.iframeunsure = true if status is \unsure
 
     debug: -> console?log it, @
     reload: (hackId) -> HackFolder.getIndex hackId, true ->
@@ -53,28 +54,33 @@ angular.module 'app.controllers' <[ui.state]>
 .directive 'ngxIframe' <[$parse]> ++ ($parse) ->
   link: ($scope, element, attrs) ->
     cb = ($parse attrs.ngxIframe) $scope
-    dispatch = (iframe) ->
-      href = try if $.browser.mozilla
-        console.log \dispatch iframe.location
-        iframe.location
+    dispatch = (iframe, loading) ->
+      ok = !try
+        iframe.location ~= \about:blank
+      # access denied, meaning the iframe is loaded. wait for .load to fire
+      if loading and $.browser.mozilla
+        # check if the failure is actually XFO denied. this doesn't work
+        # req = $.ajax do
+        #   type: \OPTION
+        #   url: attrs.src
+        #   success: ->
+        #     console.log \done
+        #     req.getAllResponseHeaders!
+        #   error: (request, textStatus, errorThrown) ->
+        #     console.log \err textStatus, request.getAllResponseHeaders!
+        #     console.log request
+        cb \unsure
       else
-        iframe.location.href
-
-      console.log href
-      if href ~= \about:blank
-        console.log \raah
-        cb \fail
-      else
-        cb \ok
-        # access denied, meaning the iframe is loaded. wait for .load to fire
+        cb if ok => \ok else \fail
 
     var fail
     $ element .load ->
       clearTimeout fail
-      dispatch @contentWindow
+      dispatch @contentWindow, true
 
-    <- (fail = setTimeout _, 1000ms)
-    dispatch element[0].contentWindow
+    fail = setTimeout (->
+      dispatch element[0].contentWindow
+    ), 1500ms
 .directive \ngxNoclick ->
   ($scope, element, attrs) ->
     $ element .click -> it.preventDefault!; false
