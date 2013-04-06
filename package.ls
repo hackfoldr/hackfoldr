@@ -28,3 +28,4 @@ devDependencies:
   'auto-reload-brunch': '1.5.x'
   'uglify-js-brunch': '1.5.x'
   'clean-css-brunch': '1.5.x'
+  'jade-angularjs-brunch': '0.0.5'

@@ -28,7 +28,8 @@ exports.config =
 
     templates:
       joinTo:
-        'js/_unused.js': /\.jade$/
+        # this name is required for jade_angular plugin to work
+        'js/dontUseMe': /^app/
 
   # Enable or disable minifying of result js / css files.
   # minify: true
@@ -41,3 +42,6 @@ exports.config =
     static_jade:
       extension: '.static.jade'
       path: [ /^app/ ]
+    jade_angular:
+      modules_folder: \partials
+      locals: {}
