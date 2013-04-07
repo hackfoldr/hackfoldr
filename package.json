@@ -28,7 +28,7 @@
     "sass-brunch": "1.5.x",
     "jade-brunch": "1.5.x",
     "static-jade-brunch": ">= 1.4.8 < 1.5",
-    "auto-reload-brunch": "1.5.x",
+    "auto-reload-brunch": "1.6.x",
     "uglify-js-brunch": "1.5.x",
     "clean-css-brunch": "1.5.x",
     "jade-angularjs-brunch": "0.0.5"
