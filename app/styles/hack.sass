@@ -179,3 +179,26 @@ a
         padding: 3px
         cursor: pointer
 
+.folder-enter-setup, .folder-leave-setup, .folder-move-setup
+  +transition(0.5s linear all)
+  position: relative
+
+.folder-enter-setup
+  height: 0
+  opacity: 0
+
+.folder-enter-setup.folder-enter-start
+  height: 100%
+  opacity: 1
+
+.folder-leave-setup
+  opacity: 1
+
+.folder-leave-setup.folder-leave-start
+  opacity: 0
+
+.folder-move-setup
+  opacity: 0.5
+
+.folder-move-setup.folder-move-start
+  opacity: 1
