@@ -15,8 +15,8 @@
               span.expanded-content {{doc.title || doc.id}}
             span.label(ng-repeat='tag in doc.tags',class="label-{{tag.class}}") {{tag.content}}
             span.collapser(ui-if='doc.children',ng-class='{collapsed: !doc.expand}',ng-click='doc.expand=!doc.expand') {{ {"true": "&#x25B8;", "false": "&#x25BE;"}[!doc.expand] }}
-          ul(ui-if='doc.children && doc.expand',ui-sortable='sortableOptions', ng-model='doc.children')
-            li(ng-repeat='doc in doc.children', ng-title="{{doc.title || doc.id}}",ngx-noclick,ng-class='{active: doc.id == docId}',ng-animate="'folder'")
+          ul(ng-show='doc.children && doc.expand',ui-sortable='sortableOptions', ng-model='doc.children',ng-animate="'fade'")
+            li(ng-repeat='doc in doc.children', ng-title="{{doc.title || doc.id}}",ngx-noclick,ng-class='{active: doc.id == docId}')
               .entry
                   span(ui-if="doc.type == 'dummy'")
                     span.expanded-content {{doc.title || doc.id}}

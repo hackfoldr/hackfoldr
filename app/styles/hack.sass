@@ -179,26 +179,22 @@ a
         padding: 3px
         cursor: pointer
 
-.folder-enter-setup, .folder-leave-setup, .folder-move-setup
+.fade-show-setup, .folder-hide-setup
   +transition(0.5s linear all)
   position: relative
 
-.folder-enter-setup
-  height: 0
-  opacity: 0
-
-.folder-enter-setup.folder-enter-start
-  height: 100%
+.fade-hide-setup
+  max-height: 999px
   opacity: 1
 
-.folder-leave-setup
-  opacity: 1
-
-.folder-leave-setup.folder-leave-start
+.fade-hide-setup.fade-hide-start
+  max-height: 0px
   opacity: 0
 
-.folder-move-setup
-  opacity: 0.5
+.fade-show-setup
+  max-height: 0px
+  opacity: 0
 
-.folder-move-setup.folder-move-start
+.fade-show-setup.fade-show-start
+  max-height: 999px
   opacity: 1
