@@ -1,5 +1,5 @@
 angular.module 'app.controllers' <[ui.state]>
-.controller AppCtrl: <[$scope $location $resource $rootScope]> ++ (s, $location, $resource, $rootScope) ->
+.controller AppCtrl: <[$scope $location $rootScope]> ++ (s, $location, $rootScope) ->
 
   s <<< {$location}
   s.$watch '$location.path()' (activeNavId or '/') ->
