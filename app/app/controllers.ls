@@ -22,6 +22,9 @@ angular.module 'app.controllers' <[ui.state]>
     iframes: HackFolder.iframes
     docs: HackFolder.docs
     tree: HackFolder.tree
+    open: (doc) ->
+      window.open doc.url, doc.id
+      return false
     activate: HackFolder.activate
     HackFolder: HackFolder
     iframeCallback: (doc) -> (status) -> $scope.$apply ->
@@ -88,6 +91,17 @@ angular.module 'app.controllers' <[ui.state]>
 .directive \ngxNoclick ->
   ($scope, element, attrs) ->
     $ element .click -> it.preventDefault!; false
+
+.directive 'ngxClickMeta' <[$parse]> ++ ($parse) ->
+  link: ($scope, element, attrs) ->
+    cb = $parse attrs.ngxClickMeta
+
+    $ element .click (e) ->
+      if e.metaKey
+        unless cb $scope
+          e.preventDefault!
+          return false
+      return
 
 .directive \ngxFinal ->
   ($scope, element, attrs) ->
