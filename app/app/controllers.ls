@@ -1,5 +1,5 @@
 angular.module 'app.controllers' <[ui.state]>
-.controller AppCtrl: <[$scope $location $rootScope]> ++ (s, $location, $rootScope) ->
+.controller AppCtrl: <[$scope $location $rootScope $timeout]> ++ (s, $location, $rootScope, $timeout) ->
 
   s <<< {$location}
   s.$watch '$location.path()' (activeNavId or '/') ->
@@ -10,6 +10,10 @@ angular.module 'app.controllers' <[ui.state]>
       'active'
     else
       ''
+
+  <- $timeout _, 10s * 1000ms
+  $rootScope.hideGithubRibbon = true
+
 .controller HackFolderCtrl: <[$scope $state HackFolder]> ++ ($scope, $state, HackFolder) ->
   $scope <<< do
     hasViewMode: -> it.match /g(doc|present|draw)/
