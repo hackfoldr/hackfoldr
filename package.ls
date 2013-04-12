@@ -13,10 +13,8 @@ engines:
 scripts:
   prepublish: 'node ./node_modules/.bin/lsc -cj package.ls'
   start: 'node ./node_modules/.bin/brunch watch --server'
-  test: 'testacular test/testacular.config.js'
 dependencies: {}
 devDependencies:
-  testacular: '>= 0.6.x'
   LiveScript: '1.1.x'
   brunch: '1.6.x'
   'javascript-brunch': '1.5.x'
