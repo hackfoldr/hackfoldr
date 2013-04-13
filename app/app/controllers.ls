@@ -87,7 +87,7 @@ angular.module 'app.controllers' <[ui.state]>
 
     fail = setTimeout (->
       dispatch element[0].contentWindow
-    ), 1500ms
+    ), 5000ms
 .directive \ngxNoclick ->
   ($scope, element, attrs) ->
     $ element .click -> it.preventDefault!; false
