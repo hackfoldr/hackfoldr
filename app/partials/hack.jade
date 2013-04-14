@@ -15,7 +15,7 @@
       article.pad(ng-repeat='(key, iframe) in iframes',ng-show='docId == key')
         span.docmode(ng-show="hasViewMode(iframe.doc.type) && iframe.mode != 'edit'",ng-click="activate(iframe.doc.id, true)") edit
         .noiframe.unsure(ui-if="iframe.doc.iframeunsure") Click the link below to open the link in a new window: 
-         br
+          br
           span.link
             img(ng-src="{{iframe.doc.icon}}",title="{{iframe.doc.title || iframe.doc.id}}")
             a(ng-href="{{iframe.src}}",target="{{iframe.doc.id}}") {{iframe.src}}
