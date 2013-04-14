@@ -1,5 +1,5 @@
 angular.module 'app.controllers' <[ui.state]>
-.controller AppCtrl: <[$scope $location $resource $rootScope]> ++ (s, $location, $resource, $rootScope) ->
+.controller AppCtrl: <[$scope $location $rootScope $timeout]> ++ (s, $location, $rootScope, $timeout) ->
 
   s <<< {$location}
   s.$watch '$location.path()' (activeNavId or '/') ->
@@ -10,6 +10,10 @@ angular.module 'app.controllers' <[ui.state]>
       'active'
     else
       ''
+
+  <- $timeout _, 10s * 1000ms
+  $rootScope.hideGithubRibbon = true
+
 .controller HackFolderCtrl: <[$scope $state HackFolder]> ++ ($scope, $state, HackFolder) ->
   $scope <<< do
     hasViewMode: -> it.match /g(doc|present|draw)/
@@ -18,6 +22,9 @@ angular.module 'app.controllers' <[ui.state]>
     iframes: HackFolder.iframes
     docs: HackFolder.docs
     tree: HackFolder.tree
+    open: (doc) ->
+      window.open doc.url, doc.id
+      return false
     activate: HackFolder.activate
     HackFolder: HackFolder
     iframeCallback: (doc) -> (status) -> $scope.$apply ->
@@ -80,10 +87,21 @@ angular.module 'app.controllers' <[ui.state]>
 
     fail = setTimeout (->
       dispatch element[0].contentWindow
-    ), 1500ms
+    ), 5000ms
 .directive \ngxNoclick ->
   ($scope, element, attrs) ->
     $ element .click -> it.preventDefault!; false
+
+.directive 'ngxClickMeta' <[$parse]> ++ ($parse) ->
+  link: ($scope, element, attrs) ->
+    cb = $parse attrs.ngxClickMeta
+
+    $ element .click (e) ->
+      if e.metaKey
+        unless cb $scope
+          e.preventDefault!
+          return false
+      return
 
 .directive \ngxFinal ->
   ($scope, element, attrs) ->

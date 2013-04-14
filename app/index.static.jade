@@ -8,23 +8,22 @@ html(lang='en')
     meta(name='description', content='')
     meta(name='author', content='')
     title(ng-bind='$state.current.name') hack.g0v.tw
+    link(rel="shotcut icon",href="/img/hackfoldr-icon.ico")
     link(rel='stylesheet', href='/css/app.css')
     //if lte IE 7
       script(src='http://cdnjs.cloudflare.com/ajax/libs/json2/20110223/json2.js')
     //if lte IE 8
       script(src='//html5shiv.googlecode.com/svn/trunk/html5.js')
-    script
-      window.brunch = window.brunch || {};
-      window.brunch['auto-reload'] = {
-        enabled: true
-      };
-    script(src='/js/vendor.js')
+    script(src='//cdnjs.cloudflare.com/ajax/libs/jquery/1.8.2/jquery.min.js')
     script(src='//cdnjs.cloudflare.com/ajax/libs/jqueryui/1.10.2/jquery-ui.min.js')
+    script(src='//ajax.googleapis.com/ajax/libs/angularjs/1.1.4/angular.min.js')
     script(src='//cdnjs.cloudflare.com/ajax/libs/angular-ui/0.4.0/angular-ui.min.js')
+    script(src='/js/vendor.js')
+    script(src='/js/partials.js')
     script(src='/js/app.js')
   body(ng-controller='AppCtrl',data-spy="scroll")
-    a(href='https://github.com/g0v/hack.g0v.tw')
-      img(style='position: absolute; top: 0; right: 0; border: 0; z-index: 9999;', src='https://s3.amazonaws.com/github/ribbons/forkme_right_orange_ff7600.png', alt='Fork me on GitHub')
+      a.github-ribbon(href='https://github.com/g0v/hack.g0v.tw')
+        img.github-ribbon(ng-hide='hideGithubRibbon',ng-animate="'fade'",style='position: absolute; top: 0; right: 0; border: 0; z-index: 9999;', src='https://s3.amazonaws.com/github/ribbons/forkme_right_orange_ff7600.png', alt='Fork me on GitHub')
     .wrapper
       .navbar.navbar-inverse.navbar-fixed-top
         .navbar-inner
@@ -35,7 +34,7 @@ html(lang='en')
               span.icon-bar
             #brand.brand: img(src="img/g0v-icon-invert.png")
             .nav-collapse
-              div(ng-include="'/partials/app/nav.html'")
+              div(ng-include="'/partials/nav.html'")
       .main-content
         div(ui-view)
       .push

@@ -2,15 +2,15 @@
 
 angular.module('scroll', []).value('$anchorScroll', angular.noop)
 
-angular.module \app <[ui ngCookies ngResource app.controllers ui.state]>
+angular.module \app <[ui partials app.controllers ui.state]>
 .config <[$stateProvider $urlRouterProvider]> ++ ($stateProvider, $urlRouterProvider) ->
   $stateProvider
     .state 'about' do
       url: '/about'
-      templateUrl: '/partials/app/about.html'
+      templateUrl: '/partials/about.html'
     .state 'hack' do
       url: '/{hackId}'
-      templateUrl: '/partials/app/hack.html'
+      templateUrl: '/partials/hack.html'
       controller: \HackFolderCtrl
     .state 'hack.doc' do
       url: '/{docId}'

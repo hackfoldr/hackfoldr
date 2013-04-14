@@ -13,10 +13,8 @@ engines:
 scripts:
   prepublish: 'node ./node_modules/.bin/lsc -cj package.ls'
   start: 'node ./node_modules/.bin/brunch watch --server'
-  test: 'testacular test/testacular.config.js'
 dependencies: {}
 devDependencies:
-  testacular: '>= 0.6.x'
   LiveScript: '1.1.x'
   brunch: '1.6.x'
   'javascript-brunch': '1.5.x'
@@ -25,6 +23,7 @@ devDependencies:
   'sass-brunch': '1.5.x'
   'jade-brunch': '1.5.x'
   'static-jade-brunch': '>= 1.4.8 < 1.5'
-  'auto-reload-brunch': '1.5.x'
+  'auto-reload-brunch': '1.6.x'
   'uglify-js-brunch': '1.5.x'
   'clean-css-brunch': '1.5.x'
+  'jade-angularjs-brunch': '0.0.5'
