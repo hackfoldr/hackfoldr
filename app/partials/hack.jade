@@ -7,30 +7,15 @@
         small: a.reload(ng-click="reload(hackId)",ngx-noclick) &#x21BA;
       ul(ui-sortable='sortableOptions', ng-model='tree')
         li(ng-repeat='doc in tree', ng-title="{{doc.title || doc.id}}",ngx-noclick,ng-class='{active: doc.id == docId}')
-          .entry
-            span.link(ui-if="doc.type == 'dummy'")
-              img(src="/img/folder.png",title="{{doc.title || doc.id}}")
-              span.expanded-content {{doc.title || doc.id}}
-            a.link(ng-href='/#/{{hackId}}/{{doc.id}}',ngx-click-meta='open(doc)',ngx-final,ui-if="doc.type != 'dummy'")
-              img(ng-src="{{doc.icon}}",title="{{doc.title || doc.id}}")
-              span.expanded-content {{doc.title || doc.id}}
-            span.label(ng-repeat='tag in doc.tags',class="label-{{tag.class}}") {{tag.content}}
-            span.collapser(ui-if='doc.children',ng-class='{collapsed: !doc.expand}',ng-click='doc.expand=!doc.expand') {{ {"true": "&#x25B8;", "false": "&#x25BE;"}[!doc.expand] }}
+          .entry(ng-include="'/partials/hackitem.html'")
           ul(ng-show='doc.children && doc.expand',ui-sortable='sortableOptions', ng-model='doc.children',ng-animate="'fade'")
             li(ng-repeat='doc in doc.children', ng-title="{{doc.title || doc.id}}",ngx-noclick,ng-class='{active: doc.id == docId}')
-              .entry
-                  span.link(ui-if="doc.type == 'dummy'")
-                    img(src="/img/folder.png",title="{{doc.title || doc.id}}")
-                    span.expanded-content {{doc.title || doc.id}}
-                  a.link(ng-href='/#/{{hackId}}/{{doc.id}}',ngx-click-meta='open(doc)',ngx-final,ui-if="doc.type != 'dummy'")
-                    img(ng-src="{{doc.icon}}",title="{{doc.title || doc.id}}")
-                    span.expanded-content {{doc.title || doc.id}}
-                  span.label(ng-repeat='tag in doc.tags',class="label-{{tag.class}}") {{tag.content}}
+              .entry(ng-include="'/partials/hackitem.html'")
     .pad-container(ng-style='{height: height-49}')
       article.pad(ng-repeat='(key, iframe) in iframes',ng-show='docId == key')
         span.docmode(ng-show="hasViewMode(iframe.doc.type) && iframe.mode != 'edit'",ng-click="activate(iframe.doc.id, true)") edit
         .noiframe.unsure(ui-if="iframe.doc.iframeunsure") Click the link below to open the link in a new window: 
-          br
+         br
           span.link
             img(ng-src="{{iframe.doc.icon}}",title="{{iframe.doc.title || iframe.doc.id}}")
             a(ng-href="{{iframe.src}}",target="{{iframe.doc.id}}") {{iframe.src}}
