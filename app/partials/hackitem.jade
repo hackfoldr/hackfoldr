@@ -4,5 +4,5 @@ span.link(ui-if="doc.type == 'dummy'",ng-click='doc.expand=!doc.expand')
 a.link(ng-href='/#/{{hackId}}/{{doc.id}}',ngx-click-meta='open(doc)',ngx-final,ui-if="doc.type != 'dummy'")
   img(ng-src="{{doc.icon}}",title="{{doc.title || doc.id}}")
   span.expanded-content {{doc.title || doc.id}}
-span.label(ng-repeat='tag in doc.tags',class="label-{{tag.class}}") {{tag.content}}
+  span.label(ng-repeat='tag in doc.tags',class="label-{{tag.class}}") {{tag.content}}
 span.collapser(ui-if='doc.children',ng-class='{collapsed: !doc.expand}',ng-click='doc.expand=!doc.expand') {{ {"true": "&#x25B8;", "false": "&#x25BE;"}[!doc.expand] }}
