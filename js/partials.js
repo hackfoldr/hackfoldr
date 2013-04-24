@@ -9,7 +9,7 @@ angular.module('partials', [])
 }])
 .run(['$templateCache', function($templateCache) {
   return $templateCache.put('/partials/hackitem.html', [
-'<span ui-if="doc.type == \'dummy\'" ng-click="doc.expand=!doc.expand" class="link"><img src="/img/folder.png" title="{{doc.title || doc.id}}"/><span class="expanded-content">{{doc.title || doc.id}}</span></span><a ng-href="/#/{{hackId}}/{{doc.id}}" ngx-click-meta="open(doc)" ngx-final="ngx-final" ui-if="doc.type != \'dummy\'" class="link"><img ng-src="{{doc.icon}}" title="{{doc.title || doc.id}}"/><span class="expanded-content">{{doc.title || doc.id}}</span></a><span ng-repeat="tag in doc.tags" class="label label-{{tag.class}}">{{tag.content}}</span><span ui-if="doc.children" ng-class="{collapsed: !doc.expand}" ng-click="doc.expand=!doc.expand" class="collapser">{{ {"true": "&#x25B8;", "false": "&#x25BE;"}[!doc.expand] }}</span>',''].join("\n"));
+'<span ui-if="doc.type == \'dummy\'" ng-click="doc.expand=!doc.expand" class="link"><img src="/img/folder.png" title="{{doc.title || doc.id}}"/><span class="expanded-content">{{doc.title || doc.id}}</span></span><a ng-href="/#/{{hackId}}/{{doc.id}}" ngx-click-meta="open(doc)" ngx-final="ngx-final" ui-if="doc.type != \'dummy\'" class="link"><img ng-src="{{doc.icon}}" title="{{doc.title || doc.id}}"/><span class="expanded-content">{{doc.title || doc.id}}</span><span ng-repeat="tag in doc.tags" class="label label-{{tag.class}}">{{tag.content}}</span></a><span ui-if="doc.children" ng-class="{collapsed: !doc.expand}" ng-click="doc.expand=!doc.expand" class="collapser">{{ {"true": "&#x25B8;", "false": "&#x25BE;"}[!doc.expand] }}</span>',''].join("\n"));
 }])
 .run(['$templateCache', function($templateCache) {
   return $templateCache.put('/partials/nav.html', [
