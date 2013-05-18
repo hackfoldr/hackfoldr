@@ -213,12 +213,13 @@ angular.module 'app.controllers' <[ui.state]>
               ..push entry
           null
         else
-          if last-parent
-            docs[last-parent]
-              if ..children
-                ..expand = ..opts?expand ? ..children.length < 5
           last-parent = i
           entry
-      tree.splice 0, tree.length, ...(nested.filter -> it?)
+      nested .= filter -> it?
+      nested .= map ->
+        if it.children
+          it.expand = it.opts?expand ? it.children.length < 5
+        it
+      tree.splice 0, tree.length, ...nested
       self.folder-title = folder-title
       cb docs
