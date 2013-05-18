@@ -37,7 +37,8 @@ exports.config =
     jade:
       options:
         pretty: yes
-      locals: {}
+      locals:
+        segmentio: 'ud5495jplm'
     static_jade:
       extension: '.static.jade'
       path: [ /^app/ ]
