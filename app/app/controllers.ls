@@ -140,6 +140,8 @@ angular.module 'app.controllers' <[ui.state]>
       | \url => decodeURIComponent decodeURIComponent id
       | otherwise => ''
 
+      src += doc.hashtag if doc.hashtag
+
       if iframes[id]
           that <<< {src, mode}
       else
@@ -160,8 +162,8 @@ angular.module 'app.controllers' <[ui.state]>
         opts -= /^"|"$/g if opts
         opts.=replace /""/g '"' if opts
         tags -= /^"|"$/g if tags
-        [_, prefix, url] = url.match /^"?(\s*)(\S+?)?"?$/
-        entry = { url, title, indent: prefix.length, opts: try JSON.parse opts ? '{}' } <<< match url
+        [_, prefix, url, hashtag] = url.match /^"?(\s*)(\S+?)?(#\S+)?"?$/
+        entry = { hashtag, url, title, indent: prefix.length, opts: try JSON.parse opts ? '{}' } <<< match url
         | void
             unless folder-title
               if title
