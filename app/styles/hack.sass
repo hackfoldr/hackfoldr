@@ -49,14 +49,14 @@ a
   .index
     margin: 14px 0px 10px 0px
     cursor: w-resize
-    width: 200px
+    width: 210px
     +transition(margin-left 0.5s)
     &.collapsed
       margin-left: -184px
       width: 223px
       cursor: e-resize
       .expanded-content
-        display: none
+        right: -100px
       img
         position: absolute
         right: 7px
@@ -64,8 +64,9 @@ a
       li
         margin-top: 1px
         ul
-          padding-top: 20px
           margin-right: -10px
+      span.collapser
+        right: -1px
 
     .hackid
       font-size: 19px
@@ -82,6 +83,8 @@ a
         a
           color: #09f
 
+    > ul
+      padding: 5px
     ul
       margin: 0
       li
