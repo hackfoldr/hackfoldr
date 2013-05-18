@@ -16,7 +16,7 @@ angular.module \app <[ui partials app.controllers ui.state]>
       url: '/{docId}'
 
   $urlRouterProvider
-    .otherwise('/g0v-hackath2n')
+    .otherwise('/g0v-hackath3n')
 
 .run <[$rootScope $state $stateParams]> ++ ($rootScope, $state, $stateParams) ->
   $rootScope.$state = $state

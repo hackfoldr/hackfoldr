@@ -1,8 +1,14 @@
 ul.nav
   li
     a(ng-href='/') 首頁
-  li
-    a(ng-href='#/g0v-hackath2n') 九大建設
+  li.dropdown
+    a.dropdown-toggle(ng-href='#/g0v-hackath3n',data-toggle="dropdown") 客廳工廠黑客松
+    // not working yet
+    ul.dropdown-menu
+      li
+        a(ng-href='#/g0v-hackath2n') 九大建設
+  li.dropdown
+    a.dropdown-toggle(ng-href='#/g0v-ly',data-toggle="dropdown") 立法院專案
 
 ul.nav.pull-right
   li(ng-class="{ active: $state.includes('about') }")
