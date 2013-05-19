@@ -50,13 +50,16 @@ angular.module 'app.controllers' <[ui.state]>
     $scope.docId = encodeURIComponent encodeURIComponent docId if docId
 
 .directive 'resize' <[$window]> ++ ($window) ->
-  (scope) ->
-    scope.width = $window.innerWidth
-    scope.height = $window.innerHeight
+  (scope, element, attrs) ->
+    refresh-size = ->
+      scope.width = $window.innerWidth
+      scope.height = $window.innerHeight
+      scope.content-height = $window.innerHeight - $ element .offset!top
+
     angular.element $window .bind 'resize' ->
-      scope.$apply ->
-        scope.width = $window.innerWidth
-        scope.height = $window.innerHeight
+      scope.$apply refresh-size
+
+    refresh-size!
 
 .directive 'ngxIframe' <[$parse]> ++ ($parse) ->
   link: ($scope, element, attrs) ->
