@@ -50,13 +50,16 @@ angular.module 'app.controllers' <[ui.state]>
     $scope.docId = encodeURIComponent encodeURIComponent docId if docId
 
 .directive 'resize' <[$window]> ++ ($window) ->
-  (scope) ->
-    scope.width = $window.innerWidth
-    scope.height = $window.innerHeight
+  (scope, element, attrs) ->
+    refresh-size = ->
+      scope.width = $window.innerWidth
+      scope.height = $window.innerHeight
+      scope.content-height = $window.innerHeight - $ element .offset!top
+
     angular.element $window .bind 'resize' ->
-      scope.$apply ->
-        scope.width = $window.innerWidth
-        scope.height = $window.innerHeight
+      scope.$apply refresh-size
+
+    refresh-size!
 
 .directive 'ngxIframe' <[$parse]> ++ ($parse) ->
   link: ($scope, element, attrs) ->
@@ -124,7 +127,7 @@ angular.module 'app.controllers' <[ui.state]>
       mode = if edit => \edit else \view
       src = match type
       | \gdoc =>
-          "https://docs.google.com/document/d/#id/#mode"
+          "https://docs.google.com/document/d/#id/#mode?pli=1&overridemobile=true"
       | \gsheet =>
           "https://docs.google.com/spreadsheet/ccc?key=#id"
       | \gpresent =>

@@ -7,6 +7,9 @@ body
   font-size: 16px
   overflow: hidden
   background: url(/img/tiles.png)
+  @media (max-width: 767px)
+    padding-left: 0
+    padding-right: 0
 a
   text-shadow: 0px 0px 2px rgba(32,32,32,0.2)
   color: #333
@@ -31,6 +34,8 @@ a
 .main-content
   position: relative
   top: 42px
+  @media (max-width: 979px)
+    top: 0px
 
 .hackfolder
   width: 100%

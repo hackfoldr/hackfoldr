@@ -1,5 +1,5 @@
 .hackfolder(resize,ng-cloak)
-    .index(ng-class="{collapsed: collapsed}", ng-click="collapsed=!collapsed",ng-style='{height: height-49}')
+    .index(ng-class="{collapsed: collapsed}", ng-click="collapsed=!collapsed",ng-style='{height: contentHeight}')
       div.hackid
         i.icon-home
         &nbsp;
@@ -11,7 +11,7 @@
           ul(ng-show='doc.children && doc.expand',ui-sortable='sortableOptions', ng-model='doc.children',ng-animate="'fade'")
             li(ng-repeat='doc in doc.children', ng-title="{{doc.title || doc.id}}",ngx-noclick,ng-class='{active: doc.id == docId}')
               .entry(ng-include="'/partials/hackitem.html'")
-    .pad-container(ng-style='{height: height-49}')
+    .pad-container(ng-style='{height: contentHeight}')
       article.pad(ng-repeat='(key, iframe) in iframes',ng-show='docId == key')
         span.docmode(ng-show="hasViewMode(iframe.doc.type) && iframe.mode != 'edit'",ng-click="activate(iframe.doc.id, true)") edit
         .noiframe.unsure(ui-if="iframe.doc.iframeunsure") Click the link below to open the link in a new window: 
