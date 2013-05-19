@@ -127,7 +127,7 @@ angular.module 'app.controllers' <[ui.state]>
       mode = if edit => \edit else \view
       src = match type
       | \gdoc =>
-          "https://docs.google.com/document/d/#id/#mode"
+          "https://docs.google.com/document/d/#id/#mode?pli=1&overridemobile=true"
       | \gsheet =>
           "https://docs.google.com/spreadsheet/ccc?key=#id"
       | \gpresent =>
