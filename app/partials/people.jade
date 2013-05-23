@@ -1,4 +1,12 @@
 .people(resize,ng-cloak)
+  .self
+    img(ng-src="http://avatars.io/twitter/{{user.twitter}}?size=large")
+    name {{name}}
+    form
+      span.label(ng-repeat="tag in user.tags") {{tag}}
+      input(ng-model="newtag")
+      input(type="submit",ng-click="add_tag(user,newtag)",value="add")
+
   .search
     input(ng-model="search")
   ul
@@ -6,6 +14,3 @@
       .person(ng-class="{{person.status}}")
         img(ng-src="http://avatars.io/twitter/{{person.twitter}}")
         .name {{name}}
-        span.label(ng-repeat="tag in person.tags") {{tag}}
-        input(type="text",ng-model="newtag")
-        span.label(ng-click="add_tag(person,newtag)") add

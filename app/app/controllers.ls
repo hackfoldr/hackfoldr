@@ -19,6 +19,13 @@ angular.module 'app.controllers' <[ui.state]>
     add_tag: (person, tag) ->
       person.tags.push tag
       return false
+    user: do
+      name: \clkao
+      github: \clkao
+      twitter: \clkao
+      tags: <[ly g0v hackath3n livescript]>
+      status: \available
+
     projects:
       * name: \立法院
       * name: \meta
