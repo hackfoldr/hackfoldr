@@ -5,3 +5,5 @@
         img(ng-src="http://avatars.io/twitter/{{person.twitter}}")
         .name {{name}}
         span.label(ng-repeat="tag in person.tags") {{tag}}
+        input(type="text",ng-model="newtag")
+        span.label(ng-click="add_tag(person,newtag)") add

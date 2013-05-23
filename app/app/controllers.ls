@@ -16,6 +16,9 @@ angular.module 'app.controllers' <[ui.state]>
 
 .controller PeopleCtrl: <[$scope $state HackFolder]> ++ ($scope, $state, HackFolder) ->
   $scope <<< do
+    add_tag: (person, tag) ->
+      person.tags.push tag
+      return false
     people:
       * name: \clkao
         github: \clkao
