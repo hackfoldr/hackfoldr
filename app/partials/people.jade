@@ -12,5 +12,6 @@
   ul
     li(ng-repeat="person in people | filter:search")
       .person(ng-class="{{person.status}}")
+        .name {{person.name}}
         img(ng-src="http://avatars.io/twitter/{{person.twitter}}")
-        .name {{name}}
+        span.label(ng-repeat="tag in user.tags") {{tag}}
