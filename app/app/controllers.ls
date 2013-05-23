@@ -19,15 +19,20 @@ angular.module 'app.controllers' <[ui.state]>
     add_tag: (person, tag) ->
       person.tags.push tag
       return false
+    projects:
+      * name: \立法院
+      * name: \meta
     people:
       * name: \clkao
         github: \clkao
         twitter: \clkao
         tags: <[ly g0v hackath3n livescript]>
+        status: \available
       * name: \hlb
         github: \hlb
         twitter: \hlb
         tags: <[design]>
+        status: \available
       ...
 
 .controller HackFolderCtrl: <[$scope $state HackFolder]> ++ ($scope, $state, HackFolder) ->

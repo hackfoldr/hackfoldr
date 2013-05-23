@@ -3,7 +3,7 @@
     input(ng-model="search")
   ul
     li(ng-repeat="person in people | filter:search")
-      .person
+      .person(ng-class="{{person.status}}")
         img(ng-src="http://avatars.io/twitter/{{person.twitter}}")
         .name {{name}}
         span.label(ng-repeat="tag in person.tags") {{tag}}
