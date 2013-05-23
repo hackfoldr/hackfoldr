@@ -5,7 +5,6 @@
       name {{name}}
       form
         span.label(ng-repeat="tag in user.tags") {{tag}}
-<<<<<<< HEAD
         input(ng-model="newtag")
         input(type="submit",ng-click="add_tag(user,newtag)",value="add")
 
@@ -18,7 +17,6 @@
           .name {{person.name}}
           img(ng-src="http://avatars.io/twitter/{{person.twitter}}")
           span.label.tag(ng-repeat="tag in user.tags") {{tag}}
-=======
     div#login-block
       h2 login option
       p
@@ -39,4 +37,3 @@
       input#messageSend(type="button", value='Send')
       script
         start()
->>>>>>> use firebase simple login
