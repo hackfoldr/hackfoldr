@@ -14,6 +14,19 @@ angular.module 'app.controllers' <[ui.state]>
   <- $timeout _, 10s * 1000ms
   $rootScope.hideGithubRibbon = true
 
+.controller PeopleCtrl: <[$scope $state HackFolder]> ++ ($scope, $state, HackFolder) ->
+  $scope <<< do
+    people:
+      * name: \clkao
+        github: \clkao
+        twitter: \clkao
+        tags: <[ly g0v hackath3n livescript]>
+      * name: \hlb
+        github: \hlb
+        twitter: \hlb
+        tags: <[design]>
+      ...
+
 .controller HackFolderCtrl: <[$scope $state HackFolder]> ++ ($scope, $state, HackFolder) ->
   $scope <<< do
     hasViewMode: -> it.match /g(doc|present|draw)/

@@ -8,6 +8,10 @@ angular.module \app <[ui partials app.controllers ui.state]>
     .state 'about' do
       url: '/about'
       templateUrl: '/partials/about.html'
+    .state 'people' do
+      url: '/people'
+      templateUrl: '/partials/people.html'
+      controller: \PeopleCtrl
     .state 'hack' do
       url: '/{hackId}'
       templateUrl: '/partials/hack.html'
