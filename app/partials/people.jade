@@ -1,6 +1,8 @@
 .people(resize,ng-cloak)
+  .search
+    input(ng-model="search")
   ul
-    li(ng-repeat="person in people")
+    li(ng-repeat="person in people | filter:search")
       .person
         img(ng-src="http://avatars.io/twitter/{{person.twitter}}")
         .name {{name}}
