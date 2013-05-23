@@ -16,7 +16,7 @@
         .person(ng-class="{{person.status}}")
           .name {{person.name}}
           img(ng-src="http://avatars.io/twitter/{{person.twitter}}")
-          span.label.tag(ng-repeat="tag in user.tags") {{tag}}
+          span.label.tag(ng-repeat="tag in person.tags") {{tag}}
     div#login-block
       h2 login option
       p
