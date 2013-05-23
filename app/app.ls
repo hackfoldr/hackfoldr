@@ -12,6 +12,10 @@ angular.module \app <[ui partials app.controllers ui.state]>
       url: '/people'
       templateUrl: '/partials/people.html'
       controller: \PeopleCtrl
+    .state 'tag' do
+      url: '/tag/{tag}'
+      templateUrl: '/partials/tag.html'
+      controller: \TagControl
     .state 'hack' do
       url: '/{hackId}'
       templateUrl: '/partials/hack.html'
