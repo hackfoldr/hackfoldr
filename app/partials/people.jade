@@ -1,17 +1,19 @@
-.people(resize,ng-cloak)
-  .self
-    img(ng-src="http://avatars.io/twitter/{{user.twitter}}?size=large")
-    name {{name}}
-    form
-      span.label(ng-repeat="tag in user.tags") {{tag}}
-      input(ng-model="newtag")
-      input(type="submit",ng-click="add_tag(user,newtag)",value="add")
-
-  .search
-    input(ng-model="search")
-  ul
-    li(ng-repeat="person in people | filter:search")
-      .person(ng-class="{{person.status}}")
-        .name {{person.name}}
-        img(ng-src="http://avatars.io/twitter/{{person.twitter}}")
+.row
+  .span4.people(resize,ng-cloak)
+    .self
+      img(ng-src="http://avatars.io/twitter/{{user.twitter}}?size=large")
+      name {{name}}
+      form
         span.label(ng-repeat="tag in user.tags") {{tag}}
+        input(ng-model="newtag")
+        input(type="submit",ng-click="add_tag(user,newtag)",value="add")
+
+  .span8
+    form.form-search
+      input.search-query(ng-model="search")
+    ul
+      li(ng-repeat="person in people | filter:search")
+        .person(ng-class="{{person.status}}")
+          .name {{person.name}}
+          img(ng-src="http://avatars.io/twitter/{{person.twitter}}")
+          span.label.tag(ng-repeat="tag in user.tags") {{tag}}
