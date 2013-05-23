@@ -17,6 +17,22 @@ angular.module 'app.controllers' <[ui.state]>
 .controller TagControl: <[$scope $state HackFolder]> ++ ($scope, $state) ->
   $scope.$watch '$state.params.tag' (tag) ->
     $scope.tag = tag
+  $scope <<< do
+    projects:
+      * name: \立法院
+      * name: \meta
+    people:
+      * name: \clkao
+        github: \clkao
+        twitter: \clkao
+        tags: <[ly g0v hackath3n livescript]>
+        status: \available
+      * name: \hlb
+        github: \hlb
+        twitter: \hlb
+        tags: <[design]>
+        status: \available
+      ...
 
 .controller PeopleCtrl: <[$scope $state HackFolder]> ++ ($scope, $state) ->
   $scope <<< do

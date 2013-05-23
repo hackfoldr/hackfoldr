@@ -1,2 +1,13 @@
 .tag-content(resize,ng-cloak)
-  h2 {{ tag }}
+  h2 關於 {{ tag }}
+    h3 專案
+      ul
+        li(ng-repeat="project in projects")
+          .name {{project.name}}
+    h3 人群
+      ul
+        li(ng-repeat="person in people")
+          .person(ng-class="{{person.status}}")
+            .name {{person.name}}
+            img(ng-src="http://avatars.io/twitter/{{person.twitter}}")
+            span.label(ng-repeat="tag in person.tags") {{tag}}
