@@ -14,7 +14,11 @@ angular.module 'app.controllers' <[ui.state]>
   <- $timeout _, 10s * 1000ms
   $rootScope.hideGithubRibbon = true
 
-.controller PeopleCtrl: <[$scope $state HackFolder]> ++ ($scope, $state, HackFolder) ->
+.controller TagControl: <[$scope $state HackFolder]> ++ ($scope, $state) ->
+  $scope.$watch '$state.params.tag' (tag) ->
+    $scope.tag = tag
+
+.controller PeopleCtrl: <[$scope $state HackFolder]> ++ ($scope, $state) ->
   $scope <<< do
     add_tag: (person, tag) ->
       person.tags.push tag
