@@ -27,3 +27,4 @@ devDependencies:
   'uglify-js-brunch': '1.5.x'
   'clean-css-brunch': '1.5.x'
   'jade-angularjs-brunch': '0.0.5'
+  'jsenv-brunch': '1.4.2'
