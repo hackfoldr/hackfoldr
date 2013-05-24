@@ -2,7 +2,7 @@
 
 angular.module('scroll', []).value('$anchorScroll', angular.noop)
 
-angular.module \app <[ui partials app.controllers ui.state]>
+angular.module \app <[ui partials app.controllers ui.state ui.bootstrap]>
 .config <[$stateProvider $urlRouterProvider $locationProvider]> ++ ($stateProvider, $urlRouterProvider, $locationProvider) ->
   $stateProvider
     .state 'about' do
