@@ -2,15 +2,20 @@ ul.nav
   li
     a(ng-href='/') 首頁
   li.dropdown
-    a.dropdown-toggle(ng-href='#/g0v-hackath3n',data-toggle="dropdown") 客廳工廠黑客松
-    // not working yet
-    ul.dropdown-menu
+    a.dropdown-toggle 黑客松
+    ul.dropdown-menu(role='menu', aria-labelledby='projects')
+      li(role='presentation')
+        a(ng-href='#/g0v-hackath3n') 客廳工廠
+          span.label.label-important.pull-right 最新
       li
         a(ng-href='#/g0v-hackath2n') 九大建設
-  li
-    a(ng-href='#/g0v-ly') 立法院專案
-  li
-    a(ng-href='#/g0vwelfare') 福利請聽
+  li.dropdown
+    a.dropdown-toggle 長期專案
+    ul.dropdown-menu(role='menu', aria-labelledby='projects')
+      li(role='presentation')
+        a(role='menuitem', tabindex='-1',ng-href='#/g0v-ly') 立法院專案
+      li(role='presentation')
+        a(role='menuitem', tabindex='-1',ng-href='#/g0vwelfare') 福利請聽
 
 ul.nav.pull-right
   li(ng-class="{ active: $state.includes('about') }")
