@@ -51,22 +51,7 @@ var authClient = new FirebaseAuthClient(myDataRef, function(error, user) {
     $('#logout-block').css('display', 'none');
   }
 });
-window.start = function() {
-  $('#messageSend').on('click', function(event){
-    console.log('click');
-    var name = $('#nameInput').val();
-    var text = $('#messageInput').val();
-    myDataRef.push({name: name, text: text});
-    $('#messageInput').val('');
-  });
-  myDataRef.on('child_added', function(snapshot) {
-    var message = snapshot.val();
-    displayChatMessage(message.name, message.text);
-  });
-  function displayChatMessage(name, text) {
-    $('<div/>').text(text).prepend($('<em/>').text(name+': ')).appendTo($('#messagesDiv'));
-    $('#messagesDiv')[0].scrollTop = $('#messagesDiv')[0].scrollHeight;
-  };
+window.loginCheck = function() {
   $('#github-login-link').on('click', function(event){
     authClient.login('github', {
       rememberMe: true,
