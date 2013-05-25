@@ -7,9 +7,11 @@ html(lang='en')
     meta(name='viewport', content='width=device-width, initial-scale=1.0')
     meta(name='description', content='')
     meta(name='author', content='')
-    title(ng-bind='$state.current.name') hackfoldr
+    title(ng-bind='$state.current.name') hack.g0v.tw
     link(rel="shotcut icon",href="/img/hackfoldr-icon.ico")
     link(rel='stylesheet', href='/css/app.css')
+    link(rel="stylesheet", href="//netdna.bootstrapcdn.com/font-awesome/3.1.1/css/font-awesome.css")
+
     script
       if (window.location.pathname == '/' && window.location.hash.length)
         window.location.href = window.location.hash.slice(1)
@@ -21,11 +23,13 @@ html(lang='en')
     script(src='//cdnjs.cloudflare.com/ajax/libs/jqueryui/1.10.2/jquery-ui.min.js')
     script(src='//ajax.googleapis.com/ajax/libs/angularjs/1.1.4/angular.min.js')
     script(src='//cdnjs.cloudflare.com/ajax/libs/angular-ui/0.4.0/angular-ui.min.js')
+    script(src='//cdn.firebase.com/v0/firebase.js')
+    script(src='//cdn.firebase.com/v0/firebase-auth-client.js')
     script(src='/js/vendor.js')
     script(src='/js/partials.js')
     script(src='/js/app.js')
   body(ng-controller='AppCtrl',data-spy="scroll")
-      a.github-ribbon(href='https://github.com/hackfoldr/hackfoldr')
+      a.github-ribbon(href='https://github.com/g0v/hack.g0v.tw')
         img.github-ribbon(ng-hide='hideGithubRibbon',ng-animate="'fade'",style='position: absolute; top: 0; right: 0; border: 0; z-index: 9999;', src='https://s3.amazonaws.com/github/ribbons/forkme_right_orange_ff7600.png', alt='Fork me on GitHub')
     .wrapper
       .navbar.navbar-inverse.navbar-fixed-top.visible-desktop
@@ -35,6 +39,7 @@ html(lang='en')
               span.icon-bar
               span.icon-bar
               span.icon-bar
+            #brand.brand: img(src="/img/g0v-icon-invert.png")
             .nav-collapse
               div(ng-include="'/partials/nav.html'")
       .main-content
