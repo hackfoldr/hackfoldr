@@ -8,6 +8,17 @@
         input(ng-model="newtag")
         input(type="submit",ng-click="add_tag(user)",value="add")
       textarea(ng-model='user.bio')
+      ul.services
+        li(ng-repeat="provider in ['facebook', 'twitter', 'github']")
+          a(ng-href="http://{{provider}}.com/{{user.auth[provider].username}}",ng-show="user.auth[provider]")
+            i(class="icon-{{provider}}")
+            | &nbsp; {{user.auth[provider].username}}
+          a.btn(ng-click="loginAndLink(provider)",ng-show="!user.auth[provider]")
+            i(class="icon-{{provider}}")
+            | &nbsp; {{provider}}
+
+
+
 
     .set-username(ng-show='toSetUsername')
       h2 Choose a username:
@@ -34,7 +45,7 @@
       a.btn#github-login-link(ng-click="auth.login('github', { rememberMe: true, scope: 'user,gist'})")
         i.icon-github.icon-large
         | &nbsp; github
-    #logout-block(ng-show='user')
+    #logout-block(ng-show='user || toSetUsername')
       h2 logout option
       p
         span#login-user-info

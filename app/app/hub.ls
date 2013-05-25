@@ -38,8 +38,8 @@ angular.module 'hub.g0v.tw' <[ui.state firebase]>
         auth: Hub.auth
         set-username: Hub.set-username
         login-and-merge: Hub.login-and-merge
+        login-and-link: Hub.login-and-link
     $scope.$on 'event:auth-login' (e, {user}) -> $scope.safeApply ->
-        console.log user
         promise = angularFire Hub.root.child("people/#{user.username}"), $scope, 'user', {}
         $scope.toSetUsername = false
     $scope.$on 'event:auth-logout' -> $scope.safeApply ->
@@ -49,10 +49,6 @@ angular.module 'hub.g0v.tw' <[ui.state firebase]>
         $scope.toSetUsername = true
         $scope.usernameInUse = existing
         $scope.newUsername = Hub.auth-user?username
-        if existing
-            console.log \usernameinuse existing
-        else
-            console.log \usernameavailable Hub.auth-user
 
 .factory Hub: <[$http angularFireCollection $rootScope]> ++ ($http, angularFireCollection, $rootScope) ->
     url = window.global.config.FIREBASE
@@ -65,8 +61,6 @@ angular.module 'hub.g0v.tw' <[ui.state firebase]>
         if always-prompt || existing
             $rootScope.$broadcast 'event:auth-userNameRequired', {existing}
         cb?! unless existing
-
-
 
     self.set-username = (username) ->
         return unless self.auth-user
@@ -81,9 +75,11 @@ angular.module 'hub.g0v.tw' <[ui.state firebase]>
         $rootScope.$broadcast 'event:auth-login', user: self.login-user
 
     self.login-and-merge = (provider) ->
-        self.auth-merge = {}
-            ..[self.auth-user.provider] = self.auth-user
-        # XXX setup some extra callback to merge on login success
+        self.auth-merge = self.auth-user
+        self.auth.login provider
+    self.login-and-link = (provider) ->
+        self.auth-link = self.auth-user
+        self.auth-link-user = self.login-user
         self.auth.login provider
     self.auth = new FirebaseAuthClient myDataRef, (error, user) ->
         if error
@@ -92,13 +88,29 @@ angular.module 'hub.g0v.tw' <[ui.state firebase]>
             self.auth-user = user
             auth <- myDataRef.child "auth-map/#{user.provider}/#{user.id}" .once \value
             if {username}? = auth.val!
-                console.log \usernameset
-                login-user <- myDataRef.child "people/#{username}" .once \value
+                entry = myDataRef.child "people/#{username}"
+                login-user <- entry.once \value
+                if merge = self.auth-merge
+                    newauth = { "#{merge.provider}": merge{id, username ? ''} }
+                    entry.child 'auth' .update newauth
+                    myDataRef.child "auth-map/#{merge.provider}/#{merge.id}" .set {username}
+                    delete self.auth-merge
                 self.login-user = login-user.val!
-                console.log \authlogin self.login-user, username
                 $rootScope.$broadcast 'event:auth-login', user: self.login-user
             else
-                check-username self.auth-user.username, true
+                if link = self.auth-link
+                    username = self.auth-link-user.username
+                    # XXX might need to reuse the token from self.auth-link to write
+                    entry = myDataRef.child "people/#{username}"
+                    #login-user <- entry.once \value
+                    #self.login-user = login-user.val!
+                    newauth = { "#{user.provider}": user{id, username ? ''} }
+                    #$rootScope.$broadcast 'event:auth-login', user: self.login-user
+                    entry.child 'auth' .update newauth
+                    myDataRef.child "auth-map/#{user.provider}/#{user.id}" .set {username}
+                    delete self.auth-link
+                else
+                    check-username self.auth-user.username, true
         else
             $rootScope.$broadcast 'event:auth-logout'
     self <<< do
