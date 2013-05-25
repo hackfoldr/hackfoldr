@@ -3,8 +3,8 @@
     .self(ng-show='user')
       h2.displayName {{user.displayName}}
       .name {{user.username}}
-      img(ng-src="{{ user.avatar }}?size=large")
-      form
+      img.img-polaroid.m-top-1(ng-src="{{ user.avatar }}?size=large",width=210)
+      form.m-top-1
         fieldset
           label 關鍵字
           span.label(ng-repeat="tag in user.tags",ng-mouseenter="toremove=1",ng-mouseleave="toremove=0")
@@ -57,7 +57,7 @@
       p
         span#login-user-info
         a.btn#logout-link(ng-click="auth.logout()") logout
-  .span8
+  .span8.p-all-p1
     form.form-search
       .m-top-1
       input.search-query(ng-model="search",placeholder="Filter by tag...")
@@ -65,6 +65,14 @@
       li(ng-repeat="person in people | filter:search")
         .person(ng-class="{{person.status}}")
           h4.name {{person.$id}}
+<<<<<<< HEAD
           img(ng-src="{{person.avatar}}?size=small")
           span.label.tag(ng-repeat="tag in person.tags")
             a(ng-href="/tag/{{tag}}") {{tag}}
+=======
+          div.row
+            div.span1.pull-left
+              img.img-polaroid(ng-src="{{person.avatar}}?size=small",width=70)
+            div.span6.pull-left
+              span.label.tag(ng-repeat="tag in person.tags") {{tag}}
+>>>>>>> 調整頁面樣式，頁面可捲動，圖片排版
