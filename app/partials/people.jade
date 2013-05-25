@@ -7,8 +7,8 @@
       form.m-top-1
         fieldset
           label 關鍵字
-          span.label(ng-repeat="tag in user.tags",ng-mouseenter="toremove=1",ng-mouseleave="toremove=0")
-            a(ng-href="/tag/{{tag}}") {{tag}}
+          span.label.tag(ng-repeat="tag in user.tags",ng-click="go('/tag/{{tag}}')",ng-mouseenter="toremove=1",ng-mouseleave="toremove=0") 
+            | {{tag}}
             a(ng-show="toremove",ng-click="remove_tag(user, tag)")
               i.icon-remove
           .input-append.m-top-p1

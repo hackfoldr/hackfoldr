@@ -10,8 +10,7 @@
           .person(ng-class="{{person.status}}")
             .name {{person.username}}
             img(ng-src="{{person.avatar}}?size=small")
-            span.label(ng-repeat="tag in person.tags")
-              a(ng-href='/tag/{{tag}}') {{tag}}
+            span.label.tag(ng-repeat="tag in person.tags",ng-class="{ 'label-success': tag == 'hackath3n' }",ng-click="go('/tag/{{tag}}')") {{tag}}
   .span8
     h2 關於 {{ tag }}
     #disqus_thread.content-panel-content
