@@ -2,13 +2,13 @@ naul.nav
   li
     a(ng-href='/') 首頁
   li.dropdown-split-left
-    a(ng-href='#/g0v-hackath3n') 客廳工廠黑客松
+    a(ng-href='/g0v-hackath3n') 客廳工廠黑客松
   li.dropdown-split-right.dropdown
     a.dropdown-toggle
       i.icon-caret-down
     ul.dropdown-menu.pull-right(role='menu', aria-labelledby='projects')
       li
-        a(ng-href='#/g0v-hackath2n') 九大建設
+        a(ng-href='/g0v-hackath2n') 九大建設
       li
         a(href='https://hackpad.com/lIoCjaeMWzC') 公地放領
       li
@@ -17,12 +17,12 @@ naul.nav
     a.dropdown-toggle 長期專案
     ul.dropdown-menu(role='menu', aria-labelledby='projects')
       li(role='presentation')
-        a(role='menuitem', tabindex='-1',ng-href='#/g0v-ly') 立法院專案
+        a(role='menuitem', tabindex='-1',ng-href='/g0v-ly') 立法院專案
       li(role='presentation')
-        a(role='menuitem', tabindex='-1',ng-href='#/g0vwelfare') 福利請聽
+        a(role='menuitem', tabindex='-1',ng-href='/g0vwelfare') 福利請聽
   //li
-    a(ng-href='#/people') People
+    a(ng-href='/people') People
 
 ul.nav.pull-right
   li(ng-class="{ active: $state.includes('about') }")
-    a(ng-href='#/about') 關於
+    a(ng-href='/about') About
