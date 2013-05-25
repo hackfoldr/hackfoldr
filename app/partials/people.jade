@@ -1,7 +1,7 @@
 .row
   .span4.people(resize,ng-cloak)
     .self(ng-show='user')
-      img(ng-src="http://avatars.io/twitter/{{user.twitter}}?size=large")
+      img(ng-src="{{ user.avatar }}")
       name {{name}}
       form
         span.label(ng-repeat="tag in user.tags") {{tag}}
@@ -10,27 +10,35 @@
       textarea(ng-model='user.bio')
 
     .set-username(ng-show='toSetUsername')
+      h2 Choose a username:
       form
         input(ng-model="newUsername")
         input(type="submit",ng-click="setUsername(newUsername)",value="Set")
+      .alert(ng-show='usernameInUse')
+        username already in use, choose another one or merge using authenticated service:
+        ui
+          li(ng-repeat="(provider, auth) in usernameInUse.auth")
+            a.btn(ng-click="loginAndMerge(provider)")
+              i(class="icon-{{provider}}")
+              | &nbsp; {{provider}}:{{auth.username}}
+
+
     #login-block(ng-show='!user')
       h2 Login
       a.btn#facebook-login-link(ng-click="auth.login('facebook', { rememberMe: true, scope: 'email,user_likes' })")
         i.icon-facebook.icon-large
         | &nbsp; facebook
-      a.btn#twitter-login-link
+      a.btn#twitter-login-link(ng-click="auth.login('twitter', { rememberMe: true })")
         i.icon-twitter.icon-large
         | &nbsp; twitter
-      a.btn#github-login-link
+      a.btn#github-login-link(ng-click="auth.login('github', { rememberMe: true, scope: 'user,gist'})")
         i.icon-github.icon-large
         | &nbsp; github
     #logout-block(ng-show='user')
       h2 logout option
       p
         span#login-user-info
-        a#logout-link(ng-click="auth.logout") logout
-    script
-      loginCheck()
+        a.btn#logout-link(ng-click="auth.logout()") logout
   .span8
     form.form-search
       input.search-query(ng-model="search")
