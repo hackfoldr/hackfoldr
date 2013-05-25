@@ -202,7 +202,7 @@ angular.module 'app.controllers' <[ui.state]>
         if entry.type is \dummy and !entry.title?length
           null
         else
-          {icon: "img/#{ entry.type }.png"} <<< entry <<< do
+          {icon: "/img/#{ entry.type }.png"} <<< entry <<< do
             tags: (entry.opts?tags ? []) ++ ((tags?split \,) ? [])
               .filter -> it.length
               .map (tag) ->
