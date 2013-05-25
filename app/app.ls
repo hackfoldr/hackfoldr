@@ -3,7 +3,7 @@
 angular.module('scroll', []).value('$anchorScroll', angular.noop)
 
 angular.module \app <[ui partials app.controllers ui.state ui.bootstrap]>
-.config <[$stateProvider $urlRouterProvider]> ++ ($stateProvider, $urlRouterProvider) ->
+.config <[$stateProvider $urlRouterProvider $locationProvider]> ++ ($stateProvider, $urlRouterProvider, $locationProvider) ->
   $stateProvider
     .state 'about' do
       url: '/about'
@@ -17,6 +17,8 @@ angular.module \app <[ui partials app.controllers ui.state ui.bootstrap]>
 
   $urlRouterProvider
     .otherwise('/g0v-hackath3n')
+
+  $locationProvider.html5Mode true
 
 .run <[$rootScope $state $stateParams]> ++ ($rootScope, $state, $stateParams) ->
   $rootScope.$state = $state
