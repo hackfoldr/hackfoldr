@@ -1,10 +1,12 @@
 /**
  * State-based routing for AngularJS
- * @version v0.0.2-dev-2013-05-26
- * @link http://angular-ui.github.com/
+ * @version v0.0.1 - 2013-03-27
+ * @link 
  * @license MIT License, http://www.opensource.org/licenses/MIT
  */
+
 (function (window, angular, undefined) {
+
 /*jshint globalstrict:true*/
 /*global angular:false*/
 'use strict';
@@ -393,8 +395,7 @@ angular.module('ui.util').provider('$urlMatcherFactory', $UrlMatcherFactory);
 
 $UrlRouterProvider.$inject = ['$urlMatcherFactoryProvider'];
 function $UrlRouterProvider(  $urlMatcherFactory) {
-  var rules = [], 
-      otherwise = null;
+  var rules = [], otherwise = null;
 
   // Returns a string that is a prefix of all strings matching the RegExp
   function regExpPrefix(re) {
@@ -428,63 +429,53 @@ function $UrlRouterProvider(  $urlMatcherFactory) {
     };
 
 
-  function handleIfMatch($injector, handler, match) {
+  function handleIfMatch($location, handler, match) {
     if (!match) return false;
-    var result = $injector.invoke(handler, handler, { $match: match });
+    var result = handler(match, $location);
     return isDefined(result) ? result : true;
   }
 
   this.when =
     function (what, handler) {
       var rule, redirect;
-      if (isString(what))
-          what = $urlMatcherFactory.compile(what);
-
+      if (isString(what)) what = $urlMatcherFactory.compile(what);
       if ($urlMatcherFactory.isMatcher(what)) {
         if (isString(handler)) {
           redirect = $urlMatcherFactory.compile(handler);
-          handler = ['$match', function ($match) { return redirect.format($match); }];
+          handler = function (match) { return redirect.format(match); };
         }
-        else if (!isFunction(handler) && !isArray(handler))
-            throw new Error("invalid 'handler' in when()");
-
-        rule = function ($injector, $location) {
-          return handleIfMatch($injector, handler, what.exec($location.path(), $location.search()));
+        else if (!isFunction(handler)) throw new Error("invalid 'handler' in when()");
+        rule = function ($location) {
+          return handleIfMatch($location, handler, what.exec($location.path(), $location.search()));
         };
         rule.prefix = isString(what.prefix) ? what.prefix : '';
       }
       else if (what instanceof RegExp) {
         if (isString(handler)) {
           redirect = handler;
-          handler = ['$match', function ($match) { return interpolate(redirect, $match); }];
+          handler = function (match) { return interpolate(redirect, match); };
         }
-        else if (!isFunction(handler) && !isArray(handler))
-            throw new Error("invalid 'handler' in when()");
-
-        if (what.global || what.sticky)
-            throw new Error("when() RegExp must not be global or sticky");
-
-        rule = function ($injector, $location) {
-          return handleIfMatch($injector, handler, what.exec($location.path()));
+        else if (!isFunction(handler)) throw new Error("invalid 'handler' in when()");
+        if (what.global || what.sticky) throw new Error("when() RegExp must not be global or sticky");
+        rule = function ($location) {
+          return handleIfMatch($location, handler, what.exec($location.path()));
         };
         rule.prefix = regExpPrefix(what);
       }
-      else
-          throw new Error("invalid 'what' in when()");
-
+      else throw new Error("invalid 'what' in when()");
       return this.rule(rule);
     };
 
   this.$get =
-    [        '$location', '$rootScope', '$injector',
-    function ($location,   $rootScope,   $injector) {
+    [        '$location', '$rootScope',
+    function ($location,   $rootScope) {
       if (otherwise) rules.push(otherwise);
 
       // TODO: Optimize groups of rules with non-empty prefix into some sort of decision tree
       function update() {
         var n=rules.length, i, handled;
         for (i=0; i<n; i++) {
-          handled = rules[i]($injector, $location);
+          handled = rules[i]($location);
           if (handled) {
             if (isString(handled)) $location.replace().url(handled);
             break;
@@ -511,7 +502,7 @@ function $StateProvider(   $urlRouterProvider,   $urlMatcherFactory) {
       if (!state) throw new Error("No such state '" + stateOrName + "'");
     } else {
       state = states[stateOrName.name];
-      if (!state || state !== stateOrName && state.self !== stateOrName)
+      if (!state || state !== stateOrName && state.self !== stateOrName) 
         throw new Error("Invalid or unregistered state");
     }
     return state;
@@ -570,7 +561,7 @@ function $StateProvider(   $urlRouterProvider,   $urlMatcherFactory) {
     } else {
       params = state.params = url ? url.parameters() : state.parent.params;
     }
-
+    
     var paramNames = {}; forEach(params, function (p) { paramNames[p] = true; });
     if (parent) {
       forEach(parent.params, function (p) {
@@ -610,13 +601,12 @@ function $StateProvider(   $urlRouterProvider,   $urlMatcherFactory) {
     if (!state.resolve) state.resolve = {}; // prevent null checks later
 
     // Register the state in the global state list and with $urlRouter if necessary.
-    if (!state['abstract'] && url) {
-      $urlRouterProvider.when(url, ['$match', function ($match) {
-        $state.transitionTo(state, $match, false);
-      }]);
+    if (!state.abstract && url) {
+      $urlRouterProvider.when(url, function (params) {
+        $state.transitionTo(state, params, false);
+      });
     }
-    states[name] = state;
-    return state;
+    return states[name] = state;
   }
 
   // Implicit root state that is always active
@@ -624,7 +614,7 @@ function $StateProvider(   $urlRouterProvider,   $urlMatcherFactory) {
     name: '',
     url: '^',
     views: null,
-    'abstract': true
+    abstract: true
   });
   root.locals = { globals: { $stateParams: {} } };
   root.navigable = null;
@@ -663,7 +653,7 @@ function $StateProvider(   $urlRouterProvider,   $urlMatcherFactory) {
       if (!isDefined(updateLocation)) updateLocation = true;
 
       to = findState(to);
-      if (to['abstract']) throw new Error("Cannot transition to abstract state '" + to + "'");
+      if (to.abstract) throw new Error("Cannot transition to abstract state '" + to + "'");
       var toPath = to.path,
           from = $state.$current, fromParams = $state.params, fromPath = from.path;
 
@@ -685,7 +675,12 @@ function $StateProvider(   $urlRouterProvider,   $urlMatcherFactory) {
       }
 
       // Normalize/filter parameters before we pass them to event handlers etc.
-      toParams = normalize(to.params, toParams || {});
+      var normalizedToParams = {};
+      forEach(to.params, function (name) {
+        var value = toParams[name];
+        normalizedToParams[name] = (value != null) ? String(value) : null;
+      });
+      toParams = normalizedToParams;
 
       // Broadcast start event and cancel the transition if requested
       if ($rootScope.$broadcast('$stateChangeStart', to.self, toParams, from.self, fromParams)
@@ -745,7 +740,7 @@ function $StateProvider(   $urlRouterProvider,   $urlMatcherFactory) {
         }
 
         $rootScope.$broadcast('$stateChangeSuccess', to.self, toParams, from.self, fromParams);
-
+        
         return $state.current;
       }, function (error) {
         if ($state.transition !== transition) return TransitionSuperseded;
@@ -767,11 +762,6 @@ function $StateProvider(   $urlRouterProvider,   $urlMatcherFactory) {
       return $state.$current.includes[findState(stateOrName).name];
     };
 
-    $state.href = function (stateOrName, params) {
-      var state = findState(stateOrName), nav = state.navigable;
-      if (!nav) throw new Error("State '" + state + "' is not navigable");
-      return nav.url.format(normalize(state.params, params || {}));
-    };
 
     function resolveState(state, params, paramsAreFiltered, inherited, dst) {
       // We need to track all the promises generated during the resolution process.
@@ -846,16 +836,6 @@ function $StateProvider(   $urlRouterProvider,   $urlMatcherFactory) {
       });
     }
 
-    function normalize(keys, values) {
-      var normalized = {};
-
-      forEach(keys, function (name) {
-        var value = values[name];
-        normalized[name] = (value != null) ? String(value) : null;
-      });
-      return normalized;
-    }
-
     function equalForKeys(a, b, keys) {
       for (var i=0; i<keys.length; i++) {
         var k = keys[i];
@@ -873,21 +853,16 @@ angular.module('ui.state')
   .provider('$state', $StateProvider);
 
 
-$ViewDirective.$inject = ['$state', '$compile', '$controller', '$injector', '$anchorScroll'];
-function $ViewDirective(   $state,   $compile,   $controller,   $injector,   $anchorScroll) {
-  // Unfortunately there is no neat way to ask $injector if a service exists
-  var $animator; try { $animator = $injector.get('$animator'); } catch (e) { /* do nothing */ }
-
+$ViewDirective.$inject = ['$state', '$compile', '$controller', '$anchorScroll'];
+function $ViewDirective(   $state,   $compile,   $controller,   $anchorScroll) {
   var directive = {
     restrict: 'ECA',
     terminal: true,
     link: function(scope, element, attr) {
       var viewScope, viewLocals,
-          initialContent = element.contents(),
-          name = attr[directive.name] || attr.name || '',
-          onloadExp = attr.onload || '',
-          animate = isDefined($animator) && $animator(scope, attr);
-
+        name = attr[directive.name] || attr.name || '',
+        onloadExp = attr.onload || '';
+      
       // Find the details of the parent view directive (if any) and use it
       // to derive our own qualified view name, then hang our own details
       // off the DOM so child directives can find it.
@@ -896,21 +871,14 @@ function $ViewDirective(   $state,   $compile,   $controller,   $injector,   $an
       var view = { name: name, state: null };
       element.data('$uiView', view);
 
-      scope.$on('$stateChangeSuccess', function() { updateView(true); });
-      updateView(false);
+      scope.$on('$stateChangeSuccess', updateView);
+      updateView();
 
-      function updateView(doAnimate) {
+      function updateView() {
         var locals = $state.$current && $state.$current.locals[name];
         if (locals === viewLocals) return; // nothing to do
 
-        // Remove existing content
-        if (animate && doAnimate) {
-          animate.leave(element.contents(), element);
-        } else {
-          element.html('');
-        }
-
-        // Destroy previous view scope
+        // Destroy previous view scope (if any)
         if (viewScope) {
           viewScope.$destroy();
           viewScope = null;
@@ -920,21 +888,14 @@ function $ViewDirective(   $state,   $compile,   $controller,   $injector,   $an
           viewLocals = locals;
           view.state = locals.$$state;
 
-          var contents;
-          if (animate && doAnimate) {
-            contents = angular.element('<div></div>').html(locals.$template).contents();
-            animate.enter(contents, element);
-          } else {
-            element.html(locals.$template);
-            contents = element.contents();
-          }
-
-          var link = $compile(contents);
+          element.html(locals.$template);
+          // element.html('<div style="height:0;position:relative;z-index:999"><span style="background:red;color:white;font-size:12px;padding:1px">' + name + '</span></div>' + locals.$template);
+          var link = $compile(element.contents());
           viewScope = scope.$new();
           if (locals.$$controller) {
             locals.$scope = viewScope;
             var controller = $controller(locals.$$controller, locals);
-            element.children().data('$ngControllerController', controller);
+            element.contents().data('$ngControllerController', controller);
           }
           link(viewScope);
           viewScope.$emit('$viewContentLoaded');
@@ -946,13 +907,7 @@ function $ViewDirective(   $state,   $compile,   $controller,   $injector,   $an
         } else {
           viewLocals = null;
           view.state = null;
-
-          // Restore initial view
-          if (doAnimate) {
-            animate.enter(initialContent, element);
-          } else {
-            element.html(initialContent);
-          }
+          element.html('');
         }
       }
     }
@@ -1046,4 +1001,5 @@ function $RouteProvider(  $stateProvider,    $urlRouterProvider) {
 angular.module('ui.compat')
   .provider('$route', $RouteProvider)
   .directive('ngView', $ViewDirective);
+
 })(window, window.angular);
