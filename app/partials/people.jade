@@ -10,13 +10,16 @@
       textarea(ng-model='user.bio')
 
     #login-block(ng-show='!user')
-      h2 login option
-      p
-        a#facebook-login-link facebook login
-      p
-        a#twitter-login-link twitter login
-      p
-        a#github-login-link github login
+      h2 Login
+      a.btn#facebook-login-link
+        i.icon-facebook.icon-large
+        | &nbsp; facebook
+      a.btn#twitter-login-link
+        i.icon-twitter.icon-large
+        | &nbsp; twitter
+      a.btn#github-login-link
+        i.icon-github.icon-large
+        | &nbsp; github
     #logout-block(ng-show='user')
       h2 logout option
       p
