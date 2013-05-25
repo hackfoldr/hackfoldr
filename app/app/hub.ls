@@ -50,13 +50,6 @@ angular.module 'hub.g0v.tw' <[ui.state firebase]>
             $scope.$apply fn
 
     $scope <<< do
-        avatar: (user, version = 'medium') ->
-            | user.auth?github?username
-                "http://avatars.io/github/#{user.auth.github.username}?size=#version"
-            | user.auth?twitter?username
-                "http://avatars.io/github/#{user.auth.twitter.username}?size=#version"
-            | user.auth?github?username
-                "http://avatars.io/github/#{user.auth.github.username}?size=#version"
         remove_tag: (person, tag) ->
             person.tags = [t for t in person.tags when t isnt tag]
         add_tag: (person) ->
@@ -101,11 +94,14 @@ angular.module 'hub.g0v.tw' <[ui.state firebase]>
         <- check-username username, false
         # XXX: disallow if people/#username exists and we do not have the credentials listed in auth
         info = self.auth-user{displayName} <<< {tags: [], username}
-        if self.auth-user.provider is 'github'
+        info.avatar = match self.auth-user.provider
+        | 'github'
             [_, gravatar] = self.auth-user.avatar_url.match // https:\/\/secure.gravatar.com/avatar/(\w+) //
-            info.avatar = "http://avatars.io/gravatar/#gravatar"
+            "http://avatars.io/gravatar/#gravatar"
+        | 'twitter'
+            "http://avatars.io/twitter/#{self.auth-user.username}"
         else
-            info.avatar = "http://avatars.io/#{self.auth-user.provider}/#{self.auth-user.id}"
+            "http://avatars.io/#{self.auth-user.provider}/#{self.auth-user.id}"
         myDataRef
             ..child "auth-map/#{self.auth-user.provider}/#{self.auth-user.id}" .set {username}
             ..child "people/#{username}" .set info
