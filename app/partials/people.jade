@@ -50,7 +50,7 @@
         a.btn#twitter-login-link(ng-click="auth.login('twitter', { rememberMe: true })")
           i.icon-twitter.icon-large
           | &nbsp; twitter
-        a.btn#github-login-link(ng-click="auth.login('github', { rememberMe: true, scope: 'user,gist'})")
+        a.btn#github-login-link(ng-click="auth.login('github', { rememberMe: true })")
           i.icon-github.icon-large
           | &nbsp; github
     #logout-block.p-all-p1(ng-show='user || toSetUsername')
