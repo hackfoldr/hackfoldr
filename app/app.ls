@@ -20,6 +20,10 @@ angular.module \app <[ui partials app.controllers hub.g0v.tw ui.state ui.bootstr
       url: '/tag/{tag}'
       templateUrl: '/partials/tag.html'
       controller: \TagControl
+      onEnter: ->
+        $ \body .addClass \people
+      onExit: ->
+        $ \body .removeClass \people
     .state 'hack' do
       url: '/{hackId}'
       templateUrl: '/partials/hack.html'
