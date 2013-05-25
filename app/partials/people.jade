@@ -66,5 +66,6 @@
         .person(ng-class="{{person.status}}")
           h4.name {{person.$id}}
           img(ng-src="{{person.avatar}}?size=small")
-          span.label.tag(ng-repeat="tag in person.tags")
-            a(ng-href="/tag/{{tag}}") {{tag}}
+          span.label.tag(ng-repeat="tag in person.tags",ng-class="{ 'label-success': tag == 'hackath3n' }",ng-click="go('/tag/{{tag}}')")
+            {{tag}}
+            //a(ng-href="/tag/{{tag}}") {{tag}}

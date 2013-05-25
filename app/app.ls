@@ -32,6 +32,7 @@ angular.module \app <[ui partials app.controllers hub.g0v.tw ui.state ui.bootstr
 
   $locationProvider.html5Mode true
 
-.run <[$rootScope $state $stateParams]> ++ ($rootScope, $state, $stateParams) ->
+.run <[$rootScope $state $stateParams $location]> ++ ($rootScope, $state, $stateParams, $location) ->
   $rootScope.$state = $state
   $rootScope.$stateParam = $stateParams
+  $rootScope.go = -> $location.path it
