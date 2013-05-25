@@ -45,7 +45,7 @@ angular.module 'hub.g0v.tw' <[ui.state firebase]>
     $scope.$on 'event:auth-logout' -> $scope.safeApply ->
         delete $scope.user
         $scope.toSetUsername = false
-    $scope.$on 'event:auth-userNameRequired' (e, {existing}) -> $scope.$apply ->
+    $scope.$on 'event:auth-userNameRequired' (e, {existing}) -> $scope.safeApply ->
         $scope.toSetUsername = true
         $scope.usernameInUse = existing
         $scope.newUsername = Hub.auth-user?username
@@ -59,12 +59,22 @@ angular.module 'hub.g0v.tw' <[ui.state firebase]>
     myDataRef = new Firebase(url)
     people = angularFireCollection myDataRef.child \people
     self = {}
+    check-username = (username, always-prompt, cb) ->
+        inuse <- myDataRef.child "people/#{username}" .once \value
+        existing = inuse.val!
+        if always-prompt || existing
+            $rootScope.$broadcast 'event:auth-userNameRequired', {existing}
+        cb?! unless existing
+
+
+
     self.set-username = (username) ->
         return unless self.auth-user
+        <- check-username username, false
         # XXX: disallow if people/#username exists and we do not have the credentials listed in auth
         myDataRef
             ..child "auth-map/#{self.auth-user.provider}/#{self.auth-user.id}" .set {username}
-            ..child "people/#{username}" .set self.auth-user{displayName, emails} <<< {tags: [], username}
+            ..child "people/#{username}" .set self.auth-user{displayName} <<< {tags: [], username}
             ..child "people/#{username}/auth/#{self.auth-user.provider}" .set self.auth-user{id, username}
         login-user <- myDataRef.child "people/#{username}" .once \value
         self.login-user = login-user.val!
@@ -88,9 +98,7 @@ angular.module 'hub.g0v.tw' <[ui.state firebase]>
                 console.log \authlogin self.login-user, username
                 $rootScope.$broadcast 'event:auth-login', user: self.login-user
             else
-                inuse <- myDataRef.child "people/#{self.auth-user.username}" .once \value
-                existing = inuse.val!
-                $rootScope.$broadcast 'event:auth-userNameRequired', {existing}
+                check-username self.auth-user.username, true
         else
             $rootScope.$broadcast 'event:auth-logout'
     self <<< do

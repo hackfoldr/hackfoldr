@@ -14,7 +14,7 @@
       form
         input(ng-model="newUsername")
         input(type="submit",ng-click="setUsername(newUsername)",value="Set")
-      .alert(ng-show='usernameInUse')
+      .alert.alert-error(ng-show='usernameInUse')
         username already in use, choose another one or merge using authenticated service:
         ui
           li(ng-repeat="(provider, auth) in usernameInUse.auth")
@@ -23,7 +23,7 @@
               | &nbsp; {{provider}}:{{auth.username}}
 
 
-    #login-block(ng-show='!user')
+    #login-block(ng-show='!user && !toSetUsername')
       h2 Login
       a.btn#facebook-login-link(ng-click="auth.login('facebook', { rememberMe: true, scope: 'email,user_likes' })")
         i.icon-facebook.icon-large
