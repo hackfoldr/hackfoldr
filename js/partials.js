@@ -13,5 +13,5 @@ angular.module('partials', [])
 }])
 .run(['$templateCache', function($templateCache) {
   return $templateCache.put('/partials/nav.html', [
-'<ul class="nav"><li><a ng-href="/">Home</a></li></ul><ul class="nav pull-right"><li ng-class="{ active: $state.includes(\'about\') }"><a ng-href="#/about">About</a></li></ul>',''].join("\n"));
+'<ul class="nav"><li><a ng-href="/">Home</a></li></ul><ul class="nav pull-right"><li ng-class="{ active: $state.includes(\'about\') }"><a ng-href="/about">About</a></li></ul>',''].join("\n"));
 }]);
