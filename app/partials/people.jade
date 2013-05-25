@@ -6,12 +6,16 @@
       form
         span.label(ng-repeat="tag in user.tags") {{tag}}
         input(ng-model="newtag")
-        input(type="submit",ng-click="add_tag(user,newtag)",value="add")
+        input(type="submit",ng-click="add_tag(user)",value="add")
       textarea(ng-model='user.bio')
 
+    .set-username(ng-show='toSetUsername')
+      form
+        input(ng-model="newUsername")
+        input(type="submit",ng-click="setUsername(newUsername)",value="Set")
     #login-block(ng-show='!user')
       h2 Login
-      a.btn#facebook-login-link
+      a.btn#facebook-login-link(ng-click="auth.login('facebook', { rememberMe: true, scope: 'email,user_likes' })")
         i.icon-facebook.icon-large
         | &nbsp; facebook
       a.btn#twitter-login-link
@@ -24,7 +28,7 @@
       h2 logout option
       p
         span#login-user-info
-        a#logout-link logout
+        a#logout-link(ng-click="auth.logout") logout
     script
       loginCheck()
   .span8
@@ -33,6 +37,6 @@
     ul
       li(ng-repeat="person in people | filter:search")
         .person(ng-class="{{person.status}}")
-          .name {{person.name}}
+          .name {{person.$id}}
           img(ng-src="http://avatars.io/twitter/{{person.twitter}}")
           span.label.tag(ng-repeat="tag in person.tags") {{tag}}

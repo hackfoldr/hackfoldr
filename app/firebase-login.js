@@ -62,7 +62,4 @@ window.loginCheck = function() {
       scope: 'user,gist'
     });
   });
-  $('#logout-link').on('click', function(event){
-    authClient.logout();
-  });
 }
