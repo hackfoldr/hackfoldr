@@ -4,11 +4,13 @@
       h2.displayName {{user.displayName}}
       .name {{user.username}}
       img(ng-src="{{ user.avatar }}")
-      label 關鍵字
-      span.label(ng-repeat="tag in user.tags",ng-mouseenter="toremove=1",ng-mouseleave="toremove=0")
-        a(ng-href="/tag/{{tag}}") {{tag}}
-        a(ng-show="toremove",ng-click="remove_tag(user, tag)")
-          i.icon-remove
+      form
+        fieldset
+          label 關鍵字
+          span.label(ng-repeat="tag in user.tags",ng-mouseenter="toremove=1",ng-mouseleave="toremove=0")
+            a(ng-href="/tag/{{tag}}") {{tag}}
+            a(ng-show="toremove",ng-click="remove_tag(user, tag)")
+              i.icon-remove
       form.newtag
         input.tag(ng-model="newtag")
         input(type="submit",ng-click="add_tag(user)",value="add")
