@@ -11,8 +11,8 @@ engines:
   node: '0.8.x'
   npm: '1.1.x'
 scripts:
-  prepublish: 'node ./node_modules/.bin/lsc -cj package.ls'
-  start: 'node ./node_modules/.bin/brunch watch --server'
+  prepublish: 'node ./node_modules/LiveScript/bin/lsc -cj package.ls'
+  start: 'node ./node_modules/brunch/bin/brunch watch --server'
 dependencies: {}
 devDependencies:
   LiveScript: '1.1.x'
