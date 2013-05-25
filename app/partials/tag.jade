@@ -9,7 +9,7 @@
         li(ng-repeat="person in people | filter:{tags: tag}")
           .person(ng-class="{{person.status}}")
             .name {{person.username}}
-            img(ng-src="http://avatars.io/twitter/{{person.twitter}}")
+            img(ng-src="{{person.avatar}}?size=small")
             span.label(ng-repeat="tag in person.tags")
               a(ng-href='/tag/{{tag}}') {{tag}}
   .span8

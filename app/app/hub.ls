@@ -100,9 +100,15 @@ angular.module 'hub.g0v.tw' <[ui.state firebase]>
         return unless self.auth-user
         <- check-username username, false
         # XXX: disallow if people/#username exists and we do not have the credentials listed in auth
+        info = self.auth-user{displayName} <<< {tags: [], username}
+        if self.auth-user.provider is 'github'
+            [_, gravatar] = self.auth-user.avatar_url.match // https:\/\/secure.gravatar.com/avatar/(\w+) //
+            info.avatar = "http://avatars.io/gravatar/#gravatar"
+        else
+            info.avatar = "http://avatars.io/#{self.auth-user.provider}/#{self.auth-user.id}"
         myDataRef
             ..child "auth-map/#{self.auth-user.provider}/#{self.auth-user.id}" .set {username}
-            ..child "people/#{username}" .set self.auth-user{displayName} <<< {tags: [], username}
+            ..child "people/#{username}" .set info
             ..child "people/#{username}/auth/#{self.auth-user.provider}" .set self.auth-user{id, username}
         login-user <- myDataRef.child "people/#{username}" .once \value
         self.login-user = login-user.val!

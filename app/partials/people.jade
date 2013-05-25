@@ -3,7 +3,7 @@
     .self(ng-show='user')
       h2.displayName {{user.displayName}}
       .name {{user.username}}
-      img(ng-src="{{ user.avatar }}")
+      img(ng-src="{{ user.avatar }}?size=large")
       form
         fieldset
           label 關鍵字
@@ -65,5 +65,5 @@
       li(ng-repeat="person in people | filter:search")
         .person(ng-class="{{person.status}}")
           h4.name {{person.$id}}
-          img(ng-src="http://avatars.io/twitter/{{person.twitter}}")
+          img(ng-src="{{person.avatar}}?size=small")
           span.label.tag(ng-repeat="tag in person.tags") {{tag}}
