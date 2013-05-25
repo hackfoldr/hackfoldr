@@ -1,13 +1,29 @@
 .row
   .span4.people(resize,ng-cloak)
-    .self
+    .self(ng-show='user')
       img(ng-src="http://avatars.io/twitter/{{user.twitter}}?size=large")
       name {{name}}
       form
         span.label(ng-repeat="tag in user.tags") {{tag}}
         input(ng-model="newtag")
         input(type="submit",ng-click="add_tag(user,newtag)",value="add")
+      textarea(ng-model='user.bio')
 
+    #login-block(ng-show='!user')
+      h2 login option
+      p
+        a#facebook-login-link facebook login
+      p
+        a#twitter-login-link twitter login
+      p
+        a#github-login-link github login
+    #logout-block(ng-show='user')
+      h2 logout option
+      p
+        span#login-user-info
+        a#logout-link logout
+    script
+      loginCheck()
   .span8
     form.form-search
       input.search-query(ng-model="search")
@@ -17,19 +33,3 @@
           .name {{person.name}}
           img(ng-src="http://avatars.io/twitter/{{person.twitter}}")
           span.label.tag(ng-repeat="tag in person.tags") {{tag}}
-    div#login-block
-      h2 login option
-      p
-        a#facebook-login-link facebook login
-      p
-        a#twitter-login-link twitter login
-      p
-        a#github-login-link github login
-    div#logout-block
-      h2 logout option
-      p
-        span#login-user-info
-        &nbsp;now&nbsp;login.&nbsp;
-        a#logout-link logout
-    script
-      loginCheck()
