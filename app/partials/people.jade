@@ -65,14 +65,8 @@
       li(ng-repeat="person in people | filter:search")
         .person(ng-class="{{person.status}}")
           h4.name {{person.$id}}
-<<<<<<< HEAD
-          img(ng-src="{{person.avatar}}?size=small")
-          span.label.tag(ng-repeat="tag in person.tags")
-            a(ng-href="/tag/{{tag}}") {{tag}}
-=======
           div.row
             div.span1.pull-left
               img.img-polaroid(ng-src="{{person.avatar}}?size=small",width=70)
             div.span6.pull-left
               span.label.tag(ng-repeat="tag in person.tags") {{tag}}
->>>>>>> 調整頁面樣式，頁面可捲動，圖片排版
