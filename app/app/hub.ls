@@ -25,6 +25,8 @@ angular.module 'hub.g0v.tw' <[ui.state firebase]>
                 "http://avatars.io/github/#{user.auth.twitter.username}?size=#version"
             | user.auth?github?username
                 "http://avatars.io/github/#{user.auth.github.username}?size=#version"
+        remove_tag: (person, tag) ->
+            person.tags = [t for t in person.tags when t isnt tag]
         add_tag: (person) ->
             person.tags ?= []
             # XXX check duplicated

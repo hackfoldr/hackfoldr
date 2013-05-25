@@ -1,12 +1,18 @@
 .row
   .span4.people(resize,ng-cloak)
     .self(ng-show='user')
+      h2.displayName {{user.displayName}}
+      .name {{user.username}}
       img(ng-src="{{ user.avatar }}")
-      name {{name}}
-      form
-        span.label(ng-repeat="tag in user.tags") {{tag}}
-        input(ng-model="newtag")
+      label 關鍵字
+      span.label(ng-repeat="tag in user.tags",ng-mouseenter="toremove=1",ng-mouseleave="toremove=0")
+        | {{tag}}
+        a(ng-show="toremove",ng-click="remove_tag(user, tag)")
+          i.icon-remove
+      form.newtag
+        input.tag(ng-model="newtag")
         input(type="submit",ng-click="add_tag(user)",value="add")
+      label 自我介紹
       textarea(ng-model='user.bio')
       ul.services
         li(ng-repeat="provider in ['facebook', 'twitter', 'github']")
