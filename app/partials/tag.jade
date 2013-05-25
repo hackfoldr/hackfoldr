@@ -1,5 +1,5 @@
-.tag-content(resize,ng-cloak)
-  h2 關於 {{ tag }}
+.row.tag-content(resize,ng-cloak)
+  .span4
     h3 專案
       ul
         li(ng-repeat="project in projects")
@@ -10,4 +10,8 @@
           .person(ng-class="{{person.status}}")
             .name {{person.username}}
             img(ng-src="http://avatars.io/twitter/{{person.twitter}}")
-            span.label(ng-repeat="tag in person.tags") {{tag}}
+            span.label(ng-repeat="tag in person.tags")
+              a(ng-href='/tag/{{tag}}') {{tag}}
+  .span8
+    h2 關於 {{ tag }}
+    #disqus_thread.content-panel-content

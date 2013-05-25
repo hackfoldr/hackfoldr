@@ -6,7 +6,7 @@
       img(ng-src="{{ user.avatar }}")
       label 關鍵字
       span.label(ng-repeat="tag in user.tags",ng-mouseenter="toremove=1",ng-mouseleave="toremove=0")
-        | {{tag}}
+        a(ng-href="/tag/{{tag}}") {{tag}}
         a(ng-show="toremove",ng-click="remove_tag(user, tag)")
           i.icon-remove
       form.newtag

@@ -1,13 +1,45 @@
 angular.module 'hub.g0v.tw' <[ui.state firebase]>
 
-.controller TagControl: <[$scope $state Hub]> ++ ($scope, $state, Hub) ->
+.controller TagControl: <[$scope $state $location Hub]> ++ ($scope, $state, $location, Hub) ->
   $scope.$watch '$state.params.tag' (tag) ->
     $scope.tag = tag
+    $scope.loadDisqus tag
   $scope <<< do
     projects:
       * name: \立法院
       * name: \meta
     people: Hub.people
+    loadDisqus: (tag) ->
+        console.log \load
+        if $location.host! is 'localhost'
+            return
+            window.disqus_developer = 1;
+
+        window.disqus_shortname = 'g0vhub'
+        window.disqus_identifier = "tag-#tag"
+        window.disqus_url = "http://hack.g0v.tw/tag/#tag"
+        if typeof DISQUS isnt 'undefined'
+          DISQUS.reset do
+            reload: true
+            config: ->
+              this.page.identifier = window.disqus_identifier
+              this.page.url = window.disqus_url
+        oldDsq = document.getElementById('disqusCommentScript');
+        if(oldDsq)
+            (document.getElementsByTagName('head')[0] ||
+            document.getElementsByTagName('body')[0]).removeChild(oldDsq)
+        console.log \url window.disqus_url
+        ``
+        // http://docs.disqus.com/developers/universal/
+        (function() {
+          var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+          dsq.src = 'http://angularjs.disqus.com/embed.js';
+          (document.getElementsByTagName('head')[0] ||
+            document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+        ``
+
+        angular.element document.getElementById 'disqus_thread' .html ''
 
 .controller PeopleCtrl: <[$scope $state Hub angularFire]> ++ ($scope, $state, Hub, angularFire) ->
     $scope.safeApply = (fn) ->
