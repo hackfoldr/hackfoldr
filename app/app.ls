@@ -12,6 +12,10 @@ angular.module \app <[ui partials app.controllers hub.g0v.tw ui.state ui.bootstr
       url: '/people'
       templateUrl: '/partials/people.html'
       controller: \PeopleCtrl
+      onEnter: ->
+        $ \body .addClass \people
+      onExit: ->
+        $ \body .removeClass \people
     .state 'tag' do
       url: '/tag/{tag}'
       templateUrl: '/partials/tag.html'
