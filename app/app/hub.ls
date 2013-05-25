@@ -10,7 +10,6 @@ angular.module 'hub.g0v.tw' <[ui.state firebase]>
       * name: \meta
     people: Hub.people
     loadDisqus: (tag) ->
-        console.log \load
         if $location.host! is 'localhost'
             return
             window.disqus_developer = 1;
