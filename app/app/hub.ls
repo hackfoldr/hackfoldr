@@ -152,14 +152,3 @@ angular.module 'hub.g0v.tw' <[ui.state firebase]>
     self <<< do
         root: myDataRef
         people: people
-        register: ->
-            person = do
-              name: \clkao
-              github: \clkao
-              twitter: \clkao
-              tags: <[ly g0v hackath3n livescript]>
-              status: \available
-            user = myDataRef.child "people/#{person.name}"
-            me <- user.once \value
-            unless me.val!
-                user.set person
