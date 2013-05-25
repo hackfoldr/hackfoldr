@@ -6,8 +6,8 @@
           .name {{project.name}}
     h3 人群
       ul
-        li(ng-repeat="person in people")
+        li(ng-repeat="person in people | filter:{tags: tag}")
           .person(ng-class="{{person.status}}")
-            .name {{person.name}}
+            .name {{person.username}}
             img(ng-src="http://avatars.io/twitter/{{person.twitter}}")
             span.label(ng-repeat="tag in person.tags") {{tag}}
