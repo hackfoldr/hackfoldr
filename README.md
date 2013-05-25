@@ -27,7 +27,7 @@ For example, with an index like http://ethercalc.org/g0v-hackath2n, you'll get h
 # Install
 
     % npm i
-    % ./node_modules/.bin/brunch w -s
+    % npm run start
 
 # CC0 1.0 Universal
 
