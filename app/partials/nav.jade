@@ -22,8 +22,11 @@ ul.nav
         a(role='menuitem', tabindex='-1',ng-href='/g0v-ly') 立法院專案
       li(role='presentation')
         a(role='menuitem', tabindex='-1',ng-href='/g0vwelfare') 福利請聽
-  //li
-    a(ng-href='/people') People
+  li
+    a(ng-href='/people')
+      | Hub
+      span.label.label-info 簽到處
+
 
 ul.nav.pull-right
   li(ng-class="{ active: $state.includes('about') }")
