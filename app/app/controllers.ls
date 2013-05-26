@@ -137,7 +137,7 @@ angular.module 'app.controllers' <[ui.state]>
       | \gsheet =>
           "https://docs.google.com/spreadsheet/ccc?key=#id"
       | \hackpad =>
-          "https://hackpad.com/#id"
+        "https://#{ doc.site ? '' }hackpad.com/ep/api/embed-pad?padId=#{id}"
       | \ethercalc =>
           "https://ethercalc.org/#id"
       | \url => decodeURIComponent decodeURIComponent id
@@ -190,9 +190,10 @@ angular.module 'app.controllers' <[ui.state]>
         | // https:\/\/docs\.google\.com/presentation/(?:d/)?([^/]+)/ //
             type: \gpresent
             id: that.1
-        | // https?:\/\/hackpad\.com/(?:.*?-)?([\w]+)(\#.*)?$ //
+        | // https?:\/\/(\w+\.)?hackpad\.com/(?:.*?-)?([\w]+)(\#.*)?$ //
             type: \hackpad
-            id: that.1
+            site: that.1
+            id: that.2
         | // ^(https?:\/\/[^/]+) //
             type: \url
             id: encodeURIComponent encodeURIComponent url
@@ -202,7 +203,7 @@ angular.module 'app.controllers' <[ui.state]>
         if entry.type is \dummy and !entry.title?length
           null
         else
-          {icon: "img/#{ entry.type }.png"} <<< entry <<< do
+          {icon: "/img/#{ entry.type }.png"} <<< entry <<< do
             tags: (entry.opts?tags ? []) ++ ((tags?split \,) ? [])
               .filter -> it.length
               .map (tag) ->
