@@ -1,0 +1,29 @@
+.row.tag-content(ng-switch="!!project",ng-cloak)
+  .span4
+    h3 專案
+    ul
+      li(ng-repeat="project in projects")
+        a.link(ng-href='/project/{{project.name}}') {{project.name}}
+    h3 關注
+    ul
+      //li(ng-repeat="person in people | filter:tag")
+        .person(ng-class="{{person.status}}")
+          .name {{person.username}}
+          img(ng-src="{{person.avatar}}?size=small")
+          span.label.tag(ng-repeat="tag in person.tags",ng-class="{ 'label-success': tag == 'hackath3n' }",ng-click="go('/tag/{{tag}}')") {{tag}}
+  .span8(ng-switch-when="true")
+    h2 專案 {{project.name}}
+    div(ng-include="'/partials/project.edit.html'")
+
+  .span8(ng-switch-default)
+    h2 專案 {{ project | json }}
+    form.form-search
+      .m-top-1
+      input.search-query(ng-model="search",placeholder="Filter by tag...")
+    ul
+      li(ng-repeat="project in projects | filter:{keywords: tag}")
+        .project(ng-class="{{project.status}}")
+          .name
+            | {{ project.name }}
+            .zh {{ project['name-zh'] }}
+          span.label.tag(ng-repeat="tag in project.keywords",ng-click="go('/tag/{{tag}}')") {{tag}}

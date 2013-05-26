@@ -8,6 +8,16 @@ angular.module \app <[ui partials app.controllers hub.g0v.tw ui.state ui.bootstr
     .state 'about' do
       url: '/about'
       templateUrl: '/partials/about.html'
+    .state 'project' do
+      url: '/project'
+      templateUrl: '/partials/project.html'
+      controller: \ProjectCtrl
+      onEnter: ->
+        $ \body .addClass \people
+      onExit: ->
+        $ \body .removeClass \people
+    .state 'project.detail' do
+      url: '/{projectName}'
     .state 'people' do
       url: '/people'
       templateUrl: '/partials/people.html'

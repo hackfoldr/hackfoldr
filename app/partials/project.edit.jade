@@ -1,0 +1,15 @@
+h3 editing
+form.m-top-1
+  fieldset
+    label 關鍵字
+    span.label.tag(ng-repeat="tag in project.keywords",ng-mouseenter="toremove=1",ng-mouseleave="toremove=0") 
+      | {{tag}}
+      a(ng-show="toremove",ng-click="remove_tag(project, tag)")
+        i.icon-remove
+    .input-append.m-top-p1
+      input.tag.span2(ng-model="opts.newtag")
+      button.btn(type="submit",ng-click="add_tag(project)") Add
+    label 名稱
+      input.name(ng-model="project['name-zh']")
+    label 說明
+    textarea(ng-model="project['description-zh']")

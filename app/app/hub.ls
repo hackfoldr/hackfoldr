@@ -40,6 +40,24 @@ angular.module 'hub.g0v.tw' <[ui.state firebase]>
 
         angular.element document.getElementById 'disqus_thread' .html ''
 
+.controller ProjectCtrl: <[$scope $state $location Hub angularFire]> ++ ($scope, $state, $location, Hub, angularFire) ->
+    $scope <<< do
+        people: Hub.people
+        projects: Hub.projects
+        opts: {}
+        remove_tag: (thing, tag) ->
+            thing.keywords = [t for t in thing.keywords when t isnt tag]
+        add_tag: (thing) ->
+            thing.keywords ?= []
+            # XXX check duplicated
+            thing.keywords.push $scope.opts.newtag
+            $scope.opts.newtag = ''
+            return false
+
+    $scope.$watch '$state.params.projectName' (projectName) ->
+        $scope.projectName = projectName
+        promise = angularFire Hub.root.child("projects/#{projectName}"), $scope, 'project', {}
+
 .controller PeopleCtrl: <[$scope $state Hub angularFire]> ++ ($scope, $state, Hub, angularFire) ->
     $scope.safeApply = (fn) ->
         phase = $scope.$root.$$phase
@@ -57,9 +75,7 @@ angular.module 'hub.g0v.tw' <[ui.state firebase]>
             person.tags.push $scope.newtag
             $scope.newtag = ''
             return false
-        projects:
-          * name: \立法院
-          * name: \meta
+        projects: Hub.projects
         people: Hub.people
         auth: Hub.auth
         set-username: Hub.set-username
@@ -80,6 +96,7 @@ angular.module 'hub.g0v.tw' <[ui.state firebase]>
     url = window.global.config.FIREBASE
     myDataRef = new Firebase(url)
     people = angularFireCollection myDataRef.child \people
+    projects = angularFireCollection myDataRef.child \projects
     self = {}
     check-username = (username, always-prompt, cb) ->
         inuse <- myDataRef.child "people/#{username}" .once \value
@@ -151,3 +168,4 @@ angular.module 'hub.g0v.tw' <[ui.state firebase]>
     self <<< do
         root: myDataRef
         people: people
+        projects: projects
