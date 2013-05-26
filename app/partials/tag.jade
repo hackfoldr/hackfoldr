@@ -2,8 +2,8 @@
   .span4
     h3 專案
       ul
-        li(ng-repeat="project in projects")
-          .name {{project.name}}
+        li(ng-click="go('/project/{{project.name}}')",ng-repeat="project in projects | filter:{keywords: tag}")
+          .name {{project['name-zh'] || project.name }}
     h3 人群
       ul
         li(ng-repeat="person in people | filter:{tags: tag}")

@@ -5,9 +5,7 @@ angular.module 'hub.g0v.tw' <[ui.state firebase]>
     $scope.tag = tag
     $scope.loadDisqus tag
   $scope <<< do
-    projects:
-      * name: \立法院
-      * name: \meta
+    projects: Hub.projects
     people: Hub.people
     loadDisqus: (tag) ->
         if $location.host! is 'localhost'
@@ -27,7 +25,6 @@ angular.module 'hub.g0v.tw' <[ui.state firebase]>
         if(oldDsq)
             (document.getElementsByTagName('head')[0] ||
             document.getElementsByTagName('body')[0]).removeChild(oldDsq)
-        console.log \url window.disqus_url
         ``
         // http://docs.disqus.com/developers/universal/
         (function() {
@@ -53,10 +50,30 @@ angular.module 'hub.g0v.tw' <[ui.state firebase]>
             thing.keywords.push $scope.opts.newtag
             $scope.opts.newtag = ''
             return false
+        newProject: ->
+            $scope.opts.isnew = true
+            $scope.opts.editMode = true
+            if $scope.project
+                $scope.cleanup?!
+                delete $scope.project
+                $state.transitionTo 'project', {}
+            $scope.project = {}
+        saveNew: (project) ->
+            # XXX use proper angular form validation
+            return false unless project.name
+            return false if [p for p in Hub.projects when p.name is project.name].length
+            $scope.opts.isnew = false
+            Hub.root.child "projects/#{project.name}" .set project <<< { created_by: Hub.login-user.username }
+            $state.transitionTo 'project.detail', { projectName: project.name }
 
     $scope.$watch '$state.params.projectName' (projectName) ->
+        return unless projectName
         $scope.projectName = projectName
+        $scope.opts.editMode = false
+        $scope.cleanup?!
         promise = angularFire Hub.root.child("projects/#{projectName}"), $scope, 'project', {}
+        cb <- promise.then
+        $scope.cleanup = cb
 
 .controller PeopleCtrl: <[$scope $state Hub angularFire]> ++ ($scope, $state, Hub, angularFire) ->
     $scope.safeApply = (fn) ->

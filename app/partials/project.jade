@@ -1,6 +1,7 @@
 .row.tag-content(ng-switch="!!project",ng-cloak)
   .span4
     h3 專案
+    a.btn(ng-click='newProject()') New
     ul
       li(ng-repeat="project in projects")
         a.link(ng-href='/project/{{project.name}}') {{project.name}}
@@ -13,7 +14,17 @@
           span.label.tag(ng-repeat="tag in person.tags",ng-class="{ 'label-success': tag == 'hackath3n' }",ng-click="go('/tag/{{tag}}')") {{tag}}
   .span8(ng-switch-when="true")
     h2 專案 {{project.name}}
-    div(ng-include="'/partials/project.edit.html'")
+    div(ui-if='opts.editMode',ng-include="'/partials/project.edit.html'")
+    div(ui-if='!opts.editMode')
+      a.btn(ng-click="opts.editMode=1") Edit
+      .name(ng-bind="project['name']")
+      .name-zh(ng-bind="project['name-zh']")
+      .description-zh(ng-bind="project['description-zh']")
+      label 關鍵字
+      span.label.tag(ng-click="go('/tag/{{tag}}')",ng-repeat="tag in project.keywords",ng-mouseenter="toremove=1",ng-mouseleave="toremove=0") 
+        | {{tag}}
+        a(ng-show="toremove",ng-click="remove_tag(project, tag)")
+          i.icon-remove
 
   .span8(ng-switch-default)
     h2 專案 {{ project | json }}

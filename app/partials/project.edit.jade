@@ -1,15 +1,28 @@
-h3 editing
-form.m-top-1
-  fieldset
-    label 關鍵字
-    span.label.tag(ng-repeat="tag in project.keywords",ng-mouseenter="toremove=1",ng-mouseleave="toremove=0") 
-      | {{tag}}
-      a(ng-show="toremove",ng-click="remove_tag(project, tag)")
-        i.icon-remove
-    .input-append.m-top-p1
-      input.tag.span2(ng-model="opts.newtag")
-      button.btn(type="submit",ng-click="add_tag(project)") Add
-    label 名稱
-      input.name(ng-model="project['name-zh']")
-    label 說明
-    textarea(ng-model="project['description-zh']")
+div(ui-if='!opts.isnew')
+  h3 editing
+  a.btn(ng-click="opts.editMode=0") Done
+div
+  h3(ng-if='opts.isnew') 新增專案
+  form.m-top-1
+    fieldset(ui-if='opts.isnew')
+      label 代號
+      input.name(ng-model="project['name']")
+      span.help-block 英文及數字
+    fieldset(ui-if='!opts.isnew')
+      label 代號
+      .name(ng-bind="project['name']")
+    fieldset
+      label 名稱
+        input.name(ng-model="project['name-zh']")
+      label 關鍵字
+      span.label.tag(ng-repeat="tag in project.keywords",ng-mouseenter="toremove=1",ng-mouseleave="toremove=0") 
+        | {{tag}}
+        a(ng-show="toremove",ng-click="remove_tag(project, tag)")
+          i.icon-remove
+      .input-append.m-top-p1
+        input.tag.span2(ng-model="opts.newtag")
+        button.btn(type="submit",ng-click="add_tag(project)") Add
+      label 說明
+      textarea(ng-model="project['description-zh']")
+    fieldset(ng-show='opts.isnew')
+      input(type='submit',value='新增',ng-click="saveNew(project)")
