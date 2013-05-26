@@ -22,6 +22,8 @@ angular.module 'app.controllers' <[ui.state]>
     iframes: HackFolder.iframes
     docs: HackFolder.docs
     tree: HackFolder.tree
+    godoc: (doc) ->
+      $scope.go "/#{ $scope.hackId }/#{ decodeURIComponent doc.id }"
     open: (doc) ->
       window.open doc.url, doc.id
       return false

@@ -1,7 +1,7 @@
 span.link(ui-if="doc.type == 'dummy'",ng-click='doc.expand=!doc.expand')
   img(src="/img/folder.png",tooltip="{{ {'true': (doc.title || doc.id), 'false': ''}[!!collapsed] }}",tooltip-placement="right")
   span.expanded-content {{doc.title || doc.id}}
-a.link(ng-href='/{{hackId}}/{{doc.id}}',ngx-click-meta='open(doc)',ngx-final,ui-if="doc.type != 'dummy'")
+a.link(ng-click='godoc(doc)',ngx-click-meta='open(doc)',ngx-final,ui-if="doc.type != 'dummy'")
   img(ng-src="{{doc.icon}}",tooltip="{{ {'true': (doc.title || doc.id), 'false': ''}[!!collapsed] }}",tooltip-placement="right")
   span.expanded-content {{doc.title || doc.id}}
   span.label(ng-repeat='tag in doc.tags',class="label-{{tag.class}}") {{tag.content}}
