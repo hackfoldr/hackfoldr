@@ -137,7 +137,7 @@ angular.module 'app.controllers' <[ui.state]>
       | \gsheet =>
           "https://docs.google.com/spreadsheet/ccc?key=#id"
       | \hackpad =>
-        "https://#{ doc.site ? '' }hackpad.com/ep/api/embed-pad?padId=#{id}"
+        "https://#{ doc.site ? '' }hackpad.com/#{id}"
       | \ethercalc =>
           "https://ethercalc.org/#id"
       | \url => decodeURIComponent decodeURIComponent id
