@@ -8,8 +8,8 @@
       ul
         li(ng-repeat="person in people | filter:{tags: tag}")
           .person(ng-class="{{person.status}}")
+            img.img-polaroid(ng-src="{{person.avatar}}?size=small")
             .name {{person.username}}
-            img(ng-src="{{person.avatar}}?size=small")
             span.label.tag(ng-repeat="tag in person.tags",ng-class="{ 'label-success': tag == 'hackath3n' }",ng-click="go('/tag/{{tag}}')") {{tag}}
   .span8
     h2 關於 {{ tag }}

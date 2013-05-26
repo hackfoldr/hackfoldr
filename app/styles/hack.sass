@@ -1,3 +1,4 @@
+@import "compass/utilities"
 @import "compass/css3/box"
 @import "compass/css3/transition"
 
@@ -214,3 +215,20 @@ a
 .fade-show-setup.fade-show-start
   max-height: 999px
   opacity: 1
+
+.tag-content
+  ul 
+    margin-left: 0
+  li
+    border-top: 1px #ccc solid
+    +clearfix
+  .person
+    margin-top: 0.5rem
+    min-height: 70px
+    img
+      float: left
+      width: 70px
+      margin-right: 1rem
+    .name 
+      font-weight: normal
+      font-size: 1rem
