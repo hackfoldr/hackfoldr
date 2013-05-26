@@ -53,6 +53,9 @@
         a.btn#github-login-link(ng-click="auth.login('github', { rememberMe: true })")
           i.icon-github.icon-large
           | &nbsp; github
+      a.btn(ng-click="auth.login('persona', { rememberMe: true })")
+        i.icon-envelope.icon-large
+        | &nbsp; 使用 Email 登入
     #logout-block.p-all-p1(ng-show='user || toSetUsername')
       p
         span#login-user-info

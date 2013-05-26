@@ -104,10 +104,10 @@ angular.module 'hub.g0v.tw' <[ui.state firebase]>
     $scope.$on 'event:auth-logout' -> $scope.safeApply ->
         delete $scope.user
         $scope.toSetUsername = false
-    $scope.$on 'event:auth-userNameRequired' (e, {existing}) -> $scope.safeApply ->
+    $scope.$on 'event:auth-userNameRequired' (e, {existing, username}) -> $scope.safeApply ->
         $scope.toSetUsername = true
         $scope.usernameInUse = existing
-        $scope.newUsername = Hub.auth-user?username
+        $scope.newUsername = username
 
 .factory Hub: <[$http angularFireCollection $rootScope]> ++ ($http, angularFireCollection, $rootScope) ->
     url = window.global.config.FIREBASE
@@ -119,20 +119,23 @@ angular.module 'hub.g0v.tw' <[ui.state firebase]>
         inuse <- myDataRef.child "people/#{username}" .once \value
         existing = inuse.val!
         if always-prompt || existing
-            $rootScope.$broadcast 'event:auth-userNameRequired', {existing}
+            $rootScope.$broadcast 'event:auth-userNameRequired', {existing, username}
         cb?! unless existing
 
     self.set-username = (username) ->
         return unless self.auth-user
         <- check-username username, false
         # XXX: disallow if people/#username exists and we do not have the credentials listed in auth
-        info = self.auth-user{displayName} <<< {tags: [], username}
+        info = {tags: [], username}
+        info.displayName = self.auth-user.displayName if self.auth-user.displayName
         info.avatar = match self.auth-user.provider
         | 'github'
             [_, gravatar] = self.auth-user.avatar_url.match // https:\/\/secure.gravatar.com/avatar/(\w+) //
             "http://avatars.io/gravatar/#gravatar"
         | 'twitter'
             "http://avatars.io/twitter/#{self.auth-user.username}"
+        | 'persona'
+            "http://avatars.io/gravatar/#{self.auth-user.hash}"
         else
             "http://avatars.io/#{self.auth-user.provider}/#{self.auth-user.id}"
         myDataRef
@@ -159,12 +162,15 @@ angular.module 'hub.g0v.tw' <[ui.state firebase]>
             if {username}? = auth.val!
                 entry = myDataRef.child "people/#{username}"
                 login-user <- entry.once \value
+                self.login-user = login-user.val!
+                unless self.login-user
+                    return check-username username, true
+
                 if merge = self.auth-merge
                     newauth = { "#{merge.provider}": merge{id, username ? ''} }
                     entry.child 'auth' .update newauth
                     myDataRef.child "auth-map/#{merge.provider}/#{merge.id}" .set {username}
                     delete self.auth-merge
-                self.login-user = login-user.val!
                 $rootScope.$broadcast 'event:auth-login', user: self.login-user
             else
                 if link = self.auth-link
@@ -179,7 +185,7 @@ angular.module 'hub.g0v.tw' <[ui.state firebase]>
                     myDataRef.child "auth-map/#{user.provider}/#{user.id}" .set {username}
                     delete self.auth-link
                 else
-                    check-username self.auth-user.username, true
+                    check-username self.auth-user.username ? self.auth-user.email?split(\@)?0, true
         else
             $rootScope.$broadcast 'event:auth-logout'
     self <<< do
