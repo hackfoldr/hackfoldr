@@ -15,14 +15,14 @@ angular.module 'hub.g0v.tw' <[ui.state firebase]>
             window.disqus_developer = 1;
 
         window.disqus_shortname = 'g0vhub'
-        window.disqus_identifier = "tag-#tag"
+        window.disqus_identifier = encodeURIComponent "tag-#tag"
         window.disqus_url = "http://hack.g0v.tw/tag/#tag"
+        window.disqus_title = "g0v.tw 》 tag  》#tag"
         if typeof DISQUS isnt 'undefined'
           DISQUS.reset do
             reload: true
             config: ->
-              this.page.identifier = window.disqus_identifier
-              this.page.url = window.disqus_url
+              this.page <<< window{disqus_title, disqus_identifier, disqus_url}
         oldDsq = document.getElementById('disqusCommentScript');
         if(oldDsq)
             (document.getElementsByTagName('head')[0] ||
