@@ -1,5 +1,7 @@
 body.people
   overflow: auto
+  width: 80%
+  margin: 0 auto
 .people
   .self
     padding: 10px
@@ -15,10 +17,19 @@ body.people
 
       .person
         padding: 5px
+#login-block
+  .btn-group
+    margin-bottom: 10px
 .label
   margin-right: 5px
   &.tag
     cursor: pointer
+
+.people-list
+  li 
+    border-top: 1px #ccc solid
+    padding-top: 0.5rem
+
 .person
   margin-bottom: 1em
   img
@@ -32,3 +43,14 @@ body.people
 .input-append
   .tag
     height: 25px
+
+.form-search
+  text-align: right
+  input
+    display: inline-block
+
+h4.name
+  line-height: 1
+  margin: 0 0 .5em 0
+  font-size: 16px
+  font-weight: normal
