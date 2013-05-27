@@ -46,8 +46,7 @@ angular.module 'hub.g0v.tw' <[ui.state firebase]>
             thing.keywords = [t for t in thing.keywords when t isnt tag]
         add_tag: (thing) ->
             thing.keywords ?= []
-            # XXX check duplicated
-            thing.keywords.push $scope.opts.newtag
+            thing.keywords.push $scope.opts.newtag unless $scope.opts.newtag in thing.keywords
             $scope.opts.newtag = ''
             return false
         newProject: ->
