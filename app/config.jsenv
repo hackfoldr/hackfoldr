@@ -1,3 +1,4 @@
 {
+  BUILD: "git-unknown",
   FIREBASE: "https://g0vhub.firebaseio.com"
 }

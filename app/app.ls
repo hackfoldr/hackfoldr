@@ -42,3 +42,4 @@ angular.module \app <[ui partials app.controllers hub.g0v.tw ui.state ui.bootstr
   $rootScope.$state = $state
   $rootScope.$stateParam = $stateParams
   $rootScope.go = -> $location.path it
+  $rootScope._build = window.global.config.BUILD
