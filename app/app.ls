@@ -12,32 +12,24 @@ angular.module \app <[ui partials app.controllers hub.g0v.tw ui.state ui.bootstr
       url: '/project'
       templateUrl: '/partials/project.html'
       controller: \ProjectCtrl
-      onEnter: ->
-        $ \body .addClass \people
-      onExit: ->
-        $ \body .removeClass \people
     .state 'project.detail' do
       url: '/{projectName}'
     .state 'people' do
       url: '/people'
       templateUrl: '/partials/people.html'
       controller: \PeopleCtrl
-      onEnter: ->
-        $ \body .addClass \people
-      onExit: ->
-        $ \body .removeClass \people
     .state 'tag' do
       url: '/tag/{tag}'
       templateUrl: '/partials/tag.html'
       controller: \TagControl
-      onEnter: ->
-        $ \body .addClass \people
-      onExit: ->
-        $ \body .removeClass \people
     .state 'hack' do
       url: '/{hackId}'
       templateUrl: '/partials/hack.html'
       controller: \HackFolderCtrl
+      onEnter: ->
+        $ \body .addClass \hide-overflow
+      onExit: ->
+        $ \body .removeClass \hide-overflow
     .state 'hack.doc' do
       url: '/{docId}'
 
