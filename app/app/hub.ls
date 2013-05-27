@@ -190,7 +190,8 @@ angular.module 'hub.g0v.tw' <[ui.state firebase]>
                     myDataRef.child "auth-map/#{user.provider}/#{user.id}" .set {username}
                     delete self.auth-link
                 else
-                    check-username self.auth-user.username ? self.auth-user.email?split(\@)?0, true
+                    self.auth-user.username ?= self.auth-user.email?split(\@)?0.replace(/\./, \,)
+                    check-username self.auth-user.username, true
         else
             $rootScope.$broadcast 'event:auth-logout'
     self <<< do
