@@ -88,8 +88,7 @@ angular.module 'hub.g0v.tw' <[ui.state firebase]>
             person.tags = [t for t in person.tags when t isnt tag]
         add_tag: (person) ->
             person.tags ?= []
-            # XXX check duplicated
-            person.tags.push $scope.newtag
+            person.tags.push $scope.newtag unless $scope.newtag in person.tags
             $scope.newtag = ''
             return false
         projects: Hub.projects
