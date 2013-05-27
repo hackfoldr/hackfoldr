@@ -1,6 +1,7 @@
 @import "compass/utilities"
-@import "compass/css3/box"
-@import "compass/css3/transition"
+@import "compass/css3"
+//@import "compass/css3/box"
+// @import "compass/css3/transition"
 
 
 .navbar .nav > li.dropdown-split-left > a
@@ -216,6 +217,8 @@ a
   max-height: 999px
   opacity: 1
 
+/* hack.g0v.tw/tag/ */
+
 .tag-content
   ul 
     margin-left: 0
@@ -232,3 +235,22 @@ a
     .name 
       font-weight: normal
       font-size: 1rem
+
+/* hack.g0v.tw/tag/ */
+
+body.about
+  overflow: auto
+.about
+  width: 80%
+  max-width: 800px
+  margin: 3rem auto 8rem auto
+  h1
+    margin: 0 0 1rem 0
+  h2
+    font-size: 1.5rem
+    margin-top: 2rem
+    +box-shadow(#ccc 0 1px 0, #fff 0 2px 0)
+  h3
+    font-size: 1rem
+  p, ol, ul, li
+    line-height: 1.5rem
