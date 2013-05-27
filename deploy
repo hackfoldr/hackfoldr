@@ -10,3 +10,8 @@ cd _public
 git add -A . && git commit -a -m 'regen' && git push origin gh-pages
 cd ..
 git push $upstream gh-pages
+if [ "x$FIREBASE" != "x" ]
+then
+	echo $FIREBASE
+	lsc -j < etc/rules.ls | curl -X PUT -d @- $FIREBASE/.settings/rules.json?auth=$FIREBASE_SECRET
+fi
