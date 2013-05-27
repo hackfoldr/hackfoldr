@@ -121,6 +121,7 @@ angular.module 'hub.g0v.tw' <[ui.state firebase]>
     projects = angularFireCollection myDataRef.child \projects
     self = {}
     check-username = (username, always-prompt, cb) ->
+        username.=replace(/\./g, \,)
         inuse <- myDataRef.child "people/#{username}" .once \value
         existing = inuse.val!
         if always-prompt || existing
@@ -190,7 +191,7 @@ angular.module 'hub.g0v.tw' <[ui.state firebase]>
                     myDataRef.child "auth-map/#{user.provider}/#{user.id}" .set {username}
                     delete self.auth-link
                 else
-                    self.auth-user.username ?= self.auth-user.email?split(\@)?0.replace(/\./, \,)
+                    self.auth-user.username ?= self.auth-user.email?split(\@)?0
                     check-username self.auth-user.username, true
         else
             $rootScope.$broadcast 'event:auth-logout'
