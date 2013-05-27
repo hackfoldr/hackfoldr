@@ -133,6 +133,7 @@ angular.module 'hub.g0v.tw' <[ui.state firebase]>
         <- check-username username, false
         # XXX: disallow if people/#username exists and we do not have the credentials listed in auth
         info = {tags: [], username}
+        info.auth = "#{self.auth-user.provider}": self.auth-user{id, username ? ''}
         info.displayName = self.auth-user.displayName if self.auth-user.displayName
         info.avatar = match self.auth-user.provider
         | 'github'
@@ -147,7 +148,6 @@ angular.module 'hub.g0v.tw' <[ui.state firebase]>
         myDataRef
             ..child "auth-map/#{self.auth-user.provider}/#{self.auth-user.id}" .set {username}
             ..child "people/#{username}" .set info
-            ..child "people/#{username}/auth/#{self.auth-user.provider}" .set self.auth-user{id, username}
         login-user <- myDataRef.child "people/#{username}" .once \value
         self.login-user = login-user.val!
         $rootScope.$broadcast 'event:auth-login', user: self.login-user
@@ -180,30 +180,19 @@ angular.module 'hub.g0v.tw' <[ui.state firebase]>
         else if user
             self.auth-user = user
             auth <- myDataRef.child "auth-map/#{user.provider}/#{user.id}" .once \value
-            if {username}? = auth.val!
+            if !self.auth-link and {username}? = auth.val!
                 entry = myDataRef.child "people/#{username}"
                 login-user <- entry.once \value
                 self.login-user = login-user.val!
                 unless self.login-user
                     return check-username username, true
-
-                if merge = self.auth-merge
-                    newauth = { "#{merge.provider}": merge{id, username ? ''} }
-                    entry.child 'auth' .update newauth
-                    myDataRef.child "auth-map/#{merge.provider}/#{merge.id}" .set {username}
-                    delete self.auth-merge
                 $rootScope.$broadcast 'event:auth-login', user: self.login-user
             else
                 if link = self.auth-link
                     username = self.auth-link-user.username
-                    # XXX might need to reuse the token from self.auth-link to write
-                    entry = myDataRef.child "people/#{username}"
-                    #login-user <- entry.once \value
-                    #self.login-user = login-user.val!
-                    newauth = { "#{user.provider}": user{id, username ? ''} }
-                    #$rootScope.$broadcast 'event:auth-login', user: self.login-user
-                    entry.child 'auth' .update newauth
                     myDataRef.child "auth-map/#{user.provider}/#{user.id}" .set {username}
+                    err <- myDataRef.auth link.firebaseAuthToken
+                    myDataRef.child "people/#{username}/auth" .update "#{user.provider}": user{id, username ? ''}
                     delete self.auth-link
                 else
                     self.auth-user.username ?= self.auth-user.email?split(\@)?0
