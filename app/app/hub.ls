@@ -99,15 +99,22 @@ angular.module 'hub.g0v.tw' <[ui.state firebase]>
         login-and-merge: Hub.login-and-merge
         login-and-link: Hub.login-and-link
     $scope.$on 'event:auth-login' (e, {user}) -> $scope.safeApply ->
-        promise = angularFire Hub.root.child("people/#{user.username}"), $scope, 'user', {}
         $scope.toSetUsername = false
+        promise = angularFire Hub.root.child("people/#{user.username}"), $scope, 'user', {}
+        cb <- promise.then
+        $scope.safeApply!
+        $scope.cleanup = cb
     $scope.$on 'event:auth-logout' -> $scope.safeApply ->
+        $scope.cleanup?!
         delete $scope.user
         $scope.toSetUsername = false
     $scope.$on 'event:auth-userNameRequired' (e, {existing, username}) -> $scope.safeApply ->
         $scope.toSetUsername = true
         $scope.usernameInUse = existing
         $scope.newUsername = username
+
+    if Hub.login-user
+        $scope.$emit 'event:auth-login' user: Hub.login-user
 
 .factory Hub: <[$http angularFireCollection $rootScope]> ++ ($http, angularFireCollection, $rootScope) ->
     url = window.global.config.FIREBASE
