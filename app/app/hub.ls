@@ -153,12 +153,27 @@ angular.module 'hub.g0v.tw' <[ui.state firebase]>
         $rootScope.$broadcast 'event:auth-login', user: self.login-user
 
     self.login-and-merge = (provider) ->
-        self.auth-merge = self.auth-user
-        self.auth.login provider
+        done = (username) ->
+            # here we use the current token, which allows to write to people/#username
+            user = self.auth-user
+            entry = myDataRef.child "people/#{username}/auth" .update "#{user.provider}": user{id, username ? ''}
+            # now we switch back to the previous token, which authenticates as the new provider to be merged
+            err <- myDataRef.auth user.firebaseAuthToken
+            myDataRef.child "auth-map/#{user.provider}/#{user.id}" .set {username}
+            $rootScope.$broadcast 'event:auth-login', user: self.login-user
+        merge-auth = new FirebaseAuthClient myDataRef, (error, user) ->
+            if error => console.log error
+            if user
+                auth <- myDataRef.child "auth-map/#{user.provider}/#{user.id}" .once \value
+                if {username}? = auth.val!
+                    done username
+        merge-auth.login provider
+
     self.login-and-link = (provider) ->
         self.auth-link = self.auth-user
         self.auth-link-user = self.login-user
         self.auth.login provider
+
     self.auth = new FirebaseAuthClient myDataRef, (error, user) ->
         if error
             console.log error
