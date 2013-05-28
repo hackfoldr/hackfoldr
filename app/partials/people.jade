@@ -64,6 +64,13 @@
     form.form-search
       .m-top-1
       input.search-query(ng-model="search",placeholder="Filter by tag...")
+    .taglist.row
+      span(ng-repeat="entry in tagcloud")
+        span.label.tag(ng-click="$parent.search = entry.tag",ng-mouseenter="toadd=1",ng-mouseleave="toadd=0")
+          | {{entry.tag}}
+          span.badge.badge-info(style="font-size: smaller") {{entry.count}}
+          a(ng-show="toadd",ng-click="add_tag(user, entry.tag)")
+            i.icon-plus
     ul.people-list
       li(ng-repeat="person in people | filter:search")
         .person(ng-class="{{person.status}}")

@@ -87,14 +87,16 @@ angular.module 'hub.g0v.tw' <[ui.state firebase]>
         gotag: (tag) -> $scope.go "/tag/#{ encodeURIComponent tag }"
         remove_tag: (person, tag) ->
             person.tags = [t for t in person.tags when t isnt tag]
-        add_tag: (person) ->
+        add_tag: (person, tag) ->
             person.tags ?= []
-            person.tags.push $scope.newtag unless $scope.newtag in person.tags
-            $scope.newtag = ''
+            newtag = tag ? $scope.newtag
+            person.tags.push newtag unless newtag in person.tags
+            $scope.newtag = '' unless tag
             return false
         projects: Hub.projects
         people: Hub.people
         auth: Hub.auth
+        hub: Hub
         set-username: Hub.set-username
         login-and-merge: Hub.login-and-merge
         login-and-link: Hub.login-and-link
@@ -113,15 +115,30 @@ angular.module 'hub.g0v.tw' <[ui.state firebase]>
         $scope.usernameInUse = existing
         $scope.newUsername = username
 
+    $scope.$watch 'hub.inited' ->
+        return unless it
+        do-tagcloud = (people) ->
+            return unless people
+            tagcloud = {}
+            for _, {tags}:p of people when tags
+                for tag in tags
+                    tagcloud[tag] ?= 0
+                    tagcloud[tag]++
+            $scope.tagcloud = [{tag, count} for tag, count of tagcloud when count > 1].sort (a, b) -> b.count - a.count
+        do-tagcloud $scope.people if Hub.people.length
+        <- setTimeout _, 100ms
+        $scope.$watch 'people' $scope.safeApply -> do-tagcloud
     if Hub.login-user
         $scope.$emit 'event:auth-login' user: Hub.login-user
 
 .factory Hub: <[$http angularFireCollection $rootScope]> ++ ($http, angularFireCollection, $rootScope) ->
     url = window.global.config.FIREBASE
-    myDataRef = new Firebase(url)
-    people = angularFireCollection myDataRef.child \people
-    projects = angularFireCollection myDataRef.child \projects
     self = {}
+    myDataRef = new Firebase(url)
+    init = ->
+        self.inited = true
+    people = angularFireCollection myDataRef.child(\people), init
+    projects = angularFireCollection myDataRef.child \projects
     check-username = (username, always-prompt, cb) ->
         username.=replace(/\./g, \,)
         inuse <- myDataRef.child "people/#{username}" .once \value
