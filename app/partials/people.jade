@@ -76,7 +76,7 @@
         .person(ng-class="{{person.status}}")
           div.row
             div.span1.pull-left
-              img.img-polaroid(ng-src="{{person.avatar}}?size=small",width=70)
+              img.img-polaroid(ng-src="{{person.avatar}}?size=medium",width=70)
             div.span6.pull-left
               h4.name {{person.$id}}
               span.label.tag(ng-repeat="tag in person.tags",ng-class="{ 'label-success': tag == 'hackath3n' }",ng-click="gotag(tag)") {{tag}}
