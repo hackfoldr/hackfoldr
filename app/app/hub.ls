@@ -5,6 +5,7 @@ angular.module 'hub.g0v.tw' <[ui.state firebase]>
     $scope.tag = tag
     $scope.loadDisqus tag
   $scope <<< do
+    gotag: (tag) -> $scope.go "/tag/#{ encodeURIComponent tag }"
     projects: Hub.projects
     people: Hub.people
     loadDisqus: (tag) ->
@@ -83,6 +84,7 @@ angular.module 'hub.g0v.tw' <[ui.state firebase]>
             $scope.$apply fn
 
     $scope <<< do
+        gotag: (tag) -> $scope.go "/tag/#{ encodeURIComponent tag }"
         remove_tag: (person, tag) ->
             person.tags = [t for t in person.tags when t isnt tag]
         add_tag: (person) ->

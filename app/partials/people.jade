@@ -7,7 +7,7 @@
       form.m-top-1
         fieldset
           label 關鍵字
-          span.label.tag(ng-repeat="tag in user.tags",ng-click="go('/tag/{{tag}}')",ng-mouseenter="toremove=1",ng-mouseleave="toremove=0") 
+          span.label.tag(ng-repeat="tag in user.tags",ng-click="gotag(tag)",ng-mouseenter="toremove=1",ng-mouseleave="toremove=0") 
             | {{tag}}
             a(ng-show="toremove",ng-click="remove_tag(user, tag)")
               i.icon-remove
@@ -72,4 +72,4 @@
               img.img-polaroid(ng-src="{{person.avatar}}?size=small",width=70)
             div.span6.pull-left
               h4.name {{person.$id}}
-              span.label.tag(ng-repeat="tag in person.tags",ng-class="{ 'label-success': tag == 'hackath3n' }",ng-click="go('/tag/{{tag}}')") {{tag}}
+              span.label.tag(ng-repeat="tag in person.tags",ng-class="{ 'label-success': tag == 'hackath3n' }",ng-click="gotag(tag)") {{tag}}
