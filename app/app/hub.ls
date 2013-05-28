@@ -1,5 +1,18 @@
 angular.module 'hub.g0v.tw' <[ui.state firebase]>
 
+.controller AuthzCtrl: <[$scope $window $state Hub]> ++ ($scope, $window, $state, Hub) ->
+  $scope.$on 'event:auth-login' (e, {user}) -> $scope.$apply ->
+    console.log \hiauthz $state.params.request, user, Hub.auth-user
+    req-ref = Hub.root.child "authz/#{$state.params.request}"
+    <- req-ref.once \value
+    req = it.val!
+    err <- req-ref.update {user.username}
+
+    if err
+        console.log err
+    else
+        $window.location.href = that if req.uri
+
 .controller TagControl: <[$scope $state $location Hub]> ++ ($scope, $state, $location, Hub) ->
   $scope.$watch '$state.params.tag' (tag) ->
     $scope.tag = tag

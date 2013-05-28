@@ -5,6 +5,10 @@ angular.module('scroll', []).value('$anchorScroll', angular.noop)
 angular.module \app <[ui partials app.controllers hub.g0v.tw ui.state ui.bootstrap]>
 .config <[$stateProvider $urlRouterProvider $locationProvider]> ++ ($stateProvider, $urlRouterProvider, $locationProvider) ->
   $stateProvider
+    .state 'authz' do
+      url: '/authz/{request}'
+      templaetUrl: '/partials/authz.html'
+      controller: \AuthzCtrl
     .state 'about' do
       url: '/about'
       templateUrl: '/partials/about.html'
