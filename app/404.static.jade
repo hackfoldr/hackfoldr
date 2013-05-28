@@ -30,8 +30,6 @@ html(lang='en')
     script(src='/js/partials.js')
     script(src='/js/app.js')
   body(ng-controller='AppCtrl',data-spy="scroll")
-    a.github-ribbon(href='https://github.com/g0v/hack.g0v.tw')
-      img.github-ribbon(ng-hide='hideGithubRibbon',ng-animate="'fade'",style='position: absolute; top: 0; right: 0; border: 0; z-index: 9999;', src='https://s3.amazonaws.com/github/ribbons/forkme_right_orange_ff7600.png', alt='Fork me on GitHub')
     .wrapper
       .navbar.navbar-inverse.navbar-fixed-top.visible-desktop
         .navbar-inner
@@ -40,7 +38,8 @@ html(lang='en')
               span.icon-bar
               span.icon-bar
               span.icon-bar
-            .small.badge.badge-inverse.pull-right {{ _build }}
+            a(href="http://github.com/g0v/hack.g0v.tw",target="_blank")
+              .small.badge.badge-inverse.pull-right {{ _build }}
             #brand.brand: img(src="/img/g0v-icon-invert.png")
             .nav-collapse
               div(ng-include="'/partials/nav.html'")
