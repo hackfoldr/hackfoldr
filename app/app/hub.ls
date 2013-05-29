@@ -6,12 +6,13 @@ angular.module 'hub.g0v.tw' <[ui.state firebase]>
     req-ref = Hub.root.child "authz/#{$state.params.request}"
     <- req-ref.once \value
     req = it.val!
-    err <- req-ref.update {user.username}
+    email = Hub.auth-user.email ? Hub.auth-user.emails?0
+    err <- req-ref.update {user.username, user.displayName, email}
 
     if err
         console.log err
     else
-        $window.location.href = that if req.uri
+        $window.location.href = that + '/' + $state.params.request if req.uri
 
 .controller TagControl: <[$scope $state $location Hub]> ++ ($scope, $state, $location, Hub) ->
   $scope.$watch '$state.params.tag' (tag) ->
