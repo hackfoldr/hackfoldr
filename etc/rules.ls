@@ -14,3 +14,7 @@ rules:
   products:
     '.read': true
     '.write': true
+  authz:
+    $id:
+      '.read': "auth != null && data.child('username').val() === null",
+      '.write': "auth != null && (newData.child('username').val() === root.child('auth-map/' + auth.provider + '/' + auth.id + '/username').val())"
