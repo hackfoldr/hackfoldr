@@ -1,6 +1,7 @@
 #!/bin/sh
 upstream=$1
 : ${upstream:=origin}
+npm i
 git pull $upstream master || exit -1
 git branch -f gh-pages $upstream/gh-pages
 rm -rf _public
