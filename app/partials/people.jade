@@ -1,5 +1,5 @@
-.row.people(style="width:940px;margin-left:auto;margin-right:auto;",ng-cloak)
-  .span4(style="margin-left:0px;")
+.row.people.people-layout(ng-cloak)
+  .span4#left-block
     .self(ng-show='user')
       h2.displayName {{user.displayName}}
       //.name {{user.username}}
@@ -12,14 +12,14 @@
             a(ng-show="toremove",ng-click="remove_tag(user, tag)")
               i.icon-remove
           .input-append.m-top-p1
-            input.tag(style="width:170px;",ng-model="newtag")
+            input.tag(ng-model="newtag")
             button.btn(type="submit",ng-click="add_tag(user)") 新增關鍵字
           label 自我介紹
-          textarea(style="width:260px;height:70px;",ng-model='user.bio')
+          textarea#bio-input(ng-model='user.bio')
       h4 連結帳號
       ul.services.unstyled
-        li(style="margin-bottom:5px;", ng-repeat="provider in ['facebook', 'twitter', 'github']")
-          a.btn.btn-block.btn-primary.disabled(style="cursor:pointer;", ng-href="http://{{provider}}.com/{{user.auth[provider].username}}",ng-show="user.auth[provider]")
+        li.m-bottom-1(ng-repeat="provider in ['facebook', 'twitter', 'github']")
+          a.btn.btn-block.btn-primary.disabled(ng-href="http://{{provider}}.com/{{user.auth[provider].username}}",ng-show="user.auth[provider]")
             i(class="icon-{{provider}}")
             | &nbsp; {{user.auth[provider].username}}
           a.btn.btn-block(ng-click="loginAndLink(provider)",ng-show="!user.auth[provider]")
@@ -31,7 +31,7 @@
         form.m-top-1
           fieldset
             .input-append
-              input.tag(style="width:220px;",ng-model="newUsername")
+              input#set-username-input(ng-model="newUsername")
               button.btn(type="submit",ng-click="setUsername(newUsername)") 設定
         .alert.alert-error(ng-show='usernameInUse')
           已有 G0V 成員使用此名稱，請選擇其他使用者名稱
@@ -43,7 +43,7 @@
 
     #login-block.p-all-p1(ng-show='!user && !toSetUsername')
       h3 登入 G0V
-      .well(style="max-width: 400px; margin: 0 auto 10px;")
+      .well
         button.btn.btn-block(type="button", ng-click="auth.login('facebook', { rememberMe: true, scope: 'email,user_likes' })")
           i.icon-facebook.icon-large
           | &nbsp; 使用 facebook 登入
@@ -58,16 +58,16 @@
       p
         button.btn.btn-block#logout-link(ng-click="auth.logout()") 登出 G0V
 
-  .span8.p-all-p1(style="margin-left:0px;padding-left:0px;")
+  .span8.p-all-p1#right-block
     form.form-search
       .m-top-1
       input.search-query(ng-model="search",placeholder="Filter by tag...")
-    .taglist.row(style="margin-left:30px;margin-bottom:15px;")
+    .taglist.row
       span(ng-repeat="entry in tagcloud")
         span.label.tag(ng-click="$parent.search = entry.tag",ng-mouseenter="toadd=1",ng-mouseleave="toadd=0")
           i.icon-plus(ng-class="{transparent: !toadd}",ng-click="add_tag(user, entry.tag)",ngx-final)
           | {{entry.tag}}
-          span.badge.badge-info(style="font-size: smaller") {{entry.count}}
+          span.badge.badge-info.font-se {{entry.count}}
     ul.people-list
       li(ng-repeat="person in people | filter:search")
         .person(ng-class="{{person.status}}")
