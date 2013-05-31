@@ -1,5 +1,5 @@
-.row.tag-content(ng-cloak)
-  .span4
+.row.tag-content(style="width:940px;margin-left:auto;margin-right:auto;",ng-cloak)
+  .span4(style="margin-left:0px;")
     h3 專案
       ul
         li(ng-click="go('/project/{{project.name}}')",ng-repeat="project in projects | filter:{keywords: tag}")
@@ -11,6 +11,6 @@
             img.img-polaroid(ng-src="{{person.avatar}}?size=small")
             .name {{person.username}}
             span.label.tag(ng-repeat="tag in person.tags",ng-class="{ 'label-success': tag == 'hackath3n' }",ng-click="gotag(tag)") {{tag}}
-  .span8
+  .span8.p-all-p1(style="margin-left:0px;padding-left:0px;")
     h2 關於 {{ tag }}
     #disqus_thread.content-panel-content
