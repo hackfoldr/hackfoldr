@@ -108,7 +108,7 @@ angular.module('ui.bootstrap.collapse',['ui.bootstrap.transition'])
       var initialAnimSkip = true;
       scope.$watch(function (){ return element[0].scrollHeight; }, function (value) {
         //The listener is called when scollHeight changes
-        //It actually does on 2 scenarios: 
+        //It actually does on 2 scenarios:
         // 1. Parent is set to display none
         // 2. angular bindings inside are resolved
         //When we have a change of scrollHeight we are setting again the correct height if the group is opened
@@ -122,7 +122,7 @@ angular.module('ui.bootstrap.collapse',['ui.bootstrap.transition'])
           }
         }
       });
-      
+
       scope.$watch(attrs.collapse, function(value) {
         if (value) {
           collapse();
@@ -130,7 +130,7 @@ angular.module('ui.bootstrap.collapse',['ui.bootstrap.transition'])
           expand();
         }
       });
-      
+
 
       var currentTransition;
       var doTransition = function(change) {
@@ -163,7 +163,7 @@ angular.module('ui.bootstrap.collapse',['ui.bootstrap.transition'])
         }
         isCollapsed = false;
       };
-      
+
       var collapse = function() {
         isCollapsed = true;
         if (initialAnimSkip) {
@@ -185,7 +185,7 @@ angular.module('ui.bootstrap.accordion', ['ui.bootstrap.collapse'])
 })
 
 .controller('AccordionController', ['$scope', '$attrs', 'accordionConfig', function ($scope, $attrs, accordionConfig) {
-  
+
   // This array keeps track of the accordion groups
   this.groups = [];
 
@@ -200,7 +200,7 @@ angular.module('ui.bootstrap.accordion', ['ui.bootstrap.collapse'])
       });
     }
   };
-  
+
   // This is called from the accordion-group directive to add itself to the accordion
   this.addGroup = function(groupScope) {
     var that = this;
@@ -253,7 +253,7 @@ angular.module('ui.bootstrap.accordion', ['ui.bootstrap.collapse'])
       accordionCtrl.addGroup(scope);
 
       scope.isOpen = false;
-      
+
       if ( attrs.isOpen ) {
         getIsOpen = $parse(attrs.isOpen);
         setIsOpen = getIsOpen.assign;
@@ -262,7 +262,7 @@ angular.module('ui.bootstrap.accordion', ['ui.bootstrap.collapse'])
           function watchIsOpen() { return getIsOpen(scope.$parent); },
           function updateOpen(value) { scope.isOpen = value; }
         );
-        
+
         scope.isOpen = getIsOpen ? getIsOpen(scope.$parent) : false;
       }
 
@@ -414,10 +414,10 @@ angular.module('ui.bootstrap.buttons', [])
 }]);
 /*
 *
-*    AngularJS Bootstrap Carousel 
+*    AngularJS Bootstrap Carousel
 *
 *      A pure AngularJS carousel.
-*      
+*
 *      For no interval set the interval to non-number, or milliseconds of desired interval
 *      Template: <carousel interval="none"><slide>{{anything}}</slide></carousel>
 *      To change the carousel's active slide set the active attribute to true
@@ -449,7 +449,7 @@ angular.module('ui.bootstrap.carousel', ['ui.bootstrap.transition'])
     }
     function goNext() {
       //If we have a slide to transition from and we have a transition type and we're allowed, go
-      if (self.currentSlide && angular.isString(direction) && !$scope.noTransition && nextSlide.$element) { 
+      if (self.currentSlide && angular.isString(direction) && !$scope.noTransition && nextSlide.$element) {
         //We shouldn't do class manip in here, but it's the same weird thing bootstrap does. need to fix sometime
         nextSlide.$element.addClass(direction);
         nextSlide.$element[0].offsetWidth = nextSlide.$element[0].offsetWidth; //force reflow
@@ -631,16 +631,16 @@ dialogModule.provider("$dialog", function(){
     backdropClass: 'modal-backdrop',
     transitionClass: 'fade',
     triggerClass: 'in',
-    dialogOpenClass: 'modal-open',  
+    dialogOpenClass: 'modal-open',
     resolve:{},
     backdropFade: false,
     dialogFade:false,
     keyboard: true, // close with esc key
     backdropClick: true // only in conjunction with backdrop=true
     /* other options: template, templateUrl, controller */
-	};
+  };
 
-	var globalOptions = {};
+  var globalOptions = {};
 
   var activeBackdrops = {value : 0};
 
@@ -650,21 +650,21 @@ dialogModule.provider("$dialog", function(){
   //        // don't close dialog when backdrop is clicked by default
   //        $dialogProvider.options({backdropClick: false});
   //      });
-	this.options = function(value){
-		globalOptions = value;
-	};
+  this.options = function(value){
+    globalOptions = value;
+  };
 
   // Returns the actual `$dialog` service that is injected in controllers
-	this.$get = ["$http", "$document", "$compile", "$rootScope", "$controller", "$templateCache", "$q", "$transition", "$injector",
+  this.$get = ["$http", "$document", "$compile", "$rootScope", "$controller", "$templateCache", "$q", "$transition", "$injector",
   function ($http, $document, $compile, $rootScope, $controller, $templateCache, $q, $transition, $injector) {
 
-		var body = $document.find('body');
+    var body = $document.find('body');
 
-		function createElement(clazz) {
-			var el = angular.element("<div>");
-			el.addClass(clazz);
-			return el;
-		}
+    function createElement(clazz) {
+      var el = angular.element("<div>");
+      el.addClass(clazz);
+      return el;
+    }
 
     // The `Dialog` class represents a modal dialog. The dialog class can be invoked by providing an options object
     // containing at lest template or templateUrl and controller:
@@ -674,7 +674,7 @@ dialogModule.provider("$dialog", function(){
     // Dialogs can also be created using templateUrl and controller as distinct arguments:
     //
     //     var d = new Dialog('path/to/dialog.html', MyDialogController);
-		function Dialog(opts) {
+    function Dialog(opts) {
 
       var self = this, options = this.options = angular.extend({}, defaults, globalOptions, opts);
       this._open = false;
@@ -818,9 +818,9 @@ dialogModule.provider("$dialog", function(){
     Dialog.prototype._addElementsToDom = function(){
       body.append(this.modalEl);
 
-      if(this.options.backdrop) { 
+      if(this.options.backdrop) {
         if (activeBackdrops.value === 0) {
-          body.append(this.backdropEl); 
+          body.append(this.backdropEl);
         }
         activeBackdrops.value++;
       }
@@ -831,10 +831,10 @@ dialogModule.provider("$dialog", function(){
     Dialog.prototype._removeElementsFromDom = function(){
       this.modalEl.remove();
 
-      if(this.options.backdrop) { 
+      if(this.options.backdrop) {
         activeBackdrops.value--;
         if (activeBackdrops.value === 0) {
-          this.backdropEl.remove(); 
+          this.backdropEl.remove();
         }
       }
       this._open = false;
@@ -960,7 +960,7 @@ angular.module('ui.bootstrap.modal', ['ui.bootstrap.dialog'])
       // Create a dialog with the template as the contents of the directive
       // Add the current scope as the resolve in order to make the directive scope as a dialog controller scope
       opts = angular.extend(opts, {
-        template: elm.html(), 
+        template: elm.html(),
         resolve: { $scope: function() { return scope; } }
       });
       var dialog = $dialog.dialog(opts);
@@ -972,9 +972,9 @@ angular.module('ui.bootstrap.modal', ['ui.bootstrap.dialog'])
           $parse(attrs.close)(scope);
         };
       } else {
-        setClosed = function() {         
+        setClosed = function() {
           if (angular.isFunction($parse(shownExpr).assign)) {
-            $parse(shownExpr).assign(scope, false); 
+            $parse(shownExpr).assign(scope, false);
           }
         };
       }
@@ -1038,7 +1038,7 @@ angular.module('ui.bootstrap.pagination', [])
 
       scope.$watch('numPages + currentPage + maxSize', function() {
         scope.pages = [];
-        
+
         // Default page limits
         var startPage = 1, endPage = scope.numPages;
 
@@ -1210,7 +1210,7 @@ angular.module( 'ui.bootstrap.tooltip', [ 'ui.bootstrap.position' ] )
 
   // The options specified to the provider globally.
   var globalOptions = {};
-  
+
   /**
    * `options({})` allows global configuration of all tooltips in the
    * application.
@@ -1220,9 +1220,9 @@ angular.module( 'ui.bootstrap.tooltip', [ 'ui.bootstrap.position' ] )
    *     $tooltipProvider.options( { placement: 'left' } );
    *   });
    */
-	this.options = function( value ) {
-		angular.extend( globalOptions, value );
-	};
+  this.options = function( value ) {
+    angular.extend( globalOptions, value );
+  };
 
   /**
    * This is a helper function for translating camel-case to snake-case.
@@ -1259,7 +1259,7 @@ angular.module( 'ui.bootstrap.tooltip', [ 'ui.bootstrap.position' ] )
        */
       function setTriggers ( trigger ) {
         var show, hide;
-       
+
         show = trigger || options.trigger || defaultTriggerShow;
         if ( angular.isDefined ( options.trigger ) ) {
           hide = triggerMap[options.trigger] || show;
@@ -1276,7 +1276,7 @@ angular.module( 'ui.bootstrap.tooltip', [ 'ui.bootstrap.position' ] )
       var directiveName = snake_case( type );
       var triggers = setTriggers( undefined );
 
-      var template = 
+      var template =
         '<'+ directiveName +'-popup '+
           'title="{{tt_title}}" '+
           'content="{{tt_content}}" '+
@@ -1306,7 +1306,7 @@ angular.module( 'ui.bootstrap.tooltip', [ 'ui.bootstrap.position' ] )
               hideTooltipBind();
             }
           }
-          
+
           // Show the tooltip with delay if specified, otherwise show it immediately
           function showTooltipBind() {
             if ( scope.tt_popupDelay ) {
@@ -1321,7 +1321,7 @@ angular.module( 'ui.bootstrap.tooltip', [ 'ui.bootstrap.position' ] )
               hide();
             });
           }
-          
+
           // Show the tooltip popup element.
           function show() {
             var position,
@@ -1339,11 +1339,11 @@ angular.module( 'ui.bootstrap.tooltip', [ 'ui.bootstrap.position' ] )
             if ( transitionTimeout ) {
               $timeout.cancel( transitionTimeout );
             }
-            
+
             // Set the initial positioning.
             tooltip.css({ top: 0, left: 0, display: 'block' });
-            
-            // Now we add it to the DOM because need some info about it. But it's not 
+
+            // Now we add it to the DOM because need some info about it. But it's not
             // visible yet anyway.
             if ( options.appendToBody ) {
                 $body = $body || $document.find( 'body' );
@@ -1351,14 +1351,14 @@ angular.module( 'ui.bootstrap.tooltip', [ 'ui.bootstrap.position' ] )
             } else {
               element.after( tooltip );
             }
-            
+
             // Get the position of the directive element.
             position = $position.position( element );
 
             // Get the height and width of the tooltip so we can center it.
             ttWidth = tooltip.prop( 'offsetWidth' );
             ttHeight = tooltip.prop( 'offsetHeight' );
-            
+
             // Calculate the tooltip's top and left coordinates to center it with
             // this directive.
             switch ( scope.tt_placement ) {
@@ -1387,14 +1387,14 @@ angular.module( 'ui.bootstrap.tooltip', [ 'ui.bootstrap.position' ] )
                 };
                 break;
             }
-            
+
             // Now set the calculated positioning.
             tooltip.css( ttPosition );
-              
+
             // And show the tooltip.
             scope.tt_isOpen = true;
           }
-          
+
           // Hide the tooltip popup element.
           function hide() {
             // First things first: we don't show it anymore.
@@ -1402,8 +1402,8 @@ angular.module( 'ui.bootstrap.tooltip', [ 'ui.bootstrap.position' ] )
 
             //if tooltip is going to be shown after delay, we must cancel this
             $timeout.cancel( popupTimeout );
-            
-            // And now we remove it from the DOM. However, if we have animation, we 
+
+            // And now we remove it from the DOM. However, if we have animation, we
             // need to wait for it to expire beforehand.
             // FIXME: this is a placeholder for a port of the transitions library.
             if ( angular.isDefined( scope.tt_animation ) && scope.tt_animation() ) {
@@ -1681,10 +1681,10 @@ angular.module('ui.bootstrap.tabs', [])
     panes.push(pane);
   };
 
-  this.removePane = function removePane(pane) { 
+  this.removePane = function removePane(pane) {
     var index = panes.indexOf(pane);
     panes.splice(index, 1);
-    //Select a new pane if removed pane was selected 
+    //Select a new pane if removed pane was selected
     if (pane.selected && panes.length > 0) {
       $scope.select(panes[index < panes.length ? index : index-1]);
     }

@@ -1,18 +1,23 @@
 .row.tag-content(ng-cloak)
-  .span4.p-all-p1#left-block
-    h3 專案
-      ul
-        li(ng-click="go('/project/{{project.name}}')",ng-repeat="project in projects | filter:{keywords: tag}")
-          .name {{project['name-zh'] || project.name }}
-    h3 人群
-      ul
-        li(ng-repeat="person in people | filter:{tags: tag}")
-          .person(ng-class="{{person.status}}")
-            img.img-polaroid(ng-src="{{person.avatar}}?size=small")
-            .name {{person.username}}
-            span.label.tag(ng-repeat="tag in person.tags",ng-class="{ 'label-success': tag == 'hackath3n' }",ng-click="gotag(tag)") {{tag}}
+  .span4#left-block
+    .p-all-p1
+      h3 專案
+        ul
+          li(ng-click="go('/project/{{project.name}}')",ng-repeat="project in projects | filter:{keywords: tag}")
+            .name {{project['name-zh'] || project.name }}
+      h3 人群
+        ul
+          li(ng-repeat="person in people | filter:{tags: tag}")
+            .person(ng-class="{{person.status}}")
+              .row.fix-m-left
+                img.img-polaroid(ng-src="{{person.avatar}}?size=small")
+                .name {{person.username}}
+                button.btn.m-top-1(ng-click="toggle_tag($event)") 關鍵字
+              .row.m-top-p1.fix-m-left.hide
+                span.label.tag(ng-repeat="tag in person.tags",ng-class="{ 'label-success': tag == 'hackath3n' }",ng-click="gotag(tag)") {{tag}}
   .span8.p-all-p1#right-block
-    h3 關於 {{ tag }}
-    .back-link
-      a(href="/people") 回到 Hub
-    #disqus_thread.content-panel-content
+    .p-all-p1
+      h3 關於 {{ tag }}
+      .back-link
+        a(href="/people") 回到 Hub
+      #disqus_thread.content-panel-content

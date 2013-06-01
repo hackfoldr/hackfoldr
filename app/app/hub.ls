@@ -19,6 +19,12 @@ angular.module 'hub.g0v.tw' <[ui.state firebase]>
     $scope.tag = tag
     $scope.loadDisqus tag
   $scope <<< do
+    toggle_tag: (e) ->
+      this_element = angular.element(e.srcElement)
+      if (this_element.parent().next().css('display')=='none')
+        this_element.parent().next().css('display', 'block')
+      else
+        this_element.parent().next().css('display', 'none')
     gotag: (tag) -> $scope.go "/tag/#{ encodeURIComponent tag }"
     projects: Hub.projects
     people: Hub.people
