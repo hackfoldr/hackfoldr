@@ -29,6 +29,22 @@ For example, with an index like http://ethercalc.org/g0v-hackath2n, you'll get h
     % npm i
     % npm run start
 
+# Using vagrant to develop.
+
+[Vagrant](http://docs.vagrantup.com/v2/why-vagrant/index.html) provides easy to configure, reproducible, and portable work environments
+
+To use vagrant, you need to install 
+
+- vagrant (> 1.1.x)
+- virtualbox
+
+To setup up work environment
+
+    % vagrant box add g0v https://dl.dropboxusercontent.com/u/4339854/g0v/g0v-ubuntu-precise64.box
+    % vagrant up
+
+After `vagrant up`, browse localhost:6987 in your favorit browser. You are all set!
+
 # CC0 1.0 Universal
 
 To the extent possible under law, Chia-liang Kao has waived all copyright
