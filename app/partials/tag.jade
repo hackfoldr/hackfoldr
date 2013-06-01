@@ -1,5 +1,5 @@
 .row.tag-content(ng-cloak)
-  .span4#left-block
+  .span4.p-all-p1#left-block
     h3 專案
       ul
         li(ng-click="go('/project/{{project.name}}')",ng-repeat="project in projects | filter:{keywords: tag}")
