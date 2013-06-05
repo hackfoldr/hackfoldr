@@ -13,9 +13,6 @@ html(lang='en')
     link(rel='stylesheet', href='/css/app.css')
     base(href="/")
 
-    script.
-      if (window.location.pathname == '/' && window.location.hash.length)
-        window.location.href = window.location.hash.slice(1)
     //if lte IE 7
       script(src='http://cdnjs.cloudflare.com/ajax/libs/json2/20110223/json2.js')
     //if lte IE 8
