@@ -63,11 +63,12 @@
       .m-top-1
       input.search-query(ng-model="search",placeholder="Filter by tag...")
     .taglist.row
-      span(ng-repeat="entry in tagcloud")
-        span.label.tag(ng-click="$parent.search = entry.tag",ng-mouseenter="toadd=1",ng-mouseleave="toadd=0")
+      span.label(ng-repeat="entry in tagcloud")
+        span.tag(ng-click="$parent.search = entry.tag",ng-mouseenter="toadd=1",ng-mouseleave="toadd=0")
           i.icon-plus(ng-class="{transparent: !toadd}",ng-click="add_tag(user, entry.tag)",ngx-final)
           | {{entry.tag}}
           span.badge.badge-info.font-se {{entry.count}}
+      span(style="-webkit-flex:100 1 auto") &nbsp;
     ul.people-list
       li(ng-repeat="person in people | filter:search")
         .person(ng-class="{{person.status}}")
