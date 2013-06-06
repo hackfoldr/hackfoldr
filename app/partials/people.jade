@@ -70,10 +70,10 @@
           span.badge.badge-info.font-se {{entry.count}}
       span(style="-webkit-flex:100 1 auto") &nbsp;
     div.people-list
-      .person(ng-class="{{person.status}}",ng-repeat="person in people | filter:search",style="margin:{{show_detail(person,'margin')}};width:{{show_detail(person,'width')}};float:{{show_detail(person,'float')}};background:{{show_detail(person,'background')}};",ng-click="show_detail(person,'click')")
-        div: img.img-polaroid(ng-src="{{person.avatar}}")
+      .person(ng-class="{{person.status}}",ng-class="{'show-detail': showPerson == person}",ng-repeat="person in people | filter:search",ng-click="togglePerson(person)")
+        div: img.img-polaroid(ng-src="{{person.avatar}}?size=medium")
         .person-name(style="font-size:13px;") {{person.$id}}
-        .person-tag(style="display:{{show_detail(person,'display')}};")
-          span.label.tag(ng-repeat="tag in person.tags",ng-class="{ 'label-success': tag == 'hackath3n' }",ng-click="gotag(tag)") {{tag}}
-        .person-bio(style="display:{{show_detail(person,'display')}};")
-          {{person.bio}}
+        .person-detail(ng-show="person == showPerson")
+          .person-tag
+            span.label.tag(ng-repeat="tag in person.tags",ng-class="{ 'label-success': tag == 'hackath3n' }",ng-click="gotag(tag)") {{tag}}
+          .person-bio {{person.bio}}
