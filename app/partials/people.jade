@@ -69,12 +69,9 @@
           | {{entry.tag}}
           span.badge.badge-info.font-se {{entry.count}}
       span(style="-webkit-flex:100 1 auto") &nbsp;
-    ul.people-list
-      li(ng-repeat="person in people | filter:search")
-        .person(ng-class="{{person.status}}")
-          div.row
-            div.span1.pull-left
-              img.img-polaroid(ng-src="{{person.avatar}}?size=medium",width=70)
-            div.span6.pull-left
-              h4.name {{person.$id}}
-              span.label.tag(ng-repeat="tag in person.tags",ng-class="{ 'label-success': tag == 'hackath3n' }",ng-click="gotag(tag)") {{tag}}
+    div.people-list
+      .person(ng-class="{{person.status}}",ng-repeat="person in people | filter:search",style="margin:{{show_detail(person,'margin')}};width:{{show_detail(person,'width')}};float:{{show_detail(person,'float')}}",ng-click="show_detail(person,'click')")
+        div: img.img-polaroid(ng-src="{{person.avatar}}")
+        .person-name(style="font-size:13px;") {{person.$id}}
+        .person-tag(style="display:{{show_detail(person,'display')}};")
+          span.label.tag(ng-repeat="tag in person.tags",ng-class="{ 'label-success': tag == 'hackath3n' }",ng-click="gotag(tag)") {{tag}}

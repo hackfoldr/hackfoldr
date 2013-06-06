@@ -105,6 +105,15 @@ angular.module 'hub.g0v.tw' <[ui.state firebase]>
 
     $scope <<< do
         gotag: (tag) -> $scope.go "/tag/#{ encodeURIComponent tag }"
+        show_detail: (person,update) ->
+            switch update
+            | \click => ( $scope.showPerson = if $scope.showPerson==person then null else person)
+            | \float => ( if $scope.showPerson==person then \left else \none )
+            | \display => ( if $scope.showPerson==person then \block else \none )
+            | \width => ( if $scope.showPerson==person then \100% else \110px )
+            | \margin => ( if $scope.showPerson==person then "30px 6px" else \6px )
+            | _ => 0
+            
         remove_tag: (person, tag) ->
             person.tags = [t for t in person.tags when t isnt tag]
         add_tag: (person, tag) ->
