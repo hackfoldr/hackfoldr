@@ -112,6 +112,7 @@ angular.module 'hub.g0v.tw' <[ui.state firebase]>
             | \display => ( if $scope.showPerson==person then \block else \none )
             | \width => ( if $scope.showPerson==person then \100% else \110px )
             | \margin => ( if $scope.showPerson==person then "30px 6px" else \6px )
+            | \background => ( if $scope.showPerson==person then \#ddd else \none )
             | _ => 0
             
         remove_tag: (person, tag) ->
