@@ -29,21 +29,24 @@
     cursor: pointer
 
 .people-list
-  li
-    border-top: 1px #ccc solid
-    padding-top: 0.5rem
   .person
     width: 110px
-    margin: 6px
+    margin: 7px
     &.show-detail
       float: left
       display: block
       width: 100%
-      margin: 30px 6px
-      padding: 10px
-      background: #ddd
+      margin: 30px 0px
+      padding: 20px 0
+      background: rgba(32,32,32,0.1)
+      border-radius: 20px
+      .person-name
+        font-family: Century Gothic 
+        font-size: 32px!important
+        line-height: 64px
 
 .person
+  cursor: pointer
   margin-bottom: 1em
   display: inline-block
   text-align: center
@@ -56,6 +59,12 @@
     width: 100%
   .person-bio
     margin: 10px 0 20px 0
+    background: rgba(32,32,32,0.2)
+    box-shadow: 0 3px 1px 0 rgba(0,0,0,0.1)
+    padding: 30px 0
+    text-shadow: 0 1px 3px rgba(32,32,32,0.2)
+    &.person-bio-empty
+      color: #999
 
 .input-append
   .tag

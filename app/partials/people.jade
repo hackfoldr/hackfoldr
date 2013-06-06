@@ -76,4 +76,4 @@
         .person-detail(ng-show="person == showPerson")
           .person-tag
             span.label.tag(ng-repeat="tag in person.tags",ng-class="{ 'label-success': tag == 'hackath3n' }",ng-click="gotag(tag)") {{tag}}
-          .person-bio {{person.bio}}
+          .person-bio(ng-class="{'person-bio-empty': !person.bio}") {{person.bio || "( 尚未填好自我介紹 )"}}
