@@ -8,10 +8,11 @@
       h3 人群
         ul
           li(ng-repeat="person in people | filter:{tags: tag}")
-            .person(ng-class="{{person.status}}")
+            .person(ng-class="{{person.status}}",style="width:100%;")
               .row.fix-m-left
-                img.img-polaroid(ng-src="{{person.avatar}}?size=small")
-                .name {{person.username}}
+                img.img-polaroid(ng-src="{{person.avatar}}?size=medium")
+                .name(style="display:inline-block;font-size:20px;padding:15px 0;font-family:Century Gothic") {{person.username}}
+                br 
                 button.btn.m-top-1(ng-click="toggle_tag($event)") 關鍵字
               .row.m-top-p1.fix-m-left.hide
                 span.label.tag(ng-repeat="tag in person.tags",ng-class="{ 'label-success': tag == 'hackath3n' }",ng-click="gotag(tag)") {{tag}}
