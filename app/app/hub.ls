@@ -7,7 +7,7 @@ angular.module 'hub.g0v.tw' <[ui.state firebase]>
     <- req-ref.once \value
     req = it.val!
     email = Hub.auth-user.email ? Hub.auth-user.emails?0
-    err <- req-ref.update {user.username, email, displayName: user.displayName ? user.username }
+    err <- req-ref.update {user.avatar, user.username, email, displayName: user.displayName ? user.username }
 
     if err
         console.log err
