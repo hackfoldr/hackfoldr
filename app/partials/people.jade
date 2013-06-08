@@ -71,7 +71,11 @@
       span(style="-webkit-flex:100 1 auto") &nbsp;
     div.people-list
       .person(ng-class="{{person.status}}",ng-class="{'show-detail': showPerson == person}",ng-repeat="person in people | filter:search",ng-click="togglePerson(person)")
-        div: img.img-polaroid(ng-src="{{person.avatar}}?size=medium")
+        .avatar(ng-mouseenter="tofollow=1",ng-mouseleave="tofollow=0")
+          img.img-polaroid(ng-src="{{person.avatar}}?size=medium")
+          i.icon-star-empty(ng-show="followlist[person.$id]",ng-click="unfollow_person(person.$id)",ngx-final)
+          i.icon-star(ng-show="followlist[person.$id] || tofollow",ng-click="follow_person(person.$id)",ngx-final)
+
         .person-name(style="font-size:13px;") {{person.$id}}
         .person-detail(ng-show="person == showPerson")
           .person-tag

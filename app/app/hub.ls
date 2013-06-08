@@ -91,7 +91,7 @@ angular.module 'hub.g0v.tw' <[ui.state firebase]>
         $scope.projectName = projectName
         $scope.opts.editMode = false
         $scope.cleanup?!
-        promise = angularFire Hub.root.child("projects/#{projectName}"), $scope, 'project', {}
+        promise = angularfire hub.root.child("projects/#{projectname}"), $scope, 'project', {}
         cb <- promise.then
         $scope.cleanup = cb
 
@@ -115,6 +115,12 @@ angular.module 'hub.g0v.tw' <[ui.state firebase]>
             person.tags.push newtag unless newtag in person.tags
             $scope.newtag = '' unless tag
             return false
+        follow_person: (id) ->
+            $scope.following.push id unless id in $scope.following
+            $scope.followlist[id] = 1
+        unfollow_person: (id) ->
+            $scope.following = [t for t in $scope.following when t isnt id]
+            delete $scope.followlist[id]
         projects: Hub.projects
         people: Hub.people
         auth: Hub.auth
@@ -125,9 +131,22 @@ angular.module 'hub.g0v.tw' <[ui.state firebase]>
     $scope.$on 'event:auth-login' (e, {user}) -> $scope.safeApply ->
         $scope.toSetUsername = false
         promise = angularFire Hub.root.child("people/#{user.username}"), $scope, 'user', {}
-        cb <- promise.then
-        $scope.safeApply!
-        $scope.cleanup = cb
+        p2 = angularFire Hub.root.child("following/#{user.username}"), $scope, 'following', []
+        $scope.$watch 'following' (val) ->
+            $scope.followlist = {[u, true] for u in val ? []}
+
+        p2.then (cb) ->
+            if c = $scope.cleanup
+                $scope.cleanup = ->
+                    c!
+                    cb!
+        promise.then (cb) ->
+            $scope.safeApply!
+            if c = $scope.cleanup
+                $scope.cleanup = ->
+                    c!
+                    cb!
+
     $scope.$on 'event:auth-logout' -> $scope.safeApply ->
         $scope.cleanup?!
         delete $scope.user

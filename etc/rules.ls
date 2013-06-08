@@ -3,6 +3,10 @@ rules:
     '.read': true
     $userid:
       '.write': 'auth != null && (data.val() === null || (auth.id == data.child(\'auth/\' + auth.provider + \'/id\').val()))'
+  following:
+    '.read': true
+    $userid:
+      '.write':  "auth != null && (data.val() === null || (auth.id == root.child('people/' + $userid + '/auth/' + auth.provider + '/id').val()))"
   'auth-map':
     $provider:
       $id:
