@@ -7,7 +7,7 @@ angular.module \app <[ui partials app.controllers hub.g0v.tw ui.state ui.bootstr
   $stateProvider
     .state 'authz' do
       url: '/authz/{request}'
-      templaetUrl: '/partials/authz.html'
+      templateUrl: '/partials/authz.html'
       controller: \AuthzCtrl
     .state 'about' do
       url: '/about'
