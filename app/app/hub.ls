@@ -1,13 +1,17 @@
 angular.module 'hub.g0v.tw' <[ui.state firebase]>
 
 .controller AuthzCtrl: <[$scope $window $state Hub]> ++ ($scope, $window, $state, Hub) ->
+  $scope.$on 'event:auth-logout' -> $scope.safeApply ->
+    $scope.cleanup?!
   $scope.$on 'event:auth-login' (e, {user}) -> $scope.$apply ->
-    console.log \hiauthz $state.params.request, user, Hub.auth-user
+    f-ref = Hub.root.child "following/#{user.username}"
     req-ref = Hub.root.child "authz/#{$state.params.request}"
+    <- f-ref.once \value
+    following = it.val!
     <- req-ref.once \value
     req = it.val!
     email = Hub.auth-user.email ? Hub.auth-user.emails?0
-    err <- req-ref.update {user.avatar, user.username, email, displayName: user.displayName ? user.username }
+    err <- req-ref.update {user.avatar, user.username, following, email, displayName: user.displayName ? user.username }
 
     if err
         console.log err
@@ -136,6 +140,7 @@ angular.module 'hub.g0v.tw' <[ui.state firebase]>
             $scope.followlist = {[u, true] for u in val ? []}
 
         p2.then (cb) ->
+            $rootScope.$broadcast 'event:auth-userloaded', {$scope.user, $socpe.following}
             if c = $scope.cleanup
                 $scope.cleanup = ->
                     c!
