@@ -101,8 +101,13 @@ angular.module 'app.controllers' <[ui.state]>
   link: ($scope, element, attrs) ->
     cb = $parse attrs.ngxClickMeta
 
+    is-meta = if navigator.appVersion.match /Win/
+      -> it.ctrlKey
+    else
+      -> it.metaKey
+
     $ element .click (e) ->
-      if e.metaKey
+      if is-meta e
         unless cb $scope
           e.preventDefault!
           return false
