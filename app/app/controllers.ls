@@ -172,7 +172,7 @@ angular.module 'app.controllers' <[ui.state]>
         opts -= /^"|"$/g if opts
         opts.=replace /""/g '"' if opts
         tags -= /^"|"$/g if tags
-        [_, prefix, url, hashtag] = url.match /^"?(\s*)(\S+?)?(#\S+)?"?$/
+        [_, prefix, url, hashtag] = url.match /^"?(\s*)(\S+?)?(#\S+?)?"?$/
         entry = { hashtag, url, title, indent: prefix.length, opts: try JSON.parse opts ? '{}' } <<< match url
         | void
             unless folder-title
