@@ -159,12 +159,18 @@ angular.module 'app.controllers' <[ui.state]>
 
     getIndex: (id, force, cb) ->
       return cb docs if hackId is id and !force
-      csv <- $http.get "https://www.ethercalc.org/_/#{id}/csv"
-      .success
+      retry = 0
+      doit = ~>
+        csv <~ $http.get "https://www.ethercalc.org/_/#{id}/csv"
+        .error -> return if ++retry > 3; setTimeout doit, 1000ms
+        .success
 
-      hackId := id
-      docs.length = 0
+        hackId := id
+        docs.length = 0
+        @load-csv csv, cb
+      doit!
 
+    load-csv: (csv, cb) ->
       var folder-title
       entries = for line in csv.split /\n/ when line
         [url, title, opts, tags, ...rest] = line.split /,/
