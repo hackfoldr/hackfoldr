@@ -49,7 +49,7 @@ exports.config =
       options:
         pretty: yes
       locals:
-        segmentio: 'ud5495jplm'
+        googleAnalytics: 'UA-41326468-1'
     static_jade:
       extension: '.static.jade'
       path: [ /^app/ ]
