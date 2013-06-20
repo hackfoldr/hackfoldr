@@ -4,11 +4,10 @@
 # a known issue that symbolic link can not be created in virtualbox shared fold
 # we have to workround npm modules installaltion.
 $script = <<SCRIPT
-cp -arf /vagrant /tmp
-cd /tmp/vagrant
-npm i
-cp -r node_modules /vagrant
+mkdir -p /tmp/node_modules /vagrant/node_modules
+sudo mount --bind /tmp/node_modules /vagrant/node_modules
 cd /vagrant
+npm i
 npm run start
 SCRIPT
 
