@@ -47,3 +47,5 @@ angular.module \app <[ui partials app.controllers hub.g0v.tw ui.state ui.bootstr
   $rootScope.$stateParam = $stateParams
   $rootScope.go = -> $location.path it
   $rootScope._build = window.global.config.BUILD
+  $rootScope.$on \$stateChangeSuccess (e, {name}) ->
+    window?ga? 'send' 'pageview' page: $location.$$url, title: name
