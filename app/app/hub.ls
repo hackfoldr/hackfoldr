@@ -95,7 +95,7 @@ angular.module 'hub.g0v.tw' <[ui.state firebase]>
         $scope.projectName = projectName
         $scope.opts.editMode = false
         $scope.cleanup?!
-        promise = angularfire hub.root.child("projects/#{projectname}"), $scope, 'project', {}
+        promise = angularfire hub.root.child("projects/#{projectName}"), $scope, 'project', {}
         cb <- promise.then
         $scope.cleanup = cb
 
