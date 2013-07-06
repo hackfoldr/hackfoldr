@@ -4,5 +4,5 @@ angular.module 'irc.g0v.tw' <[ui.state]>
     switch it
     | \irc => $scope.irc-enabled = true
     | \irc.log => $scope.irclog-enabled = true
-    $scope.irc-active = it is /^irc/
+    $scope.irc-active = $state.includes \irc
 
