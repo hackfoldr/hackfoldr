@@ -1,15 +1,7 @@
 angular.module 'app.controllers' <[ui.state]>
-.controller AppCtrl: <[$scope $location $rootScope $timeout]> ++ (s, $location, $rootScope, $timeout) ->
-
-  s <<< {$location}
-  s.$watch '$location.path()' (activeNavId or '/') ->
-    s <<< {activeNavId}
-
-  s.getClass = (id) ->
-    if s.activeNavId.substring 0 id.length is id
-      'active'
-    else
-      ''
+.controller AppCtrl: <[$scope $state $rootScope $timeout]> ++ ($scope, $state, $rootScope, $timeout) ->
+  $scope.$watch '$state.current.name' ->
+    $scope.irc-enabled = true if it is \irc
 
   <- $timeout _, 10s * 1000ms
   $rootScope.hideGithubRibbon = true
