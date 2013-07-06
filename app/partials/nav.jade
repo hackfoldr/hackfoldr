@@ -28,6 +28,14 @@ ul.nav
     a(ng-href='/people')
       | Hub
       span.label.label-info 簽到處
+  li.dropdown-split-left
+    a(ng-href='/irc') 聊天室
+  li.dropdown-split-right.dropdown
+    a.dropdown-toggle
+      i.icon-caret-down
+    ul.dropdown-menu.pull-right(role='menu', aria-labelledby='irc')
+      li
+        a(ng-href='/irc/log') 紀錄
 
 
 ul.nav.pull-right

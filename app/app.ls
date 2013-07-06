@@ -12,6 +12,14 @@ angular.module \app <[ui partials app.controllers hub.g0v.tw ui.state ui.bootstr
     .state 'about' do
       url: '/about'
       templateUrl: '/partials/about.html'
+    .state 'irc' do
+      url: '/irc'
+      onEnter: ->
+        $ \body .addClass \hide-overflow
+      onExit: ->
+        $ \body .removeClass \hide-overflow
+    .state 'irc.log' do
+      url: '/log'
     .state 'project' do
       url: '/project'
       templateUrl: '/partials/project.html'
