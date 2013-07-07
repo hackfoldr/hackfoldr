@@ -140,7 +140,7 @@ angular.module 'hub.g0v.tw' <[ui.state firebase]>
             $scope.followlist = {[u, true] for u in val ? []}
 
         p2.then (cb) ->
-            $rootScope.$broadcast 'event:auth-userloaded', {$scope.user, $socpe.following}
+            #$rootScope.$broadcast 'event:auth-userloaded', {$scope.user, $socpe.following}
             if c = $scope.cleanup
                 $scope.cleanup = ->
                     c!
