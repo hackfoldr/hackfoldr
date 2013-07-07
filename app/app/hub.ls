@@ -226,7 +226,7 @@ angular.module 'hub.g0v.tw' <[ui.state firebase]>
             err <- myDataRef.auth user.firebaseAuthToken
             myDataRef.child "auth-map/#{user.provider}/#{user.id}" .set {username}
             $rootScope.$broadcast 'event:auth-login', user: self.login-user
-        merge-auth = new FirebaseAuthClient myDataRef, (error, user) ->
+        merge-auth = new FirebaseSimpleLogin myDataRef, (error, user) ->
             if error => console.log error
             if user
                 auth <- myDataRef.child "auth-map/#{user.provider}/#{user.id}" .once \value
@@ -239,7 +239,7 @@ angular.module 'hub.g0v.tw' <[ui.state firebase]>
         self.auth-link-user = self.login-user
         self.auth.login provider
 
-    self.auth = new FirebaseAuthClient myDataRef, (error, user) ->
+    self.auth = new FirebaseSimpleLogin myDataRef, (error, user) ->
         if error
             console.log error
         else if user
