@@ -3,6 +3,7 @@ div(ui-if='!opts.isnew')
   a.btn(ng-click="opts.editMode=0") Done
 div
   h3(ng-if='opts.isnew') 新增專案
+  a.btn(ng-click="addfromURL()") Add from URL
   form.m-top-1
     fieldset(ui-if='opts.isnew')
       label 代號
@@ -15,7 +16,7 @@ div
       label 名稱
         input.name(ng-model="project['name-zh']")
       label 關鍵字
-      span.label.tag(ng-repeat="tag in project.keywords",ng-mouseenter="toremove=1",ng-mouseleave="toremove=0") 
+      span.label.tag(ng-repeat="tag in project.keywords",ng-mouseenter="toremove=1",ng-mouseleave="toremove=0")
         | {{tag}}
         a(ng-show="toremove",ng-click="remove_tag(project, tag)")
           i.icon-remove

@@ -62,7 +62,7 @@ angular.module 'hub.g0v.tw' <[ui.state firebase]>
 
         angular.element document.getElementById 'disqus_thread' .html ''
 
-.controller ProjectCtrl: <[$scope $state $location Hub angularFire]> ++ ($scope, $state, $location, Hub, angularFire) ->
+.controller ProjectCtrl: <[$scope $state $location $http Hub angularFire]> ++ ($scope, $state, $location, $http, Hub, angularFire) ->
     $scope <<< do
         people: Hub.people
         projects: Hub.projects
@@ -74,6 +74,12 @@ angular.module 'hub.g0v.tw' <[ui.state firebase]>
             thing.keywords.push $scope.opts.newtag unless $scope.opts.newtag in thing.keywords
             $scope.opts.newtag = ''
             return false
+        addfromURL: ->
+            url = prompt "Enter URL", ''
+            <- $http.get url .error -> console.log it
+            .success
+            res = JSON.parse Base64.decode it?content
+            $scope.project <<< res
         newProject: ->
             $scope.opts.isnew = true
             $scope.opts.editMode = true
