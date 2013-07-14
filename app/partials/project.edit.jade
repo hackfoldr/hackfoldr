@@ -14,7 +14,7 @@ div
       .name(ng-bind="project['name']")
     fieldset
       label 名稱
-        input.name(ng-model="project['name-zh']")
+        input.name(ng-model="project['name_zh']")
       label 關鍵字
       span.label.tag(ng-repeat="tag in project.keywords",ng-mouseenter="toremove=1",ng-mouseleave="toremove=0")
         | {{tag}}
@@ -23,7 +23,9 @@ div
       .input-append.m-top-p1
         input.tag.span2(ng-model="opts.newtag")
         button.btn(type="submit",ng-click="add_tag(project)") Add
-      label 說明
-      textarea(ng-model="project['description-zh']")
+      label Description
+      textarea(ng-model="project['description']")
+      label 說明（中文）
+      textarea(ng-model="project['description_zh']")
     fieldset(ng-show='opts.isnew')
       input(type='submit',value='新增',ng-click="saveNew(project)")

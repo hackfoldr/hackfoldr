@@ -18,10 +18,13 @@
     div(ui-if='!opts.editMode')
       a.btn(ng-click="opts.editMode=1") Edit
       .name(ng-bind="project['name']")
-      .name-zh(ng-bind="project['name-zh']")
-      .description-zh(ng-bind="project['description-zh']")
+      .name-zh(ng-bind="project['name_zh']")
+      label 說明（中文）
+      .description-zh(ng-bind="project['description_zh']")
+      label Description
+      .description(ng-bind="project['description']")
       label 關鍵字
-      span.label.tag(ng-click="go('/tag/{{tag}}')",ng-repeat="tag in project.keywords",ng-mouseenter="toremove=1",ng-mouseleave="toremove=0") 
+      span.label.tag(ng-click="go('/tag/{{tag}}')",ng-repeat="tag in project.keywords",ng-mouseenter="toremove=1",ng-mouseleave="toremove=0")
         | {{tag}}
         a(ng-show="toremove",ng-click="remove_tag(project, tag)")
           i.icon-remove
@@ -36,5 +39,5 @@
         .project(ng-class="{{project.status}}")
           .name
             | {{ project.name }}
-            .zh {{ project['name-zh'] }}
+            .zh {{ project['name_zh'] }}
           span.label.tag(ng-repeat="tag in project.keywords",ng-click="go('/tag/{{tag}}')") {{tag}}
