@@ -56,39 +56,31 @@ a
     img
       width: 16px
       height: 16px
-      margin-right: 9px
-      vertical-align: text-bottom
+      margin-right: 5px
+      vertical-align: -2px
 
   .index
-    margin: 14px 0px 10px 0px
+    background-color: #dfc184
+    font-family: 微軟正黑體
+    font-size: 16px
+    line-height: 20px
+    margin: 0 0 10px 0
     cursor: w-resize
-    width: 210px
-    +transition(margin-left 0.5s)
+    width: 280px
+    +transition(margin-left 0.1s)
     &.collapsed
-      margin-left: -184px
-      width: 223px
       cursor: e-resize
-      ul
-        overflow: visible
-      .expanded-content
-        right: -100px
-      img
-        position: absolute
-        right: 7px
-        margin-top: 3px
-      li
-        margin-top: 1px
-        ul
-          margin-right: -10px
-      span.collapser
-        right: -1px
+      margin-left: -275px
 
     .hackid
-      font-size: 19px
       padding: 6px 0 4px 10px
-      background: rgba(64,64,64,0.1)
-      box-shadow: 0 0 15px -5px #999 inset
-      margin-bottom: 10px
+      background-color: #8f6048
+      color: #eee
+      margin-bottom: 0
+      a
+        color: #eee
+        &:hover
+          color: white
 
       i
         margin-top: 4px
@@ -96,22 +88,20 @@ a
         float: right
         margin-right: 12px
         a
-          color: #09f
+          color: white
 
     > ul
-      padding: 5px
+      padding: 0
     ul
       margin: 0
       li
-        margin-top: 1px
-        padding: 2px 5px 2px 11px
-        min-height: 1.2em
-        font-size: 16px
-        &:hover
-          background: rgba(255,255,255,0.7)
-          box-shadow: 0 0 10px rgba(0,0,0,0.1)
-          a
-            text-decoration: none
+        line-height: 25px
+        li
+          padding-left: 22px
+          &:hover
+            border-right: 5px solid #644436
+        a
+          text-decoration: none
         span.label
           vertical-align: text-bottom
 
