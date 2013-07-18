@@ -60,8 +60,11 @@ a
       vertical-align: -2px
 
   .index
-    background-color: #dfc184
-    font-family: 微軟正黑體
+    &,a,a:hover,li
+      color: #555
+    background-color: white
+    border-right: 3px solid #777
+    font-family: Hiragino Kaku Gothic Pro, Apple LiGothic, Heiti TC, LiHei Pro, 微軟正黑體
     font-size: 16px
     line-height: 20px
     margin: 0 0 10px 0
@@ -73,15 +76,9 @@ a
       margin-left: -275px
 
     .hackid
-      padding: 6px 0 4px 10px
-      background-color: #8f6048
-      color: #eee
+      background-color: #ddd
       margin-bottom: 0
-      a
-        color: #eee
-        &:hover
-          color: white
-
+      padding: 15px 0 10px 10px
       i
         margin-top: 4px
       small
@@ -90,14 +87,15 @@ a
         a
           color: white
 
-    > ul
-      padding: 0
     ul
       margin: 0
+      padding-left: 22px
+      &.wrap
+        padding: 0 10px
       li
         line-height: 25px
+        padding: 0
         li
-          padding-left: 22px
           &:hover
             border-right: 5px solid #644436
         a
@@ -136,7 +134,6 @@ a
     position: relative
     background: url(/img/ps_neutral.png) #f4f4f4
     +box-flex(20)
-    border-left: 2px solid orange
     article
       position: absolute
       top: 0
