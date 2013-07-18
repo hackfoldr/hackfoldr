@@ -1,7 +1,7 @@
 @import "compass/utilities/general/clearfix"
 @import "compass/css3"
 //@import "compass/css3/box"
-// @import "compass/css3/transition"
+//@import "compass/css3/transition"
 
 
 .navbar .nav > li.dropdown-split-left > a
@@ -60,75 +60,65 @@ a
       vertical-align: -2px
 
   .index
-    &,a,a:hover,li
-      color: #555
+    $pad: 15px
+    &,a,li
+      color: #666
+      line-height: 25px
+    a:hover
+      color: black
+      text-decoration: none
     background-color: white
-    border-right: 3px solid #777
+    border-right: 3px solid #888
+    cursor: w-resize
     font-family: Hiragino Kaku Gothic Pro, Apple LiGothic, Heiti TC, LiHei Pro, 微軟正黑體
     font-size: 16px
-    line-height: 20px
-    margin: 0 0 10px 0
-    cursor: w-resize
-    width: 280px
-    +transition(margin-left 0.1s)
+    width: 300px
+    +transition(margin-left .15s, border-right-width .15s .15s)
     &.collapsed
+      border-right-width: 10px
       cursor: e-resize
-      margin-left: -275px
+      margin-left: -300px
 
     .hackid
       background-color: #ddd
-      margin-bottom: 0
-      padding: 15px 0 10px 10px
+      margin-bottom: 10px
+      padding: 15px 0 10px $pad
       i
         margin-top: 4px
       small
         float: right
-        margin-right: 12px
-        a
-          color: white
+        margin-right: $pad
 
     ul
       margin: 0
-      padding-left: 22px
-      &.wrap
-        padding: 0 10px
+      overflow-x: hidden
+      overflow-y: auto
+      .link
+        cursor: pointer
+        &:hover
+          background-color: #ddd
+      .active .link
+        background-color: #bbb
+        color: white
       li
-        line-height: 25px
+        list-style: none
         padding: 0
-        li
+        position: relative
+        .link
+          padding-left: $pad
+          +transition(.15s)
           &:hover
-            border-right: 5px solid #644436
-        a
-          text-decoration: none
+            padding-left: $pad+22px
+        li .link
+          padding-left: $pad+22px
+          &:hover
+            padding-left: $pad+44px
+        span.collapser
+          position: absolute
+          right: $pad
+          top: 0px
         span.label
           vertical-align: text-bottom
-
-  ul
-    overflow-x: hidden
-    overflow-y: auto
-    height: 100%
-    margin-left: 10px
-    margin-right: 20px
-    li
-      position: relative
-      list-style: none
-      cursor: pointer
-      margin: 0
-      padding: 2px 5px
-      &:first-child
-        padding: 5px 0 15px -3px
-        margin-top: 5px
-        font-weight: 700
-      &.active > .entry
-        background: orange
-        margin-left: -30px
-        margin-right: -20px
-        padding-left: 30px
-      span.collapser
-        position: absolute
-        right: 5px
-        top: 0px
-
 
   .pad-container
     position: relative
