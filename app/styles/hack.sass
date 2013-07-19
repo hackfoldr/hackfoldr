@@ -74,10 +74,12 @@ a
     font-size: 16px
     width: 300px
     +transition(margin-left .15s, border-right-width .15s .15s)
+    overflow-y: auto
     &.collapsed
       border-right: 8px solid #888
       cursor: e-resize
       margin-left: -265px
+      overflow-y: hidden
       span.collapser
         right: 2px
         position: absolute
