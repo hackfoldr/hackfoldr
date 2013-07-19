@@ -68,16 +68,19 @@ a
       color: black
       text-decoration: none
     background-color: white
-    border-right: 3px solid #888
+    border-right: 4px solid #888
     cursor: w-resize
     font-family: "Lantinghei TC Extralight", "Hiragino Kaku Gothic Pro", "Apple LiGothic", "Heiti TC", "LiHei Pro", "Microsoft YaHei", "微軟正黑體", "文泉驿正黑", sans-serif
     font-size: 16px
     width: 300px
     +transition(margin-left .15s, border-right-width .15s .15s)
     &.collapsed
-      border-right-width: 10px
+      border-right: 8px solid #888
       cursor: e-resize
-      margin-left: -300px
+      margin-left: -265px
+      img
+        position: absolute
+        right: 0
 
     .hackid
       background-color: #ddd
