@@ -46,8 +46,8 @@ a
     top: 0px
 
 .hackfolder
-  width: 100%
   +display-box
+  width: 100%
   .label
     margin-left: 5px
 
@@ -60,13 +60,16 @@ a
     a:hover
       color: black
       text-decoration: none
-    background-color: white
-    border-right: 3px solid #888
     cursor: w-resize
     font-family: "Lantinghei TC Extralight", "Hiragino Kaku Gothic Pro", "Apple LiGothic", "Heiti TC", "LiHei Pro", "Microsoft YaHei", "微軟正黑體", "文泉驿正黑", sans-serif
     font-size: 16px
-    overflow: visible
-    width: $width
+    margin-right: calc(-100% + 300px)
+    margin-right: -moz-calc(-100% + 300px)
+    margin-right: -webkit-calc(-100% + 300px)
+    overflow: auto
+    position: relative
+    width: 100%
+    z-index: 1000
     +transition(margin-left .15s, border-right-width .15s .15s)
     &.collapsed
       cursor: e-resize
@@ -84,6 +87,7 @@ a
       background-color: #ddd
       margin-bottom: 10px
       padding: 15px 0 10px $pad
+      width: $width - $pad
       i
         margin-top: 4px
       small
@@ -92,30 +96,29 @@ a
 
     ul
       margin: 0
-      overflow-x: hidden
-      .link
-        display: inline-block
-        img
-          width: 16px
-          height: 16px
-          margin-right: 5px
-          vertical-align: -2px
-        cursor: pointer
-        &:hover
-          background-color: #ddd
-      .active .link
-        background-color: #bbb
-        color: white
       li
         list-style: none
         padding: 0
         position: relative
+        &.active .link
+          background-color: #bbb
+          color: white
         .link
+          box-sizing: border-box
+          cursor: pointer
+          display: inline-block
+          left: 0
           padding-left: $pad
-          width: 100%
+          width: $width
           +transition(.15s)
           &:hover
+            background-color: #ddd
             padding-left: $pad+22px
+          img
+            width: 16px
+            height: 16px
+            margin-right: 5px
+            vertical-align: -2px
         li .link
           padding-left: $pad+22px
           &:hover
