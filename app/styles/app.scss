@@ -61,3 +61,25 @@
 
 // Utility classes
 @import "vendor/styles/bootstrap/utilities"; // Has to be last to override when necessary
+
+@import "vendor/styles/bootstrap/responsive-utilities";
+
+
+// MEDIA QUERIES
+// ------------------
+
+// Large desktops
+@import "vendor/styles/bootstrap/responsive-1200px-min";
+
+// Tablets to regular desktops
+@import "vendor/styles/bootstrap/responsive-768px-979px";
+
+// Phones to portrait tablets and narrow desktops
+@import "vendor/styles/bootstrap/responsive-767px-max";
+
+
+// RESPONSIVE NAVBAR
+// ------------------
+
+// From 979px and below, show a button to toggle navbar contents
+@import "vendor/styles/bootstrap/responsive-navbar";
