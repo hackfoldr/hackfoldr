@@ -1,43 +1,79 @@
-.row.tag-content(ng-switch="!!project",ng-cloak)
-  .span4
-    h3 專案
-    a.btn(ng-click='newProject()') New
-    ul
-      li(ng-repeat="project in projects")
-        a.link(ng-href='/project/{{project.name}}') {{project.name}}
-    h3 關注
-    ul
-      //li(ng-repeat="person in people | filter:tag")
-        .person(ng-class="{{person.status}}")
-          .name {{person.username}}
-          img(ng-src="{{person.avatar}}?size=small")
-          span.label.tag(ng-repeat="tag in person.tags",ng-class="{ 'label-success': tag == 'hackath3n' }",ng-click="go('/tag/{{tag}}')") {{tag}}
-  .span8(ng-switch-when="true")
-    h2 專案 {{project.name}}
-    div(ui-if='opts.editMode',ng-include="'/partials/project.edit.html'")
-    div(ui-if='!opts.editMode')
-      a.btn(ng-click="opts.editMode=1") Edit
-      .name(ng-bind="project['name']")
-      .name-zh(ng-bind="project['name_zh']")
-      label 說明（中文）
-      .description-zh(ng-bind="project['description_zh']")
-      label Description
-      .description(ng-bind="project['description']")
-      label 關鍵字
-      span.label.tag(ng-click="go('/tag/{{tag}}')",ng-repeat="tag in project.keywords",ng-mouseenter="toremove=1",ng-mouseleave="toremove=0")
-        | {{tag}}
-        a(ng-show="toremove",ng-click="remove_tag(project, tag)")
-          i.icon-remove
-
-  .span8(ng-switch-default)
-    h2 專案 {{ project | json }}
-    form.form-search
-      .m-top-1
-      input.search-query(ng-model="search",placeholder="Filter by tag...")
-    ul
-      li(ng-repeat="project in projects | filter:{keywords: tag}")
-        .project(ng-class="{{project.status}}")
-          .name
-            | {{ project.name }}
-            .zh {{ project['name_zh'] }}
-          span.label.tag(ng-repeat="tag in project.keywords",ng-click="go('/tag/{{tag}}')") {{tag}}
+.container
+  .row
+    .span8
+        h1 專案列表
+        a.btn(ng-click='newProject()') New
+        p {{ people.clkao }}
+        article.mod-project(ng-repeat='project in projects | filter:search')
+          h2
+            a(href='#') {{project.name_zh || project.name}}
+            small
+              | &nbsp;隸屬&nbsp;
+              a(href='#') {{project.project || "XXX" }}
+          p {{ project.description_zh }}
+          dl.dl-horizontal.mod-project-meta
+            dt 專案網址
+            dd
+              a(href='#') http://foo.com/
+            dt.inline 專案連結
+            dd.inline
+              .mod-project-links
+                a(href='#')
+                  img(src='/img/hackfoldr-icon.ico', width='16')
+                | &nbsp;
+                a(href='#')
+                  i.icon-github
+                | &nbsp;
+                a(href='#')
+                  i.icon-youtube
+                | &nbsp;
+                a(href='#')
+                  i.icon-trello
+            dt.inline 專案進度
+            dd.inline-last
+                span.label 空想
+                span.label.label-success 1.0
+            dt 專案需求
+            dd
+              span.label.label-important 設計
+              | &nbsp;
+              span.label.label-important 窗口
+            dt(ui-if="project.author") 協調者
+            dd(ui-if="project.author")
+              a.avatar-link(href='#', data-toggle='tooltip', title='{{project.author}}')
+                img.avatar(ng-src='$parent.people[project.author].avatar')
+            dt 參與者
+            dd
+              a.avatar-link(href='#', data-toggle='tooltip', title='{{user}}', ng-repeat="user in project.contributors")
+                img.avatar(ng-src='$parent.people[user].avatar')
+                | &nbsp;
+        .pagination
+          ul
+            li.disabled
+              span «
+            li.active
+              span 1
+            li
+              a(href='#') 2
+            li
+              a(href='#') 3
+            li
+              a(href='#') 4
+            li
+              a(href='#') 5
+            li
+              a(href='#') Next
+      .span4
+        section.mod-search
+          h2 搜尋
+          form.form-search
+            input.input-medium.search-query(type='text',ng-model="search")
+            button.btn(type='submit') Search
+        section.mod-featured
+          h2 特色推薦
+          .mod-project
+            a(href='#')
+              img(src='http://placehold.it/370x240/9213c7/84ef92')
+              h2
+                a(href='#') blahblah
+              p blahblah
