@@ -4,7 +4,7 @@
         i.icon-home
         &nbsp;
         a.indexlink.expanded-content(ng-href="http://ethercalc.org/{{hackId}}",target="_blank",ngx-final) {{HackFolder.folderTitle || hackId}} 
-        small: a.reload(ng-click="reload(hackId)",ngx-noclick) &#x21BA;
+        small {{ {"true": "&#x25C2;", "false": "&#x25B8;"}[!collapsed] }}
       ul.wrap(ui-sortable='sortableOptions',ng-model='tree')
         li(ng-repeat='doc in tree', ng-title="{{doc.title || doc.id}}",ngx-noclick,ng-class='{active: doc.id == docId}')
           .entry(ng-include="'/partials/hackitem.html'")
