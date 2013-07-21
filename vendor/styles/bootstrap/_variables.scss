@@ -62,9 +62,9 @@ $headingsColor:         inherit !default; // empty to use BS default, $textColor
 // -------------------------
 // Based on 14px font-size and 20px line-height
 
-$fontSizeLarge:         $baseFontSize * 1.25; // ~18px
-$fontSizeSmall:         $baseFontSize * 0.85; // ~12px
-$fontSizeMini:          $baseFontSize * 0.75; // ~11px
+$fontSizeLarge:         $baseFontSize * 1.25 !default; // ~18px
+$fontSizeSmall:         $baseFontSize * 0.85 !default; // ~12px
+$fontSizeMini:          $baseFontSize * 0.75 !default; // ~11px
 
 $paddingLarge:          11px 19px !default; // 44px
 $paddingSmall:          2px 10px !default;  // 26px
@@ -86,7 +86,7 @@ $tableBorder:                       #ddd !default; // table and cell border
 // -------------------------
 $btnBackground:                     $white !default;
 $btnBackgroundHighlight:            darken($white, 10%) !default;
-$btnBorder:                         #bbb !default;
+$btnBorder:                         #ccc !default;
 
 $btnPrimaryBackground:              $linkColor !default;
 $btnPrimaryBackgroundHighlight:     adjust-hue($btnPrimaryBackground, 20%) !default;
@@ -126,7 +126,7 @@ $dropdownDividerBottom:         $white !default;
 
 $dropdownLinkColor:             $grayDark !default;
 $dropdownLinkColorHover:        $white !default;
-$dropdownLinkColorActive:       $dropdownLinkColor !default;
+$dropdownLinkColorActive:       $white !default;
 
 $dropdownLinkBackgroundActive:  $linkColor !default;
 $dropdownLinkBackgroundHover:   $dropdownLinkBackgroundActive !default;
@@ -151,8 +151,8 @@ $zindexModal:             1050 !default;
 
 // Sprite icons path
 // -------------------------
-$iconSpritePath:          "/img/glyphicons-halflings.png";
-$iconWhiteSpritePath:     "/img/glyphicons-halflings-white.png";
+$iconSpritePath:          image-path("glyphicons-halflings.png") !default;
+$iconWhiteSpritePath:     image-path("glyphicons-halflings-white.png") !default;
 
 
 // Input placeholder text color
