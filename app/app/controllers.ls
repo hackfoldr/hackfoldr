@@ -164,6 +164,7 @@ angular.module 'app.controllers' <[ui.state]>
 
     load-csv: (csv, cb) ->
       var folder-title
+      csv -= /^\"?#.*\n/gm
       entries = for line in csv.split /\n/ when line
         [url, title, opts, tags, ...rest] = line.split /,/
         title -= /^"|"$/g
