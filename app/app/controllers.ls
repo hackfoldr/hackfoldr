@@ -7,7 +7,7 @@ angular.module 'app.controllers' <[ui.state]>
   $rootScope.hideGithubRibbon = true
 
 .controller HackFolderCtrl: <[$scope $state HackFolder]> ++ ($scope, $state, HackFolder) ->
-# $scope.$watch HackFolder, ->
+# $scope.$watch 'HackFolder' ->
 #   $('.index').jScrollPane()
   $scope <<< do
     hasViewMode: -> it.match /g(doc|present|draw)/
