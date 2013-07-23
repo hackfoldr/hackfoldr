@@ -65,7 +65,8 @@ body
     cursor: w-resize
     font-family: "Lantinghei TC Extralight", "Hiragino Kaku Gothic Pro", "Apple LiGothic", "Heiti TC", "LiHei Pro", "Microsoft YaHei", "微軟正黑體", "文泉驿正黑", sans-serif
     font-size: 16px
-    overflow: auto
+    overflow-x: hidden
+    overflow-y: auto
     width: $width
     +transition(.15s)
     &.collapsed
@@ -103,13 +104,13 @@ body
           background-color: #bbb
           color: white
         .link
-          box-sizing: border-box
+          +box-sizing(border-box)
           cursor: pointer
           display: inline-block
           left: 0
           padding-left: $pad
-          width: $width
           +transition(.15s)
+          width: $width
           &:hover
             background-color: #ddd
             padding-left: $pad+22px
