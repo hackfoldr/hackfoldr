@@ -64,6 +64,7 @@ angular.module 'hub.g0v.tw' <[ui.state firebase]>
 
 .controller ProjectCtrl: <[$scope $state $location $http Hub angularFire]> ++ ($scope, $state, $location, $http, Hub, angularFire) ->
     $scope <<< do
+        avatarFor: (user) -> Hub.people.getByName user .avatar
         people: Hub.people
         projects: Hub.projects
         opts: {}
