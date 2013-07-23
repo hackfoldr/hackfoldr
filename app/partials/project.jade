@@ -15,26 +15,37 @@
             dt 專案網址
             dd
               a(href='#') http://foo.com/
-            dt.inline 專案連結
-            dd.inline
+            dt 專案連結
+            dd
               .mod-project-links
-                a(href='#')
-                  img(src='/img/hackfoldr-icon.ico', width='16')
-                | &nbsp;
-                a(href='#')
-                  i.icon-github
-                | &nbsp;
-                a(href='#')
-                  i.icon-youtube
-                | &nbsp;
-                a(href='#')
-                  i.icon-trello
+                ul
+                  li
+                    a(href='#')
+                      i.icon-link
+                      | 網站
+                  li
+                    a(href='#')
+                      i.icon-hackfoldr
+                      | 文件
+                  li
+                    a(href='#')
+                      i.icon-github
+                      | 程式源碼
+                  li
+                    a(href='#')
+                      i.icon-youtube
+                      | 5分鐘瞭解影片
+                    li
+                      a(href='#')
+                        i.icon-trello
+                        | 專案控管
+
             dt.inline 專案進度
-            dd.inline-last
+            dd.inline
                 span.label 空想
                 span.label.label-success 1.0
-            dt 專案需求
-            dd
+            dt.inline 專案需求
+            dd.inline-last
               span.label.label-important 設計
               | &nbsp;
               span.label.label-important 窗口
@@ -69,6 +80,12 @@
           form.form-search
             input.input-medium.search-query(type='text',ng-model="search")
             button.btn(type='submit') Search
+        section
+            .mod-project
+                h2 沒有你關心的議題？
+                p Make one now!
+                a.btn.btn-large.btn-block(href='#') New Project
+
         section.mod-featured
           h2 特色推薦
           .mod-project

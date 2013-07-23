@@ -1,6 +1,18 @@
 $baseFontSize: 16px;
 $baseLineHeight: 24px;
 
+// icon
+a .icon-hackfoldr {
+    width: 16px;
+    height: 16px;
+    display: inline-block;
+    background: image-url("/img/hackfoldr.svg");
+    background-size: 100% 100%;
+    .no-svg & {
+        background: image-url("/img/hackfoldr-16.png");
+    }
+}
+
 .mod-project {
     border: 1px solid #ccc;
     padding: 20px;
@@ -19,10 +31,10 @@ $baseLineHeight: 24px;
         font-size: $baseFontSize;
     }
     dt, dd {
-        border-bottom: 1px solid #ddd;
+        border-top: 1px solid #ddd;
         line-height: 32px;
         @media (max-width: 767px) {
-            border-bottom: none;
+            border-top: none;
             line-height: auto;
         }
     }
@@ -44,7 +56,7 @@ $baseLineHeight: 24px;
     }
 
     dt {
-        width: 120px;
+        width: 140px;
         padding-right: 20px;
         @media (max-width: 767px) {
             padding-right: 0;
@@ -68,9 +80,13 @@ $baseLineHeight: 24px;
 .mod-project-links {
     a {
         color: #000;
-        font-size: 16px;
-        &:hover {
-            text-decoration: none;
+    }
+    ul {
+        list-style: none;
+        margin: 0;
+        li {
+            display: inline-block;
+            margin-right: 16px;
         }
     }
 }
