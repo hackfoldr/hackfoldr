@@ -7,8 +7,6 @@ angular.module 'app.controllers' <[ui.state]>
   $rootScope.hideGithubRibbon = true
 
 .controller HackFolderCtrl: <[$scope $state HackFolder]> ++ ($scope, $state, HackFolder) ->
-# $scope.$watch 'HackFolder' ->
-#   $('.index').jScrollPane()
   $scope <<< do
     hasViewMode: -> it.match /g(doc|present|draw)/
     sortableOptions: do
@@ -110,6 +108,16 @@ angular.module 'app.controllers' <[ui.state]>
 .directive \ngxFinal ->
   ($scope, element, attrs) ->
     $ element .click -> it.stopPropagation();
+
+.directive \scrollbar <[$window]> ++ ($window) ->
+  (scope, element, attrs) ->
+    has-scrollbar = ->
+      $index = $('.index')
+      scope.has-scrollbar = $index.get(0).scrollHeight > $window.innerHeight - $('.navbar').height()
+    angular.element $window .bind \resize ->
+      scope.$apply has-scrollbar
+    scope.$watch 'docs' has-scrollbar
+    has-scrollbar()
 
 .factory HackFolder: <[$http]> ++ ($http) ->
   iframes = {}

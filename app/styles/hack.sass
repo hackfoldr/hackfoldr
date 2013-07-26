@@ -52,6 +52,7 @@ body
     margin-left: 5px
 
   .index
+    $bar-width: 16px
     $pad: 15px
     $width: 300px
     &,a,li
@@ -67,8 +68,8 @@ body
     font-size: 16px
     overflow-x: hidden
     overflow-y: auto
-    width: $width
     +transition(.15s)
+    width: $width
     &.collapsed
       cursor: e-resize
       margin-left: -$width+27px
@@ -93,6 +94,8 @@ body
         margin-right: $pad
         a
           cursor: pointer
+    &.scrollbar
+      width: $width+$bar-width
 
     ul
       margin: 0
