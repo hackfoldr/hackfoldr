@@ -2,46 +2,46 @@
   .row
     .span8
         h1 專案列表
-        a.btn(ng-click='newProject()') New
         p {{ people.clkao }}
+        article.mod-project.new(ui-if='opts.isnew',ng-include="'/partials/project.edit.html'")
         article.mod-project(ng-repeat='project in projects | filter:search')
           h2
             a(href='#') {{project.name_zh || project.name}}
-            small
+            small(ng-show="project.projects")
               | &nbsp;隸屬&nbsp;
-              a(href='#') {{project.project || "XXX" }}
+              a(href='#',ng-repeat="pname in project.projects") {{pname}}&nbsp;
+          .view(ui-if="editMode && project = ")
           p {{ project.description_zh }}
           dl.dl-horizontal.mod-project-meta
             dt 專案網址
-            dd: a(href='#') http://foo.com/
+            dd: a(ng-href='{{project.homepage}}') {{project.homepage}}
             dt 專案連結
             dd: .mod-project-links
               ul
-                li: a(href='#')
+                li: a(ng-href='{{project.homepage}}',target="_blank")
                   i.icon-link
                   | &nbsp;
                   | 網站
-                li: a(href='#')
+                li(ng-show="project.document"): a(ng-href='{{project.document}}',target="_blank")
                   i.icon-hackfoldr
                   | &nbsp;
                   | 文件
-                li: a(href='#')
+                li(ng-show="project.repository"): a(href='{{project.repository.url}}',target="_blank")
                   i.icon-github
                   | &nbsp;
                   | 程式源碼
-                li: a(href='#')
+                li(ng-show="project.video"): a(href='{{project.video}}',target="_blank")
                   i.icon-youtube
                   | &nbsp;
                   | 5分鐘瞭解影片
-                li: a(href='#')
+                li(ng-show="project.trello"): a(href='{{project.trello}}',target="_blank")
                   i.icon-trello
                   | &nbsp;
                   | 專案控管
 
             dt.inline 專案進度
             dd.inline
-                span.label 空想
-                span.label.label-success 1.0
+                span.label(ng-class="label-{{project.status}}") {{ project.status }}
             dt.inline 專案需求
             dd.inline-last
               span.label.label-important 設計
@@ -82,7 +82,7 @@
             .mod-project
                 h2 沒有你關心的議題？
                 p Make one now!
-                a.btn.btn-large.btn-block(href='#') New Project
+                a.btn.btn-large.btn-block(ng-click='newProject()') 新增專案
 
         section.mod-featured
           h2 特色推薦
