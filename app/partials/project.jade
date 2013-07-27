@@ -10,7 +10,6 @@
             small(ng-show="project.projects")
               | &nbsp;隸屬&nbsp;
               a(href='#',ng-repeat="pname in project.projects") {{pname}}&nbsp;
-          .view(ui-if="editMode && project = ")
           p {{ project.description_zh }}
           dl.dl-horizontal.mod-project-meta
             dt 專案網址
@@ -41,7 +40,7 @@
 
             dt.inline 專案進度
             dd.inline
-                span.label(ng-class="label-{{project.status}}") {{ project.status }}
+                span.label(ng-class="'label-' + project.status") {{ project.status }}
             dt.inline 專案需求
             dd.inline-last
               span.label.label-important 設計

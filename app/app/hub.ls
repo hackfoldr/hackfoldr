@@ -77,7 +77,7 @@ angular.module 'hub.g0v.tw' <[ui.state firebase]>
             return false
         addfromURL: ->
             repo = prompt "Enter github user/repo with g0v.json", ''
-            url = "http://api.github.com/repos/#{repo}/contents/g0v.json"
+            url = "https://api.github.com/repos/#{repo}/contents/g0v.json"
             <- $http.get url .error -> console.log it
             .success
             res = JSON.parse Base64.decode it?content

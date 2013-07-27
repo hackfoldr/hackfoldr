@@ -3,7 +3,7 @@ div(ui-if='!opts.isnew')
   a.btn(ng-click="opts.editMode=0") Done
 div
   h3(ng-if='opts.isnew') 新增專案
-  a.btn(ng-click="addfromURL()") Add from URL
+  a.btn(ng-click="addfromURL()") Add from GitHub
   form.m-top-1
     fieldset(ui-if='opts.isnew')
       label 代號
