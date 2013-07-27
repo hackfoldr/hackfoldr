@@ -31,7 +31,10 @@ ul.nav
   li
     a(ng-href='/people')
       | Hub
-      span.label.label-info 簽到處
+  li
+    a(ng-href='/project')
+      | 專案列表
+      span.label.label-important new
   li.irc.dropdown-split-left(ng-class="{ active: $state.includes('irc') }")
     a(ng-href='/irc')
       i.icon-link(ng-class="{'irc-enabled': ircEnabled}")
