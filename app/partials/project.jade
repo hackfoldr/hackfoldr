@@ -46,11 +46,11 @@
               span.label.label-important(ng-repeat='need in project.needs') {{ need }}&nbsp;
             dt(ui-if="project.author") 協調者
             dd(ui-if="project.author")
-              a.avatar-link(href='#', data-toggle='tooltip', title='{{project.author}}')
+              span.avatar-link(data-toggle='tooltip', title='{{project.author}}')
                 img.avatar(ng-src='{{avatarFor(project.author)}}')
             dt(ui-if="project.contributors") 參與者
             dd(ui-if="project.contributors")
-              a.avatar-link(href='#', data-toggle='tooltip', title='{{user}}', ng-repeat="user in project.contributors")
+              span.avatar-link(data-toggle='tooltip', title='{{user}}', ng-repeat="user in project.contributors")
                 img.avatar(ng-src='{{avatarFor(user)}}')
                 | &nbsp;
         //.pagination
