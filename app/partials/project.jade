@@ -12,12 +12,12 @@
               a(href='#',ng-repeat="pname in project.projects") {{pname}}&nbsp;
           p {{ project.description_zh }}
           dl.dl-horizontal.mod-project-meta
-            dt 專案網址
-            dd: a(ng-href='{{project.homepage}}') {{project.homepage}}
+            dt(ng-show="project.homepage") 專案網址
+            dd(ng-show="project.homepage"): a(ng-href='{{project.homepage}}') {{project.homepage}}
             dt 專案連結
             dd: .mod-project-links
               ul
-                li: a(ng-href='{{project.homepage}}',target="_blank")
+                li(ng-show="project.homepage"): a(ng-href='{{project.homepage}}',target="_blank")
                   i.icon-link
                   | &nbsp;
                   | 網站
@@ -43,9 +43,7 @@
                 span.label(ng-class="'label-' + project.status") {{ project.status }}
             dt.inline 專案需求
             dd.inline-last
-              span.label.label-important 設計
-              | &nbsp;
-              span.label.label-important 窗口
+              span.label.label-important(ng-repeat='need in project.needs') {{ need }}&nbsp;
             dt(ui-if="project.author") 協調者
             dd(ui-if="project.author")
               a.avatar-link(href='#', data-toggle='tooltip', title='{{project.author}}')
@@ -55,7 +53,7 @@
               a.avatar-link(href='#', data-toggle='tooltip', title='{{user}}', ng-repeat="user in project.contributors")
                 img.avatar(ng-src='{{avatarFor(user)}}')
                 | &nbsp;
-        .pagination
+        //.pagination
           ul
             li.disabled
               span «
@@ -86,8 +84,8 @@
         section.mod-featured
           h2 特色推薦
           .mod-project
-            a(href='#')
-              img(src='http://placehold.it/370x240/9213c7/84ef92')
-              h2
-                a(href='#') blahblah
-              p blahblah
+            a(ng-href='{{featured.homepage}}')
+              img(ng-src='{{featured.thumbnail}}')'
+            h2
+              a(ng-href='{{featured.homepage}}') {{featured.name_zh || featured.name}}
+              p {{featured.description_zh}}

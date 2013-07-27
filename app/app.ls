@@ -57,3 +57,9 @@ angular.module \app <[ui partials app.controllers irc.g0v.tw hub.g0v.tw ui.state
   $rootScope._build = window.global.config.BUILD
   $rootScope.$on \$stateChangeSuccess (e, {name}) ->
     window?ga? 'send' 'pageview' page: $location.$$url, title: name
+  $rootScope.safeApply = ($scope, fn) ->
+    phase = $scope.$root.$$phase
+    if (phase is '$apply' || phase is '$digest')
+      fn?!
+    else
+      $scope.$apply fn

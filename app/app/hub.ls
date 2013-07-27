@@ -1,7 +1,7 @@
 angular.module 'hub.g0v.tw' <[ui.state firebase]>
 
 .controller AuthzCtrl: <[$scope $window $state Hub]> ++ ($scope, $window, $state, Hub) ->
-  $scope.$on 'event:auth-logout' -> $scope.safeApply ->
+  $scope.$on 'event:auth-logout' -> $scope.safeApply $scope, ->
     $scope.cleanup?!
   $scope.$on 'event:auth-login' (e, {user}) -> $scope.$apply ->
     f-ref = Hub.root.child "following/#{user.username}"
@@ -62,9 +62,12 @@ angular.module 'hub.g0v.tw' <[ui.state firebase]>
 
         angular.element document.getElementById 'disqus_thread' .html ''
 
-.controller ProjectCtrl: <[$scope $state $location $http Hub angularFire]> ++ ($scope, $state, $location, $http, Hub, angularFire) ->
+.controller ProjectCtrl: <[$scope $state $location $http $timeout Hub angularFire]> ++ ($scope, $state, $location, $http, $timeout, Hub, angularFire) ->
+    $scope.$on 'event:hub-ready' -> $timeout -> $scope.safeApply $scope, ->
+      $scope.featured = [p for p in Hub.projects when p.thumbnail]?0
+      console.log \ready Hub.projects, $scope.featured
     $scope <<< do
-        avatarFor: (user) -> Hub.people.getByName user .avatar
+        avatarFor: (user) -> Hub.people.getByName user ?.avatar
         people: Hub.people
         projects: Hub.projects
         opts: {}
@@ -93,6 +96,7 @@ angular.module 'hub.g0v.tw' <[ui.state firebase]>
         saveNew: (project) ->
             # XXX use proper angular form validation
             return false unless project.name
+            # XXX warn
             return false if [p for p in Hub.projects when p.name is project.name].length
             $scope.opts.isnew = false
             Hub.root.child "projects/#{project.name}" .set project <<< { created_by: Hub.login-user.username }
@@ -108,12 +112,6 @@ angular.module 'hub.g0v.tw' <[ui.state firebase]>
         $scope.cleanup = cb
 
 .controller PeopleCtrl: <[$scope $state Hub angularFire]> ++ ($scope, $state, Hub, angularFire) ->
-    $scope.safeApply = (fn) ->
-        phase = $scope.$root.$$phase
-        if (phase is '$apply' || phase is '$digest')
-            fn?!
-        else
-            $scope.$apply fn
 
     $scope <<< do
         gotag: (tag) -> $scope.go "/tag/#{ encodeURIComponent tag }"
@@ -140,7 +138,7 @@ angular.module 'hub.g0v.tw' <[ui.state firebase]>
         set-username: Hub.set-username
         login-and-merge: Hub.login-and-merge
         login-and-link: Hub.login-and-link
-    $scope.$on 'event:auth-login' (e, {user}) -> $scope.safeApply ->
+    $scope.$on 'event:auth-login' (e, {user}) -> $scope.safeApply $scope, ->
         $scope.toSetUsername = false
         promise = angularFire Hub.root.child("people/#{user.username}"), $scope, 'user', {}
         p2 = angularFire Hub.root.child("following/#{user.username}"), $scope, 'following', []
@@ -154,17 +152,17 @@ angular.module 'hub.g0v.tw' <[ui.state firebase]>
                     c!
                     cb!
         promise.then (cb) ->
-            $scope.safeApply!
+            $scope.safeApply $scope
             if c = $scope.cleanup
                 $scope.cleanup = ->
                     c!
                     cb!
 
-    $scope.$on 'event:auth-logout' -> $scope.safeApply ->
+    $scope.$on 'event:auth-logout' -> $scope.safeApply $scope, ->
         $scope.cleanup?!
         delete $scope.user
         $scope.toSetUsername = false
-    $scope.$on 'event:auth-userNameRequired' (e, {existing, username}) -> $scope.safeApply ->
+    $scope.$on 'event:auth-userNameRequired' (e, {existing, username}) -> $scope.safeApply $scope, ->
         $scope.toSetUsername = true
         $scope.usernameInUse = existing
         $scope.newUsername = username
@@ -181,7 +179,7 @@ angular.module 'hub.g0v.tw' <[ui.state firebase]>
             $scope.tagcloud = [{tag, count} for tag, count of tagcloud when count > 1].sort (a, b) -> b.count - a.count
         do-tagcloud $scope.people if Hub.people.length
         <- setTimeout _, 100ms
-        $scope.$watch 'people' $scope.safeApply -> do-tagcloud
+        $scope.$watch 'people' $scope.safeApply $scope, -> do-tagcloud
     if Hub.login-user
         $scope.$emit 'event:auth-login' user: Hub.login-user
 
@@ -190,9 +188,10 @@ angular.module 'hub.g0v.tw' <[ui.state firebase]>
     self = {}
     myDataRef = new Firebase(url)
     init = ->
+        $rootScope.$broadcast 'event:hub-ready'
         self.inited = true
-    people = angularFireCollection myDataRef.child(\people), init
-    projects = angularFireCollection myDataRef.child \projects
+    people = angularFireCollection myDataRef.child \people
+    projects = angularFireCollection myDataRef.child(\projects), init
     check-username = (username, always-prompt, cb) ->
         username.=replace(/\./g, \,)
         inuse <- myDataRef.child "people/#{username}" .once \value
