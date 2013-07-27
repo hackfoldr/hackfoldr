@@ -67,7 +67,7 @@ angular.module 'hub.g0v.tw' <[ui.state firebase]>
       featured = [p for p in Hub.projects when p.thumbnail]
       $scope.featured = featured[Math.floor Math.random! * *]
     $scope <<< do
-        avatarFor: (user) -> Hub.people.getByName user ?.avatar
+        avatarFor: (user) -> Hub.people.getByName user ?.avatar ? "http://avatars.io/github/#user"
         people: Hub.people
         projects: Hub.projects
         opts: {}
