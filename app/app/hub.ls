@@ -64,8 +64,8 @@ angular.module 'hub.g0v.tw' <[ui.state firebase]>
 
 .controller ProjectCtrl: <[$scope $state $location $http $timeout Hub angularFire]> ++ ($scope, $state, $location, $http, $timeout, Hub, angularFire) ->
     $scope.$on 'event:hub-ready' -> $timeout -> $scope.safeApply $scope, ->
-      $scope.featured = [p for p in Hub.projects when p.thumbnail]?0
-      console.log \ready Hub.projects, $scope.featured
+      featured = [p for p in Hub.projects when p.thumbnail]
+      $scope.featured = featured[Math.floor Math.random! * *]
     $scope <<< do
         avatarFor: (user) -> Hub.people.getByName user ?.avatar
         people: Hub.people
