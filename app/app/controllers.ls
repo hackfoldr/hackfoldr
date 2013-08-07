@@ -15,7 +15,14 @@ angular.module 'app.controllers' <[ui.state]>
     docs: HackFolder.docs
     tree: HackFolder.tree
     godoc: (doc) ->
-      $scope.go "/#{ $scope.hackId }/#{ decodeURIComponent doc.id }"
+      if doc.opts?target == '_blank'
+        window.open doc.url, doc.id
+        return true
+      else if doc.url.match /(https?:)?\/\/[^/]*(github|facebook)[^/]*\//
+        window.open doc.url, doc.id
+        return true
+      else
+        $scope.go "/#{ $scope.hackId }/#{ decodeURIComponent doc.id }"
     open: (doc) ->
       window.open doc.url, doc.id
       return false
