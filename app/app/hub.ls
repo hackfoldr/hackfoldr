@@ -132,6 +132,7 @@ angular.module 'hub.g0v.tw' <[ui.state firebase]>
             $scope.following = [t for t in $scope.following when t isnt id]
             delete $scope.followlist[id]
         projects: Hub.projects
+        filteredpeople: Hub.filteredpeople
         people: Hub.people
         auth: Hub.auth
         hub: Hub
@@ -180,9 +181,11 @@ angular.module 'hub.g0v.tw' <[ui.state firebase]>
         do-tagcloud $scope.people if Hub.people.length
         <- setTimeout _, 100ms
         $scope.$watch 'people' $scope.safeApply $scope, -> do-tagcloud
+    $scope.$watch 'search' !->
+        if $scope.search !== void
+            $scope.filteredpeople = $scope.people
     if Hub.login-user
         $scope.$emit 'event:auth-login' user: Hub.login-user
-
 .factory Hub: <[$http angularFireCollection $rootScope]> ++ ($http, angularFireCollection, $rootScope) ->
     url = window.global.config.FIREBASE
     self = {}
@@ -190,6 +193,7 @@ angular.module 'hub.g0v.tw' <[ui.state firebase]>
     init = ->
         $rootScope.$broadcast 'event:hub-ready'
         self.inited = true
+    filteredpeople = angularFireCollection myDataRef.child("people").limit 50
     people = angularFireCollection myDataRef.child \people
     projects = angularFireCollection myDataRef.child(\projects), init
     check-username = (username, always-prompt, cb) ->
@@ -275,3 +279,4 @@ angular.module 'hub.g0v.tw' <[ui.state firebase]>
         root: myDataRef
         people: people
         projects: projects
+        filteredpeople: filteredpeople
