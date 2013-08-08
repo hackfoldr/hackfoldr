@@ -70,7 +70,7 @@
           span.badge.badge-info.font-se {{entry.count}}
       span(style="-webkit-flex:100 1 auto") &nbsp;
     div.people-list
-      .person(ng-class="{{person.status}}",ng-class="{'show-detail': showPerson == person}",ng-repeat="person in people | filter:search",ng-click="togglePerson(person)")
+      .person(ng-class="{{person.status}}",ng-class="{'show-detail': showPerson == person}",ng-repeat="person in people | filter:search",ng-click="togglePerson(person)", ng-hide="person.$index > 49 && (search === undefined) || search === ''")
         .avatar(ng-mouseenter="tofollow=1",ng-mouseleave="tofollow=0")
           img.img-polaroid(ng-src="{{person.avatar}}?size=medium")
           i.icon-star-empty(ng-show="followlist[person.$id]",ng-click="unfollow_person(person.$id)",ngx-final)
