@@ -1,5 +1,7 @@
 angular.module 'hub.g0v.tw' <[ui.state firebase github]>
-
+.config ($httpProvider) ->
+    $httpProvider.defaults.useXDomain = true
+    delete $httpProvider.defaults.headers.common['X-Requested-With']
 .controller AuthzCtrl: <[$scope $window $state Hub]> ++ ($scope, $window, $state, Hub) ->
   $scope.$on 'event:auth-logout' -> $scope.safeApply $scope, ->
     $scope.cleanup?!
@@ -94,12 +96,41 @@ angular.module 'hub.g0v.tw' <[ui.state firebase github]>
                 $state.transitionTo 'project', {}
             $scope.project = {}
         saveNew: (project) ->
+
+
+            $http {
+                withCredentials: true
+            }
+            $http.get 'https://api.github.com/repos/clonn/hack.g0v.tw/contents/'
+            .success (data, status, headers, config)->
+
+                flagG0v = false
+                result = null
+
+                for value in data
+                    name = value.name
+                    if name.toLowerCase().match 'g0v.json'
+                        flagG0v = true
+                        result = value
+
+                # adjust to raw url of github
+                url = result.html_url.replace('github.com', 'raw.github.com')
+                url = url.replace('/blob', '')
+
+                queryUrl = 'http://query.yahooapis.com/v1/public/yql?q=select * from html where url="{{query}}"&format=json&diagnostics=true&callback=angular.callbacks._0'
+                queryUrl = queryUrl.replace('{{query}}', url)
+
+                $http.jsonp queryUrl
+                .success (data, status, headers, config)->
+
+                    # this is already parse layer
+                    console.log data
             # XXX use proper angular form validation
-            return false unless project.name
+            # return false unless project.name
             # XXX warn
-            return false if [p for p in Hub.projects when p.name is project.name].length
+            # return false if [p for p in Hub.projects when p.name is project.name].length
             $scope.opts.isnew = false
-            Hub.root.child "projects/#{project.name}" .set project <<< { created_by: Hub.login-user.username }
+            # Hub.root.child "projects/#{project.name}" .set project <<< { created_by: Hub.login-user.username }
             $state.transitionTo 'project.detail', { projectName: project.name }
 
     $scope.$watch '$state.params.projectName' (projectName) ->
