@@ -96,12 +96,19 @@ angular.module 'hub.g0v.tw' <[ui.state firebase]>
                 $state.transitionTo 'project', {}
             $scope.project = {}
         saveNew: (project) ->
+            
+            return $scope.opts.warning = 'Github 網址不可為空' unless project.github
+            return $scope.opts.warning = 'Github 網址不符合格式' unless angular.element('.github-url').val().match(/^https:\/\/github.com\/.*[a-zA-Z\d]\/.*[a-zA-Z\d]/)
+            return $scope.opts.warning = 'Github 網址與其他專案重複' if [p for p in Hub.projects when p.url is project.github].length
 
+            ghData = project.github.split('/')
+            ghUser = ghData[3]
+            ghProject = ghData[4]
 
             $http {
                 withCredentials: true
             }
-            $http.get 'https://api.github.com/repos/clonn/hack.g0v.tw/contents/'
+            $http.get "https://api.github.com/repos/#ghUser/#ghProject/contents/"
             .success (data, status, headers, config)->
 
                 flagG0v = false
@@ -113,11 +120,13 @@ angular.module 'hub.g0v.tw' <[ui.state firebase]>
                         flagG0v = true
                         result = value
 
+                return $scope.opts.warning = 'Github 專案底下請放入 g0v.json' unless flagG0v
+
                 # adjust to raw url of github
                 url = result.html_url.replace('github.com', 'raw.github.com')
                 url = url.replace('/blob', '')
 
-                queryUrl = 'http://query.yahooapis.com/v1/public/yql?q=select * from html where url="{{query}}"&format=json&diagnostics=true&callback=angular.callbacks._0'
+                queryUrl = 'http://query.yahooapis.com/v1/public/yql?q=select * from html where url="{{query}}"&format=json&diagnostics=true&callback=JSON_CALLBACK'
                 queryUrl = queryUrl.replace('{{query}}', url)
 
                 $http.jsonp queryUrl
@@ -125,13 +134,17 @@ angular.module 'hub.g0v.tw' <[ui.state firebase]>
 
                     # this is already parse layer
                     console.log data
+                    $scope.opts.isnew = false
+                    Hub.root.child "projects/#{project.name}" .set project <<< { created_by: Hub.login-user.username }
+                    $state.transitionTo 'project.detail', { projectName: project.name }
+                    
             # XXX use proper angular form validation
             # return false unless project.name
             # XXX warn
             # return false if [p for p in Hub.projects when p.name is project.name].length
-            $scope.opts.isnew = false
+            # $scope.opts.isnew = false
             # Hub.root.child "projects/#{project.name}" .set project <<< { created_by: Hub.login-user.username }
-            $state.transitionTo 'project.detail', { projectName: project.name }
+            # $state.transitionTo 'project.detail', { projectName: project.name }
 
     $scope.$watch '$state.params.projectName' (projectName) ->
         return unless projectName
