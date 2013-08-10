@@ -69,7 +69,7 @@ angular.module 'hub.g0v.tw' <[ui.state firebase github]>
       featured = [p for p in Hub.projects when p.thumbnail]
       $scope.featured = featured[Math.floor Math.random! * *]
     $scope <<< do
-        avatarFor: (user) -> Hub.people.getByName user ?.avatar ? "http://avatars.io/github/#user"
+        avatarFor: (user) -> Hub.people.getByName user ?.avatar ? "http://avatars.io/github/#user"    
         people: Hub.people
         projects: Hub.projects
         opts: {}
@@ -95,19 +95,35 @@ angular.module 'hub.g0v.tw' <[ui.state firebase github]>
                 delete $scope.project
                 $state.transitionTo 'project', {}
             $scope.project = {}
+
+        checkProject: (project, meta) ->
+            leak = []
+            $scope.opts.warning = null
+            for value in meta
+                console.log value
+                unless project[value]
+                    console.log "leak #{value}"
+                    leak.push value 
+            
+            if leak.length > 0
+                $scope.opts.warning = 'g0v.json 無法符合格式，缺少了 ' + leak.join(', ') + ' 關鍵字'
+
+            console.log $scope.opts.warning
+            return $scope.opts.warning
+
         saveNew: (project) ->
             
+            console.log 'show all projects'
+            console.log Hub.projects
+            # exit this save function
             return $scope.opts.warning = 'Github 網址不可為空' unless project.github
             return $scope.opts.warning = 'Github 網址不符合格式' unless angular.element('.github-url').val().match(/^https:\/\/github.com\/.*[a-zA-Z\d]\/.*[a-zA-Z\d]/)
-            return $scope.opts.warning = 'Github 網址與其他專案重複' if [p for p in Hub.projects when p.url is project.github].length
+            # return $scope.opts.warning = 'Github 網址與其他專案重複' if [p for p in Hub.projects when p.url is project.github].length
 
             ghData = project.github.split('/')
             ghUser = ghData[3]
             ghProject = ghData[4]
 
-            $http {
-                withCredentials: true
-            }
             $http.get "https://api.github.com/repos/#ghUser/#ghProject/contents/"
             .success (data, status, headers, config)->
 
@@ -135,9 +151,28 @@ angular.module 'hub.g0v.tw' <[ui.state firebase github]>
                     # this is already parse layer
                     console.log data
                     $scope.opts.isnew = false
+                    try
+                        result = JSON.parse(data.query.results.body.p)
+                        project <<< result
+                    catch
+                        return $scope.opts.warning = 'g0v.json 無法符合格式，請參考...' unless flagG0v
+                    
+                    $scope.checkProject(project, [
+                        'name'
+                        'name_zh'
+                        'keywords'
+                        'description'
+                        'description_zh'
+                        'homepage'
+                    ])
+                    if $scope.opts.warning.length > 0
+                        console.log 'return warning'
+                        return $scope.opts.warning
+                    # name have to fullfill in g0v.json 
                     Hub.root.child "projects/#{project.name}" .set project <<< { created_by: Hub.login-user.username }
                     $state.transitionTo 'project.detail', { projectName: project.name }
-                    
+                    return 
+
             # XXX use proper angular form validation
             # return false unless project.name
             # XXX warn
