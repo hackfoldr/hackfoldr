@@ -16,5 +16,5 @@ keywords: <[angularjs livescript sass bootstrap]>
 audience: <[contributor]>
 products: <[website]>
 projects: <[meta]>
-contributors: <[au dirty fukuball lis186 zbryikt 小蟹 FourDollars hlb ETBlue yhsiang]>
+contributors: <[au dirty fukuball lis186 zbryikt 小蟹 FourDollars hlb ETBlue yhsiang dannvix]>
 needs: <[designer writer]>

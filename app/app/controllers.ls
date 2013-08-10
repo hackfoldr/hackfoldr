@@ -30,6 +30,7 @@ angular.module 'app.controllers' <[ui.state]>
     HackFolder: HackFolder
     iframeCallback: (doc) -> (status) -> $scope.$apply ->
       console?log \iframecb status, doc
+      $state.current.title = "#{doc.title} – hack.g0v.tw"
       if status is \fail
         doc.noiframe = true
       else
