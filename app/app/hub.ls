@@ -108,7 +108,6 @@ angular.module 'hub.g0v.tw' <[ui.state firebase github]>
             if leak.length > 0
                 $scope.opts.warning = 'g0v.json 無法符合格式，缺少了 ' + leak.join(', ') + ' 關鍵字'
 
-            console.log $scope.opts.warning
             return $scope.opts.warning
 
         saveNew: (project) ->
@@ -159,19 +158,16 @@ angular.module 'hub.g0v.tw' <[ui.state firebase github]>
                     
                     $scope.checkProject(project, [
                         'name'
-                        'name_zh'
                         'keywords'
                         'description'
                         'description_zh'
                         'homepage'
                     ])
-                    if $scope.opts.warning.length > 0
-                        console.log 'return warning'
+                    if $scope.opts.warning
                         return $scope.opts.warning
                     # name have to fullfill in g0v.json 
                     Hub.root.child "projects/#{project.name}" .set project <<< { created_by: Hub.login-user.username }
                     $state.transitionTo 'project.detail', { projectName: project.name }
-                    return 
 
             # XXX use proper angular form validation
             # return false unless project.name
