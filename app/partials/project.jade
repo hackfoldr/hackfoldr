@@ -81,6 +81,75 @@
                 p Make one now!
                 a.btn.btn-large.btn-block(ng-click='newProject()') 新增專案
 
+        section.mod-issues
+          div.btn-group.pull-right
+            a(href='#',data-toggle='dropdown').btn.btn-mini.dropdown-toggle easy
+              span.caret
+            ul.dropdown-menu
+              li
+                a(href='#') all
+              li.divider
+              li
+                a(href='javascript://') easy
+              li
+                a(href='javascript://') medium
+              li
+                a(href='javascript://') hard
+          div.btn-group.pull-right
+            a(href='#',data-toggle='dropdown').btn.btn-mini.dropdown-toggle programmer
+              span.caret
+            ul.dropdown-menu
+              li
+                a(href='javascript://') all
+              li.divider
+              li
+                a(href='javascript://') programmer
+              li
+                a(href='javascript://') designer
+              li
+                a(href='javascript://') writer
+          div.btn-group.pull-right
+            a(href='javascript://',data-toggle='dropdown').btn.btn-mini.dropdown-toggle hack.g0v.tw
+              span.caret
+            ul.dropdown-menu
+              li
+                a(href='javascript://') all
+              li.divider
+              li
+                a(href='javascript://') hack.g0v.tw
+              li
+                a(href='javascript://') 22k
+              li
+                a(href='javascript://') aec-process
+          h2 歡迎跳坑
+          p 底下是一些您可以幫忙的事項，歡迎跳坑。
+          table.table.table-condensed.table-hover
+            tbody
+              tr
+                td
+                  span.avatar-link(data-toggle='tooltip', title='{{project.author}}').pull-right
+                    img.avatar(ng-src='{{avatarFor("clkao")}}')
+                  a(href='') people registry: improve load time
+                  br
+                  span.label.label-info hack.g0v.tw
+                  span.label.label-important writer
+              tr
+                td
+                  a(href='') mobile safari main-content scrollbar not visible
+                  br
+                  span.label.label-info hack.g0v.tw
+                  span.label.label-important programmer
+                  span.label.label-important design
+              tr
+                td
+                  span.avatar-link(data-toggle='tooltip', title='{{project.author}}').pull-right
+                    img.avatar(ng-src='{{avatarFor("clkao")}}')
+                  a(href='') integrated chat service
+                  br
+                  span.label.label-info 22k
+                  span.label.label-important programmer
+                  span.label.label-important writer
+
         section.mod-featured
           h2 特色推薦
           .mod-project
@@ -89,3 +158,4 @@
             h2
               a(ng-href='{{featured.homepage}}') {{featured.name_zh || featured.name}}
               p {{featured.description_zh}}
+

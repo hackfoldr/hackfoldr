@@ -91,3 +91,20 @@ a .icon-hackfoldr {
     }
 }
 
+.mod-issues {
+    border: 1px solid #ccc;
+    padding: 20px;
+    margin-bottom: 20px;
+    h2 {
+        margin-top: 0;
+        font-size: $baseFontSize * 1.5;
+        small {
+            font-size: $baseFontSize * 1.1;
+        }
+    }
+    .avatar {
+        width: 20px;
+        height: 20px;
+    }
+}
+
