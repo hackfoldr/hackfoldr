@@ -39,7 +39,6 @@ angular.module 'app.controllers' <[ui.state ngCookies]>
     showSaveBtn: ->
       $cookies.savebtn = undefined
       $cookies.savebtn != \consumed
-    #fakeSave: ->
     HackFolder: HackFolder
     iframeCallback: (doc) -> (status) -> $scope.$apply ->
       console?log \iframecb status, doc
