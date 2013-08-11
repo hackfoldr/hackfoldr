@@ -81,3 +81,8 @@
           .person-tag
             span.label.tag(ng-repeat="tag in person.tags",ng-class="{ 'label-success': tag == 'hackath3n' }",ng-click="gotag(tag)") {{tag}}
           .person-bio(ng-class="{'person-bio-empty': !person.bio}") {{person.bio || "( 尚未填好自我介紹 )"}}
+          .person-contact
+            span.label.label-info 聯絡資訊
+            a.btn(ng-repeat="provider in ['facebook', 'twitter', 'github']", ng-show='person.auth[provider]', ng-href="http://{{provider}}.com/{{person.auth[provider].username || person.auth[provider].id}}", target="_blank")
+              i.contact-icon.icon-large(class="icon-{{provider}}")
+              {{person.auth[provider].username || provider.charAt(0).toUpperCase() + provider.slice(1)}}
