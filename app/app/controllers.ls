@@ -1,4 +1,4 @@
-angular.module 'app.controllers' <[ui.state]>
+angular.module 'app.controllers' <[ui.state ngCookies]>
 .controller AppCtrl: <[$scope $state $rootScope $timeout]> ++ ($scope, $state, $rootScope, $timeout) ->
   $scope.$watch '$state.current.name' ->
     $scope.irc-enabled = true if it is \irc
@@ -6,7 +6,7 @@ angular.module 'app.controllers' <[ui.state]>
   <- $timeout _, 10s * 1000ms
   $rootScope.hideGithubRibbon = true
 
-.controller HackFolderCtrl: <[$scope $state HackFolder]> ++ ($scope, $state, HackFolder) ->
+.controller HackFolderCtrl: <[$scope $state $cookies HackFolder]> ++ ($scope, $state, $cookies, HackFolder) ->
   $scope <<< do
     hasViewMode: -> it.match /g(doc|present|draw)/
     sortableOptions: do
@@ -27,6 +27,12 @@ angular.module 'app.controllers' <[ui.state]>
       window.open doc.url, doc.id
       return false
     activate: HackFolder.activate
+    saveBtn: ->
+      $cookies.savebtn != \consumed
+    fakeSave: ->
+      $cookies.savebtn = \consumed
+      alert "你已經沒有存檔的必要了。寫吧你，不必再擔心忘記存檔。"
+      $ it.target .fadeOut!
     HackFolder: HackFolder
     iframeCallback: (doc) -> (status) -> $scope.$apply ->
       console?log \iframecb status, doc
