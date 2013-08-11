@@ -37,7 +37,6 @@ angular.module 'app.controllers' <[ui.state ngCookies]>
         $cookies.savebtn = \consumed
         if $scope.saveBtn => $scope.saveBtn.fadeOut 1000
     showSaveBtn: ->
-      $cookies.savebtn = undefined
       $cookies.savebtn != \consumed
     HackFolder: HackFolder
     iframeCallback: (doc) -> (status) -> $scope.$apply ->
