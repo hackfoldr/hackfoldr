@@ -24,6 +24,22 @@ For example, with an index like http://ethercalc.org/g0v-hackath2n, you'll get h
 * Hackpad
 * EtherCalc
 
+# Prerequisites
+
+On Mac, use [Homebrew](https://github.com/mxcl/homebrew) and install gems in `$HOME`:
+
+	$ brew install node
+	$ gem install compass --user-install
+	$ export PATH="$HOME/.gem/ruby/1.8/bin:$PATH"
+
+On Mac, use [Homebrew](https://github.com/mxcl/homebrew) and install gems in local directory: (doesn't work)
+
+	$ brew install node
+	$ export GEM_HOME="$PWD/gems"
+	$ mkdir -p $GEM_HOME
+	$ gem install compass
+	$ export PATH="$PWD/gem/bin:$PATH"
+
 # Install
 
     % npm i
