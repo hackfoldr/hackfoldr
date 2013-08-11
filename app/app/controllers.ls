@@ -27,12 +27,19 @@ angular.module 'app.controllers' <[ui.state ngCookies]>
       window.open doc.url, doc.id
       return false
     activate: HackFolder.activate
-    saveBtn: ->
+    saveBtn: void
+    saveModalOpts: dialogFade: true
+    saveModalOpen: false
+    showSaveModal: (show,rm,e)-> 
+      $scope.saveModalOpen = show
+      if e => $scope.saveBtn = $ e.target
+      if rm =>
+        $cookies.savebtn = \consumed
+        if $scope.saveBtn => $scope.saveBtn.fadeOut 1000
+    showSaveBtn: ->
+      $cookies.savebtn = undefined
       $cookies.savebtn != \consumed
-    fakeSave: ->
-      $cookies.savebtn = \consumed
-      alert "你已經沒有存檔的必要了。寫吧你，不必再擔心忘記存檔。"
-      $ it.target .fadeOut!
+    #fakeSave: ->
     HackFolder: HackFolder
     iframeCallback: (doc) -> (status) -> $scope.$apply ->
       console?log \iframecb status, doc

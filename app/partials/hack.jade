@@ -14,7 +14,20 @@
     .pad-container(ng-style='{height: contentHeight}')
       article.pad(ng-repeat='(key, iframe) in iframes',ng-show='docId == key')
         span.docmode(ng-show="hasViewMode(iframe.doc.type) && iframe.mode != 'edit'",ng-click="activate(iframe.doc.id, true)") edit
-        span.docmode(ng-show="(iframe.doc.type=='hackpad') && saveBtn()",ng-click='fakeSave($event)') save
+        span.docmode(ng-show="(iframe.doc.type=='hackpad') && showSaveBtn()",ng-click='showSaveModal(true,false,$event)') save / 存檔
+        div(modal="saveModalOpen",close="showSaveModal(false)",options="saveModalOpts")
+          .modal-header
+            h3#saveModalLabel 歡迎來到二十一世紀
+          .modal-body
+            p 在這個時代，存檔是不需要的。
+            p 你所要做的就是把你想要寫的東西寫上去，別人就能看到了。若有同時在編輯同份文件的人，他甚至會看到你打的字一個接一個的出現。
+            p 如果不能理解的話，你可以把他當成是自動存檔，只是你的任何編輯都會隨時被自動存檔到網站上。
+            p 總而言之，歡迎來到二十一世紀。
+          .modal-footer
+             button.btn-primary(ng-click="showSaveModal(false,true)") 我瞭解了
+             |  
+             button.btn(ng-click="showSaveModal(false)") 我不管，我就是要存檔
+
         .noiframe.unsure(ui-if="iframe.doc.iframeunsure") Click the link below to open the link in a new window: 
           br
           span.link
