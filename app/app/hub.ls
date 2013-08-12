@@ -1,4 +1,4 @@
-angular.module 'hub.g0v.tw' <[ui.state firebase]>
+angular.module 'hub.g0v.tw' <[ui.state firebase github]>
 
 .controller AuthzCtrl: <[$scope $window $state Hub]> ++ ($scope, $window, $state, Hub) ->
   $scope.$on 'event:auth-logout' -> $scope.safeApply $scope, ->

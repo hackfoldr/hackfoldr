@@ -82,7 +82,7 @@
                 a.btn.btn-large.btn-block(ng-click='newProject()') 新增專案
 
         section.mod-issues
-          div.btn-group.pull-right
+          div.issues-filter.btn-group.pull-right
             a(href='#',data-toggle='dropdown').btn.btn-mini.dropdown-toggle easy
               span.caret
             ul.dropdown-menu
@@ -95,7 +95,7 @@
                 a(href='javascript://') medium
               li
                 a(href='javascript://') hard
-          div.btn-group.pull-right
+          div.issues-filter.btn-group.pull-right
             a(href='#',data-toggle='dropdown').btn.btn-mini.dropdown-toggle programmer
               span.caret
             ul.dropdown-menu
@@ -108,19 +108,22 @@
                 a(href='javascript://') designer
               li
                 a(href='javascript://') writer
-          div.btn-group.pull-right
-            a(href='javascript://',data-toggle='dropdown').btn.btn-mini.dropdown-toggle hack.g0v.tw
+          div.issues-filter.btn-group.pull-right
+            a(href='javascript://',data-toggle='dropdown').btn.btn-mini.dropdown-toggle all projects
               span.caret
             ul.dropdown-menu
               li
-                a(href='javascript://') all
+                a(href='javascript://')
+                  dl.dl-horizontal
+                    dt
+                    dd all projects
               li.divider
-              li
-                a(href='javascript://') hack.g0v.tw
-              li
-                a(href='javascript://') 22k
-              li
-                a(href='javascript://') aec-process
+              li(ng-repeat='project in projects',ng-show='project.repository')
+                a(href='javascript://')
+                  dl.dl-horizontal
+                    dt
+                      span.label.label-info {{project.repository.url | github_url_to_repo_name}}
+                    dd {{project.name_zh || project.name}}&nbsp;
           h2 歡迎跳坑
           p 底下是一些您可以幫忙的事項，歡迎跳坑。
           table.table.table-condensed.table-hover
