@@ -81,7 +81,7 @@
                 p Make one now!
                 a.btn.btn-large.btn-block(ng-click='newProject()') 新增專案
 
-        section.mod-issues
+        section.mod-issues(ng-controller='IssueCtrl')
           div.issues-filter.btn-group.pull-right
             a(href='#',data-toggle='dropdown').btn.btn-mini.dropdown-toggle easy
               span.caret
@@ -128,7 +128,7 @@
           p 底下是一些您可以幫忙的事項，歡迎跳坑。
           table.table.table-condensed.table-hover
             tbody
-              tr
+              //tr
                 td
                   span.avatar-link(data-toggle='tooltip', title='{{project.author}}').pull-right
                     img.avatar(ng-src='{{avatarFor("clkao")}}')
@@ -136,14 +136,14 @@
                   br
                   span.label.label-info hack.g0v.tw
                   span.label.label-important writer
-              tr
+              //tr
                 td
                   a(href='') mobile safari main-content scrollbar not visible
                   br
                   span.label.label-info hack.g0v.tw
                   span.label.label-important programmer
                   span.label.label-important design
-              tr
+              //tr
                 td
                   span.avatar-link(data-toggle='tooltip', title='{{project.author}}').pull-right
                     img.avatar(ng-src='{{avatarFor("clkao")}}')
@@ -152,6 +152,15 @@
                   span.label.label-info 22k
                   span.label.label-important programmer
                   span.label.label-important writer
+              tr(ng-repeat='issue in issues')
+                td
+                  span.avatar-link(ng-show='issue.assignee',data-toggle='tooltip', title='{{issue.assignee.login}}').pull-right
+                    img.avatar(ng-src='{{avatarFor(issue.assignee.login)}}')
+                  a(href='{{issue.html_url}}') {{issue.title}}
+                  br
+                  span.label.label-info {{issue.repo}}
+                  span.label.label-important(ng-repeat='label in issue.labels')
+                    {{label}}
 
         section.mod-featured
           h2 特色推薦
