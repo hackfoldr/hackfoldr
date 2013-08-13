@@ -69,7 +69,7 @@ angular.module 'hub.g0v.tw' <[ui.state firebase]>
       featured = [p for p in Hub.projects when p.thumbnail]
       $scope.featured = featured[Math.floor Math.random! * *]
     $scope <<< do
-        avatarFor: (user) -> Hub.people.getByName user ?.avatar ? "http://avatars.io/github/#user"    
+        avatarFor: (user) -> Hub.people.getByName user ?.avatar ? "http://avatars.io/github/#user"
         people: Hub.people
         projects: Hub.projects
         opts: {}
@@ -110,15 +110,15 @@ angular.module 'hub.g0v.tw' <[ui.state firebase]>
                 console.log value
                 unless project[value]
                     console.log "leak #{value}"
-                    leak.push value 
-            
+                    leak.push value
+
             if leak.length > 0
                 $scope.opts.warning = 'g0v.json 無法符合格式，缺少了 ' + leak.join(', ') + ' 關鍵字'
 
             return $scope.opts.warning
 
         saveNew: (project) ->
-            
+
             console.log 'show all projects'
             console.log Hub.projects
             # exit this save function
@@ -165,7 +165,7 @@ angular.module 'hub.g0v.tw' <[ui.state firebase]>
 
                     Hub.root.child "projects/#{project.name}" .set project <<< { created_by: Hub.login-user.username }
                     $state.transitionTo 'project.detail', { projectName: project.name }
-                    
+
 
             # XXX use proper angular form validation
             # return false unless project.name
