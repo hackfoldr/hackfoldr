@@ -144,7 +144,7 @@
                   span.label.label-info 22k
                   span.label.label-important programmer
                   span.label.label-important writer
-              tr(ng-repeat='issue in issues')
+              tr(ng-repeat='issue in issues',ng-show='issue.title')
                 td
                   span.avatar-link(ng-show='issue.assignee',data-toggle='tooltip', title='{{issue.assignee.login}}').pull-right
                     img.avatar(ng-src='{{avatarFor(issue.assignee.login)}}')
@@ -153,6 +153,17 @@
                   span.label.label-info {{issue.repo}}
                   span.label.label-important(ng-repeat='label in issue.labels')
                     {{label}}
+              tr
+                td
+                  .pagination.pagination-centered.pagination-small
+                    ul
+                      li: a(href='javascript://') &laquo;
+                      li: a(href='javascript://') 1
+                      li: a(href='javascript://') 2
+                      li: a(href='javascript://') 3
+                      li: a(href='javascript://') 4
+                      li: a(href='javascript://') 5
+                      li: a(href='javascript://') &raquo;
 
         section.mod-featured
           h2 特色推薦
