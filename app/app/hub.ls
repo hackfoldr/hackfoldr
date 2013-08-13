@@ -1,5 +1,7 @@
 angular.module 'hub.g0v.tw' <[ui.state firebase]>
-
+.config ($httpProvider) ->
+    $httpProvider.defaults.useXDomain = true
+    delete $httpProvider.defaults.headers.common['X-Requested-With']
 .controller AuthzCtrl: <[$scope $window $state Hub]> ++ ($scope, $window, $state, Hub) ->
   $scope.$on 'event:auth-logout' -> $scope.safeApply $scope, ->
     $scope.cleanup?!
@@ -67,7 +69,7 @@ angular.module 'hub.g0v.tw' <[ui.state firebase]>
       featured = [p for p in Hub.projects when p.thumbnail]
       $scope.featured = featured[Math.floor Math.random! * *]
     $scope <<< do
-        avatarFor: (user) -> Hub.people.getByName user ?.avatar ? "http://avatars.io/github/#user"
+        avatarFor: (user) -> Hub.people.getByName user ?.avatar ? "http://avatars.io/github/#user"    
         people: Hub.people
         projects: Hub.projects
         opts: {}
@@ -78,13 +80,20 @@ angular.module 'hub.g0v.tw' <[ui.state firebase]>
             thing.keywords.push $scope.opts.newtag unless $scope.opts.newtag in thing.keywords
             $scope.opts.newtag = ''
             return false
-        addfromURL: ->
-            repo = prompt "Enter github user/repo with g0v.json", ''
+        addfromURL: (repo, cb) ->
+            unless (repo)
+                repo = prompt "Enter github user/repo with g0v.json", ''
+
             url = "https://api.github.com/repos/#{repo}/contents/g0v.json"
+            console.log url
             <- $http.get url .error -> console.log it
             .success
             res = JSON.parse Base64.decode it?content
+
+            console.log res
             $scope.project <<< res
+            if cb
+                cb()
         newProject: ->
             $scope.opts.isnew = true
             $scope.opts.editMode = true
@@ -93,14 +102,78 @@ angular.module 'hub.g0v.tw' <[ui.state firebase]>
                 delete $scope.project
                 $state.transitionTo 'project', {}
             $scope.project = {}
+
+        checkProject: (project, meta) ->
+            leak = []
+            $scope.opts.warning = null
+            for value in meta
+                console.log value
+                unless project[value]
+                    console.log "leak #{value}"
+                    leak.push value 
+            
+            if leak.length > 0
+                $scope.opts.warning = 'g0v.json 無法符合格式，缺少了 ' + leak.join(', ') + ' 關鍵字'
+
+            return $scope.opts.warning
+
         saveNew: (project) ->
+            
+            console.log 'show all projects'
+            console.log Hub.projects
+            # exit this save function
+            return $scope.opts.warning = 'Github 網址不可為空' unless project.github
+            return $scope.opts.warning = 'Github 網址不符合格式' unless angular.element('.github-url').val().match(/^https:\/\/github.com\/.*[a-zA-Z\d]\/.*[a-zA-Z\d]/)
+            # return $scope.opts.warning = 'Github 網址與其他專案重複' if [p for p in Hub.projects when p.url is project.github].length
+
+            # user have to login first
+            unless (Hub.login-user)
+                alert('請先進行登入動作')
+                return $location.path("/people");
+
+            ghData = project.github.split('/')
+            ghUser = ghData[3]
+            ghProject = ghData[4]
+
+            $http.get "https://api.github.com/repos/#ghUser/#ghProject/contents/"
+            .success (data, status, headers, config)->
+
+                flagG0v = false
+                result = null
+
+                for value in data
+                    name = value.name
+                    if name.toLowerCase().match 'g0v.json'
+                        flagG0v = true
+                        result = value
+
+                return $scope.opts.warning = 'Github 專案底下請放入 g0v.json' unless flagG0v
+
+                # adjust to raw url of github
+                $scope.addfromURL "#{ghUser}/#{ghProject}", ->
+                    project = $scope.project
+                    console.log project
+                    $scope.checkProject(project, [
+                        'name'
+                        'keywords'
+                        'description'
+                        'description_zh'
+                        'homepage'
+                    ])
+                    if $scope.opts.warning
+                        return $scope.opts.warning
+
+                    Hub.root.child "projects/#{project.name}" .set project <<< { created_by: Hub.login-user.username }
+                    $state.transitionTo 'project.detail', { projectName: project.name }
+                    
+
             # XXX use proper angular form validation
-            return false unless project.name
+            # return false unless project.name
             # XXX warn
-            return false if [p for p in Hub.projects when p.name is project.name].length
-            $scope.opts.isnew = false
-            Hub.root.child "projects/#{project.name}" .set project <<< { created_by: Hub.login-user.username }
-            $state.transitionTo 'project.detail', { projectName: project.name }
+            # return false if [p for p in Hub.projects when p.name is project.name].length
+            # $scope.opts.isnew = false
+            # Hub.root.child "projects/#{project.name}" .set project <<< { created_by: Hub.login-user.username }
+            # $state.transitionTo 'project.detail', { projectName: project.name }
 
     $scope.$watch '$state.params.projectName' (projectName) ->
         return unless projectName
