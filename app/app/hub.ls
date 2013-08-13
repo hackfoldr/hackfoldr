@@ -80,13 +80,20 @@ angular.module 'hub.g0v.tw' <[ui.state firebase github]>
             thing.keywords.push $scope.opts.newtag unless $scope.opts.newtag in thing.keywords
             $scope.opts.newtag = ''
             return false
-        addfromURL: ->
-            repo = prompt "Enter github user/repo with g0v.json", ''
+        addfromURL: (repo, cb) ->
+            unless (repo)
+                repo = prompt "Enter github user/repo with g0v.json", ''
+
             url = "https://api.github.com/repos/#{repo}/contents/g0v.json"
+            console.log url
             <- $http.get url .error -> console.log it
             .success
             res = JSON.parse Base64.decode it?content
+
+            console.log res
             $scope.project <<< res
+            if cb
+                cb()
         newProject: ->
             $scope.opts.isnew = true
             $scope.opts.editMode = true
@@ -119,6 +126,11 @@ angular.module 'hub.g0v.tw' <[ui.state firebase github]>
             return $scope.opts.warning = 'Github 網址不符合格式' unless angular.element('.github-url').val().match(/^https:\/\/github.com\/.*[a-zA-Z\d]\/.*[a-zA-Z\d]/)
             # return $scope.opts.warning = 'Github 網址與其他專案重複' if [p for p in Hub.projects when p.url is project.github].length
 
+            # user have to login first
+            unless (Hub.login-user)
+                alert('請先進行登入動作')
+                return $location.path("/people");
+
             ghData = project.github.split('/')
             ghUser = ghData[3]
             ghProject = ghData[4]
@@ -138,24 +150,9 @@ angular.module 'hub.g0v.tw' <[ui.state firebase github]>
                 return $scope.opts.warning = 'Github 專案底下請放入 g0v.json' unless flagG0v
 
                 # adjust to raw url of github
-                url = result.html_url.replace('github.com', 'raw.github.com')
-                url = url.replace('/blob', '')
-
-                queryUrl = 'http://query.yahooapis.com/v1/public/yql?q=select * from html where url="{{query}}"&format=json&diagnostics=true&callback=JSON_CALLBACK'
-                queryUrl = queryUrl.replace('{{query}}', url)
-
-                $http.jsonp queryUrl
-                .success (data, status, headers, config)->
-
-                    # this is already parse layer
-                    console.log data
-                    $scope.opts.isnew = false
-                    try
-                        result = JSON.parse(data.query.results.body.p)
-                        project <<< result
-                    catch
-                        return $scope.opts.warning = 'g0v.json 無法符合格式，請參考...' unless flagG0v
-                    
+                $scope.addfromURL "#{ghUser}/#{ghProject}", ->
+                    project = $scope.project
+                    console.log project
                     $scope.checkProject(project, [
                         'name'
                         'keywords'
@@ -165,9 +162,10 @@ angular.module 'hub.g0v.tw' <[ui.state firebase github]>
                     ])
                     if $scope.opts.warning
                         return $scope.opts.warning
-                    # name have to fullfill in g0v.json 
+
                     Hub.root.child "projects/#{project.name}" .set project <<< { created_by: Hub.login-user.username }
                     $state.transitionTo 'project.detail', { projectName: project.name }
+                    
 
             # XXX use proper angular form validation
             # return false unless project.name
