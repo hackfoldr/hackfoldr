@@ -26,13 +26,13 @@ var Github = (function($) {
 		},
 		load_issues: function(url, callback) {
 			if ($.isArray(url)) {
-				console.log('url is array.');
-				console.log(url);
+//				console.log('url is array.');
+//				console.log(url);
 				$.each(url, function(i, u) {
 					Github.load_issues(u, callback);
 				});
 			} else {
-				console.log('loading ' + url);
+//				console.log('loading ' + url);
 				var r = parse_ghurl(url);
 //				var api = 'https://api.github.com/repos/' + r.name + '/' + r.repo + '/issues';
 				var api = 'http://utcr.org:8080/repos/' + r.name + '/' + r.repo + '/issues';
@@ -40,7 +40,7 @@ var Github = (function($) {
 					// Only select these fields: title, state, body, html_url, label.name
 					var issues = [];
 					$.each(data, function(i, datum) {
-						console.log(datum);
+//						console.log(datum);
 						var issue = {
 							repo: r.repo,
 							assignee: datum.assignee,
