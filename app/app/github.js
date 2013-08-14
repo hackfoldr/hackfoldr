@@ -68,9 +68,24 @@ angular.module("github", [])
 	};
 })
 .controller('IssueCtrl', [ '$scope', function($scope) {
+	$scope.data = [];
+	$scope.numPerPage = 5;
+	$scope.currentPage = 1;
+	$scope.setPage = function() {
+		var offset = ($scope.currentPage - 1) * $scope.numPerPage;
+		$scope.issues = $scope.data.slice(offset, offset + $scope.numPerPage);
+	};
+	$scope.$watch('currentPage', $scope.setPage);
 	Github.load_issues(
 		[ 'http://github.com/g0v/twbudget', 'http://github.com/g0v/hack.g0v.tw' ],
-		function(issues) { $scope.issues = issues.concat($scope.issues); }
+		function(issues) {
+			$scope.data = issues.concat($scope.data);
+			$scope.numPages = Math.ceil($scope.data.length / $scope.numPerPage);
+			if ($scope.currentPage > $scope.numPages) {
+				$scope.currentPage = 1;
+			}
+			$scope.setPage();
+		}
 	);
 }]);
 

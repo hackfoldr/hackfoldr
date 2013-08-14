@@ -155,15 +155,7 @@
                     {{label}}
               tr
                 td
-                  .pagination.pagination-centered.pagination-small
-                    ul
-                      li: a(href='javascript://') &laquo;
-                      li: a(href='javascript://') 1
-                      li: a(href='javascript://') 2
-                      li: a(href='javascript://') 3
-                      li: a(href='javascript://') 4
-                      li: a(href='javascript://') 5
-                      li: a(href='javascript://') &raquo;
+                  pagination.pagination-centered.pagination-small(num-pages="numPages",current-page="currentPage",max-size="4",boundary-links="true")
 
         section.mod-featured
           h2 特色推薦

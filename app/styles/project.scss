@@ -116,6 +116,9 @@ a .icon-hackfoldr {
     }
     .pagination {
         margin: auto 0 !important;
+		a {
+			cursor: pointer;
+		}
     }
 }
 
