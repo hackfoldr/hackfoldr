@@ -1,5 +1,5 @@
 angular.module 'hub.g0v.tw' <[ui.state firebase github]>
-.config ($httpProvider) ->
+.config <[$httpProvider]> ++ ($httpProvider) ->
     $httpProvider.defaults.useXDomain = true
     delete $httpProvider.defaults.headers.common['X-Requested-With']
 .controller AuthzCtrl: <[$scope $window $state Hub]> ++ ($scope, $window, $state, Hub) ->
