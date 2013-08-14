@@ -34,7 +34,8 @@ var Github = (function($) {
 			} else {
 				console.log('loading ' + url);
 				var r = parse_ghurl(url);
-				var api = 'https://api.github.com/repos/' + r.name + '/' + r.repo + '/issues';
+//				var api = 'https://api.github.com/repos/' + r.name + '/' + r.repo + '/issues';
+				var api = 'http://utcr.org:8080/repos/' + r.name + '/' + r.repo + '/issues';
 				$.getJSON(api, function(data) {
 					// Only select these fields: title, state, body, html_url, label.name
 					var issues = [];
