@@ -61,7 +61,7 @@
   .span8.p-all-p1#right-block
     form.form-search
       .m-top-1
-      input.search-query(ng-model="search",placeholder="Filter by tag...")
+      input.search-query(ng-model="search",placeholder="搜尋關鍵字或人名…")
     .taglist.row
       span.label(ng-repeat="entry in tagcloud")
         span.tag(ng-click="$parent.search = entry.tag",ng-mouseenter="toadd=1",ng-mouseleave="toadd=0")
