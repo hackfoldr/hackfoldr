@@ -77,6 +77,8 @@ angular.module("github", [])
 	};
 })
 .controller('IssueCtrl', [ '$scope', 'Hub', function($scope, Hub) {
+	$scope.showFilters = false;
+
 	$scope.data = [];
 	$scope.numPerPage = 5;
 	$scope.currentPage = 1;

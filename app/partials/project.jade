@@ -82,7 +82,7 @@
                 a.btn.btn-large.btn-block(ng-click='newProject()') 新增專案
 
         section.mod-issues(ng-controller='IssueCtrl')
-          div.issues-filter.btn-group.pull-right
+          div.issues-filter.btn-group.pull-right(ng-show='{{showFilters}}')
             a(href='#',data-toggle='dropdown').btn.btn-mini.dropdown-toggle easy
               span.caret
             ul.dropdown-menu
@@ -91,7 +91,7 @@
               li: a(href='javascript://') easy
               li: a(href='javascript://') medium
               li: a(href='javascript://') hard
-          div.issues-filter.btn-group.pull-right
+          div.issues-filter.btn-group.pull-right(ng-show='{{showFilters}}')
             a(href='#',data-toggle='dropdown').btn.btn-mini.dropdown-toggle programmer
               span.caret
             ul.dropdown-menu
@@ -100,7 +100,7 @@
               li: a(href='javascript://') programmer
               li: a(href='javascript://') designer
               li: a(href='javascript://') writer
-          div.issues-filter.btn-group.pull-right
+          div.issues-filter.btn-group.pull-right(ng-show='{{showFilters}}')
             a(href='javascript://',data-toggle='dropdown').btn.btn-mini.dropdown-toggle all projects
               span.caret
             ul.dropdown-menu
