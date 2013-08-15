@@ -1,4 +1,7 @@
 var Github = (function($) {
+//	var API_BASE = 'https://api.github.com';
+	var API_BASE = 'http://utcr.org:8080';
+
 	var copy_fields = function(to, from, fields) {
 		$.each(fields, function(j, key) { to[key] = from[key]; });
 	};
@@ -37,26 +40,29 @@ var Github = (function($) {
 			} else {
 //				console.log('loading ' + url);
 				var r = parse_ghurl(url);
-//				var api = 'https://api.github.com/repos/' + r.name + '/' + r.repo + '/issues';
-				var api = 'http://utcr.org:8080/repos/' + r.name + '/' + r.repo + '/issues';
-				$.getJSON(api, function(data) {
-					// Only select these fields: title, state, body, html_url, label.name
-					var issues = [];
-					$.each(data, function(i, datum) {
-//						console.log(datum);
-						var issue = {
-							repo: r.repo,
-							assignee: datum.assignee,
-							labels: []
-						};
-						copy_fields(issue, datum, ['title', 'state', 'body', 'html_url']);
-						$.each(datum.labels, function(k, label) {
-							issue.labels.push(label.name);
+				var repo_api = API_BASE + '/repos/' + r.name + '/' + r.repo;
+				$.getJSON(repo_api, function(repo) {
+					if (repo.has_issues) {
+						$.getJSON(repo_api + '/issues', function(data) {
+							// Only select these fields: title, state, body, html_url, label.name
+							var issues = [];
+							$.each(data, function(i, datum) {
+//								console.log(datum);
+								var issue = {
+									repo: r.repo,
+									assignee: datum.assignee,
+									labels: []
+								};
+								copy_fields(issue, datum, ['title', 'state', 'body', 'html_url']);
+								$.each(datum.labels, function(k, label) {
+									issue.labels.push(label.name);
+								});
+								issue.label_str = issue.labels.join(':');
+								issues.push(issue);
+							});
+							callback(issues);
 						});
-						issue.label_str = issue.labels.join(':');
-						issues.push(issue);
-					});
-					callback(issues);
+					}
 				});
 			}
 		},
