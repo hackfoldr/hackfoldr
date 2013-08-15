@@ -24,6 +24,9 @@ var Github = (function($) {
 //			console.log(r);
 			return r ? r.repo : null;
 		},
+		is_ghurl: function(url) {
+			return (url && url.match(re_ghurl));
+		},
 		load_issues: function(url, callback) {
 			if ($.isArray(url)) {
 //				console.log('url is array.');
@@ -67,7 +70,7 @@ angular.module("github", [])
 		return Github.url_to_repo_name(input);
 	};
 })
-.controller('IssueCtrl', [ '$scope', function($scope) {
+.controller('IssueCtrl', [ '$scope', 'Hub', function($scope, Hub) {
 	$scope.data = [];
 	$scope.numPerPage = 5;
 	$scope.currentPage = 1;
@@ -76,16 +79,31 @@ angular.module("github", [])
 		$scope.issues = $scope.data.slice(offset, offset + $scope.numPerPage);
 	};
 	$scope.$watch('currentPage', $scope.setPage);
-	Github.load_issues(
-		[ 'http://github.com/g0v/twbudget', 'http://github.com/g0v/hack.g0v.tw' ],
-		function(issues) {
-			$scope.data = issues.concat($scope.data);
-			$scope.numPages = Math.ceil($scope.data.length / $scope.numPerPage);
-			if ($scope.currentPage > $scope.numPages) {
-				$scope.currentPage = 1;
+
+	var repo_urls = [];
+	$scope.projects = Hub.projects;
+	$scope.$watch('projects.length', function() {
+		angular.forEach($scope.projects, function(value, key) {
+			if (value.repository) {
+				var url = value.repository.url;
+				if (Github.is_ghurl(url) && (repo_urls.indexOf(url) < 0)) {
+					repo_urls.push(url);
+					Github.load_issues(
+						url,
+						function(issues) {
+							$scope.data = issues.concat($scope.data);
+							$scope.numPages = Math.ceil($scope.data.length / $scope.numPerPage);
+							if ($scope.currentPage > $scope.numPages) {
+								$scope.currentPage = 1;
+							}
+							$scope.setPage();
+						}
+					);
+				}
 			}
-			$scope.setPage();
-		}
-	);
+		});
+//		console.log(repo_urls);
+	});
+
 }]);
 
