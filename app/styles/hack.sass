@@ -36,6 +36,14 @@ body
   color: #fff!important
   text-shadow: 0 0px 16px rgba(128,128,128,1)
   background-color: rgba(255,255,255,0.1)
+.navbar .build-id
+  margin-top: 10px
+  color: hsl(0, 0%, 75%)
+
+/* hide nav labels when window.width < 1200px */
+@media (max-width: 1200px)
+  .navbar ul.nav span.label
+    display: none
 
 #brand
   float: right
