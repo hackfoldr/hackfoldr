@@ -12,9 +12,9 @@ var Github = (function($) {
 			var found = url.match(re_ghurl);
 			if (found) {
 				return {
-					url:  found[1],
-					name: found[3],
-					repo: found[4],
+					url:   found[1],
+					owner: found[3],
+					repo:  found[4],
 				};
 			}
 			return null;
@@ -40,7 +40,7 @@ var Github = (function($) {
 			} else {
 //				console.log('loading ' + url);
 				var r = parse_ghurl(url);
-				var repo_api = API_BASE + '/repos/' + r.name + '/' + r.repo;
+				var repo_api = API_BASE + '/repos/' + r.owner + '/' + r.repo;
 				$.getJSON(repo_api, function(repo) {
 					if (repo.has_issues) {
 						$.getJSON(repo_api + '/issues', function(data) {
