@@ -152,7 +152,7 @@
                   br
                   span.label.label-info {{issue.repo}}
                   span.label.label-important(ng-repeat='label in issue.labels')
-                    {{label}}
+                    {{label.name}}
               tr
                 td
                   pagination.pagination-centered.pagination-small(num-pages="numPages",current-page="currentPage",max-size="4",boundary-links="true")

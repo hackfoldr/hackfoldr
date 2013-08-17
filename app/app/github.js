@@ -1,6 +1,5 @@
 var Github = (function($) {
-//	var API_BASE = 'https://api.github.com';
-	var API_BASE = 'http://utcr.org:8080';
+	var API_PROXY = 'http://utcr.org:8080';
 
 	var copy_fields = function(to, from, fields) {
 		$.each(fields, function(j, key) { to[key] = from[key]; });
@@ -33,6 +32,7 @@ var Github = (function($) {
 					url:   found[1],
 					owner: found[3],
 					repo:  found[4],
+					name:  found[3] + '/' + found[4], // e.g., g0v/hack.g0v.tw
 				};
 			}
 			return null;
@@ -42,11 +42,11 @@ var Github = (function($) {
 	/**
 	 * Resolve Github API specification with parameter interpolated:
 	 * - Interpolate params into url_spec
-	 * - Replace prefix with API_BASE if it exist
+	 * - Replace prefix with APY_PROXY if it exist
 	 */
 	var ghapi = function(url_spec, params) {
 		var found = url_spec.match(/^(((http|https):\/\/(api\.github\.com)(:[0-9]+)?)(\/.*)?)$/);
-		var url = API_BASE ? API_BASE : found[2];
+		var url = API_PROXY ? API_PROXY : found[2];
 		var path = found[6] ? found[6] : '';
 		while (found = path.match(/^([^{}]*)({(\/([^\/{}]+))})(.*)$/)) {
 			path = found[1];
@@ -57,54 +57,83 @@ var Github = (function($) {
 			path += found[5];
 		}
 		url += path;
-		console.log(url);
+//		console.log(url);
 		return url;
 	};
 
+	var on_update_do = function() {};
+	var repositories = {};
+	var every_issues = {};
+	var issue_orders = { // name: sorter_function
+		updated_at_desc: function(a, b) {
+			var t1 = parse_iso8601(every_issues[b].updated_at);
+			var t2 = parse_iso8601(every_issues[a].updated_at);
+			return (t1 > t2) - (t1 < t2);
+		}
+	};
+
+	var load_issues2 = function(name) {
+		var repo = repositories[name];
+		if (repo) {
+//			console.log('Loading issues from repository ' + name);
+			$.getJSON(ghapi(repo.issues_url), function(issues) {
+//				console.log(issues);
+				$.each(issues, function(i, issue) {
+					issue.key = name + '#' + issue.number;
+					issue.repo = name.split('/')[1];
+//					console.log(issue);
+					every_issues[issue.key] = issue;
+				});
+//				console.log(every_issues);
+				on_update_do();
+			});
+		}
+	};
+
 	return {
+		// These interfaces are exposed for debugging/testing.
+		ghapi: ghapi,
+		parse_iso8601: parse_iso8601,
+		get_repositories: function() { return repositories; },
+		get_every_issues: function() { return every_issues; },
+
+		add_repository: function(url) {
+			var r = parse_ghurl(url);
+			if (r) {
+				// XXX: We should be able to write the url spec as: {/owner{/repo}}.
+				$.getJSON(ghapi('https://api.github.com/repos{/owner}{/repo}', r), function(repo) {
+//					console.log(repo);
+					if (repo.has_issues) {
+						if (!repositories[r.name]) {
+							repositories[r.name] = repo;
+							load_issues2(r.name); // XXX: or trigger by setTimeout()?
+						}
+					}
+				});
+			}
+		},
+
+		set_on_update: function(fn) { on_update_do = fn; },
+
+		num_issues: function() {
+			return Object.keys(every_issues).length;
+		},
+
+		get_issues: function(offset, limit) {
+			var issue_keys = Object.keys(every_issues)
+			                       .sort(issue_orders.updated_at_desc);
+			var begin = offset ? offset : 0;
+			var end = limit ? offset + limit : issue_keys.length - begin + 1;
+			issue_keys = issue_keys.slice(begin, end);
+			return $.map(issue_keys, function(issue_key) {
+				return every_issues[issue_key];
+			});
+		},
+
 		'url_to_repo_name': function(url) {
 			var r = parse_ghurl(url);
 //			console.log(r);
 			return r ? r.repo : null;
-		},
-		is_ghurl: function(url) {
-			return (url && url.match(re_ghurl));
-		},
-		load_issues: function(url, callback) {
-			if ($.isArray(url)) {
-//				console.log('url is array.');
-//				console.log(url);
-				$.each(url, function(i, u) {
-					Github.load_issues(u, callback);
-				});
-			} else {
-//				console.log('loading ' + url);
-				var r = parse_ghurl(url);
-				var repo_api = API_BASE + '/repos/' + r.owner + '/' + r.repo;
-				$.getJSON(repo_api, function(repo) {
-					if (repo.has_issues) {
-						$.getJSON(repo_api + '/issues', function(data) {
-							// Only select these fields: title, state, body, html_url, label.name
-							var issues = [];
-							$.each(data, function(i, datum) {
-//								console.log(datum);
-								var issue = {
-									repo: r.repo,
-									assignee: datum.assignee,
-									labels: []
-								};
-								copy_fields(issue, datum, ['title', 'state', 'body', 'html_url']);
-								$.each(datum.labels, function(k, label) {
-									issue.labels.push(label.name);
-								});
-								issue.label_str = issue.labels.join(':');
-								issues.push(issue);
-							});
-							callback(issues);
-						});
-					}
-				});
-			}
 		},
 	};
 })(jQuery);
@@ -117,41 +146,26 @@ angular.module("github", [])
 	};
 })
 .controller('IssueCtrl', [ '$scope', 'Hub', function($scope, Hub) {
-	$scope.showFilters = false;
-
-	$scope.data = [];
+	$scope.issues = [];
 	$scope.numPerPage = 5;
 	$scope.currentPage = 1;
 	$scope.setPage = function() {
 		var offset = ($scope.currentPage - 1) * $scope.numPerPage;
-		$scope.issues = $scope.data.slice(offset, offset + $scope.numPerPage);
+		$scope.issues = Github.get_issues(offset, $scope.numPerPage);
 	};
 	$scope.$watch('currentPage', $scope.setPage);
+	Github.set_on_update(function() {
+		$scope.numPages = Math.ceil(Github.num_issues() / $scope.numPerPage);
+		$scope.setPage();
+	});
 
-	var repo_urls = [];
 	$scope.projects = Hub.projects;
 	$scope.$watch('projects.length', function() {
 		angular.forEach($scope.projects, function(value, key) {
 			if (value.repository) {
-				var url = value.repository.url;
-				if (Github.is_ghurl(url) && (repo_urls.indexOf(url) < 0)) {
-					repo_urls.push(url);
-					Github.load_issues(
-						url,
-						function(issues) {
-							$scope.data = issues.concat($scope.data);
-							$scope.numPages = Math.ceil($scope.data.length / $scope.numPerPage);
-							if ($scope.currentPage > $scope.numPages) {
-								$scope.currentPage = 1;
-							}
-							$scope.setPage();
-						}
-					);
-				}
+				Github.add_repository(value.repository.url);
 			}
 		});
-//		console.log(repo_urls);
 	});
-
 }]);
 
