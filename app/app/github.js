@@ -6,6 +6,24 @@ var Github = (function($) {
 		$.each(fields, function(j, key) { to[key] = from[key]; });
 	};
 
+	// Parse date string in ISO8601 format into javascript Date object.
+	// See: http://stackoverflow.com/a/4829642
+	var MONTHS = [ 'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec' ];
+	var parse_iso8601 = function(iso8601) {
+		// Convert from ISO8601 to ISO2822 so Date.parse() can handle.
+		// XXX: Date.parse() in some JS engine can parse ISO8601?!
+		//      For example, Firefox 4 (JS 1.8.5).
+		var iso2822 = iso8601.replace(
+			/(\d{4})-(\d{2})-(\d{2})T(\d{2}):(\d{2}):(\d{2})(Z|\w{3})/,
+			function(str, yyyy, mm, dd, HH, MM, SS, zone) {
+//				console.log(arguments);
+				return dd + ' ' + MONTHS[mm-1] + ' ' + yyyy + ' ' + HH + ':' + MM + ':' + SS + ' GMT';
+			}
+		);
+//		console.log(iso2822);
+		return new Date(Date.parse(iso2822));
+	};
+
 	var    re_ghurl = /^((http|https):\/\/github\.com\/([^\/]+)\/([^\/]+))(\/.*)?$/;
 	var parse_ghurl = function(url) {
 		if (url) {
