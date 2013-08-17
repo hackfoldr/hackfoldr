@@ -21,6 +21,28 @@ var Github = (function($) {
 		}
 	};
 
+	/**
+	 * Resolve Github API specification with parameter interpolated:
+	 * - Interpolate params into url_spec
+	 * - Replace prefix with API_BASE if it exist
+	 */
+	var ghapi = function(url_spec, params) {
+		var found = url_spec.match(/^(((http|https):\/\/(api\.github\.com)(:[0-9]+)?)(\/.*)?)$/);
+		var url = API_BASE ? API_BASE : found[2];
+		var path = found[6] ? found[6] : '';
+		while (found = path.match(/^([^{}]*)({(\/([^\/{}]+))})(.*)$/)) {
+			path = found[1];
+			if (params && params[found[4]]) {
+				path += '/';
+				path += params[found[4]];
+			}
+			path += found[5];
+		}
+		url += path;
+		console.log(url);
+		return url;
+	};
+
 	return {
 		'url_to_repo_name': function(url) {
 			var r = parse_ghurl(url);
