@@ -1,10 +1,6 @@
 var Github = (function($) {
 	var API_PROXY = 'http://utcr.org:8080';
 
-	var copy_fields = function(to, from, fields) {
-		$.each(fields, function(j, key) { to[key] = from[key]; });
-	};
-
 	// Parse date string in ISO8601 format into javascript Date object.
 	// See: http://stackoverflow.com/a/4829642
 	var MONTHS = [ 'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec' ];
@@ -15,18 +11,15 @@ var Github = (function($) {
 		var iso2822 = iso8601.replace(
 			/(\d{4})-(\d{2})-(\d{2})T(\d{2}):(\d{2}):(\d{2})(Z|\w{3})/,
 			function(str, yyyy, mm, dd, HH, MM, SS, zone) {
-//				console.log(arguments);
 				return dd + ' ' + MONTHS[mm-1] + ' ' + yyyy + ' ' + HH + ':' + MM + ':' + SS + ' GMT';
 			}
 		);
-//		console.log(iso2822);
 		return new Date(Date.parse(iso2822));
 	};
 
-	var    re_ghurl = /^((http|https):\/\/github\.com\/([^\/]+)\/([^\/]+))(\/.*)?$/;
 	var parse_ghurl = function(url) {
 		if (url) {
-			var found = url.match(re_ghurl);
+			var found = url.match(/^((http|https):\/\/github\.com\/([^\/]+)\/([^\/]+))(\/.*)?$/);
 			if (found) {
 				return {
 					url:   found[1],
@@ -57,14 +50,13 @@ var Github = (function($) {
 			path += found[5];
 		}
 		url += path;
-//		console.log(url);
 		return url;
 	};
 
 	var on_update_do = function() {};
 	var repositories = {};
 	var every_issues = {};
-	var issue_orders = { // name: sorter_function
+	var issue_orders = { // name: compare_function
 		updated_at_desc: function(a, b) {
 			var t1 = parse_iso8601(every_issues[b].updated_at);
 			var t2 = parse_iso8601(every_issues[a].updated_at);
@@ -75,34 +67,29 @@ var Github = (function($) {
 	var load_issues2 = function(name) {
 		var repo = repositories[name];
 		if (repo) {
-//			console.log('Loading issues from repository ' + name);
 			$.getJSON(ghapi(repo.issues_url), function(issues) {
-//				console.log(issues);
 				$.each(issues, function(i, issue) {
 					issue.key = name + '#' + issue.number;
 					issue.repo = name.split('/')[1];
-//					console.log(issue);
 					every_issues[issue.key] = issue;
 				});
-//				console.log(every_issues);
 				on_update_do();
 			});
 		}
 	};
 
 	return {
-		// These interfaces are exposed for debugging/testing.
-		ghapi: ghapi,
-		parse_iso8601: parse_iso8601,
-		get_repositories: function() { return repositories; },
-		get_every_issues: function() { return every_issues; },
+//		// These interfaces are exposed for debugging/testing.
+//		ghapi: ghapi,
+//		parse_iso8601: parse_iso8601,
+//		get_repositories: function() { return repositories; },
+//		get_every_issues: function() { return every_issues; },
 
 		add_repository: function(url) {
 			var r = parse_ghurl(url);
 			if (r) {
 				// XXX: We should be able to write the url spec as: {/owner{/repo}}.
 				$.getJSON(ghapi('https://api.github.com/repos{/owner}{/repo}', r), function(repo) {
-//					console.log(repo);
 					if (repo.has_issues) {
 						if (!repositories[r.name]) {
 							repositories[r.name] = repo;
@@ -121,7 +108,7 @@ var Github = (function($) {
 
 		get_issues: function(offset, limit) {
 			var issue_keys = Object.keys(every_issues)
-			                       .sort(issue_orders.updated_at_desc);
+			                       .sort(issue_orders['updated_at_desc']);
 			var begin = offset ? offset : 0;
 			var end = limit ? offset + limit : issue_keys.length - begin + 1;
 			issue_keys = issue_keys.slice(begin, end);
@@ -132,7 +119,6 @@ var Github = (function($) {
 
 		'url_to_repo_name': function(url) {
 			var r = parse_ghurl(url);
-//			console.log(r);
 			return r ? r.repo : null;
 		},
 	};
