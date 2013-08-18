@@ -122,10 +122,10 @@ var Github = (function($) {
 					return (issue_key.split('/')[1].split('#')[0] == filter.by_project);
 				});
 			}
-			if (filter && filter.by_label && (filter.by_label != 'all')) {
+			if (filter && filter.by_labels && (filter.by_labels.length > 0)) {
 				issue_keys = $.grep(issue_keys, function(issue_key) {
 					var matched = $.grep(every_issues[issue_key].labels, function(label) {
-						return label.name == filter.by_label;
+						return ($.inArray(label.name, filter.by_labels) >= 0);
 					});
 					return matched.length > 0;
 				});
@@ -136,7 +136,7 @@ var Github = (function($) {
 		},
 
 		get_labels: function(filter) {
-			delete filter.by_label;
+			delete filter.by_labels;
 			var issues = Github.get_issues(filter);
 			var labels = array_unique($.map(issues, function(issue) {
 				return $.map(issue.labels, function(label) {
@@ -173,6 +173,14 @@ angular.module("github", [])
 		return Github.url_to_repo_name(input);
 	};
 })
+.filter('listify', function() {
+	return function(input) {
+		if ($.isArray(input)) {
+			return input.join(', ');
+		}
+		return input;
+	};
+})
 .controller('IssueCtrl', [ '$scope', 'Hub', function($scope, Hub) {
 	$scope.opt_project = 'all';
 	$scope.$watch('opt_project', function() {
@@ -183,13 +191,19 @@ angular.module("github", [])
 		$scope.opt_project = name;
 	};
 
-	$scope.opt_label = 'all';
-	$scope.$watch('opt_label', function() {
-//		console.log($scope.opt_label);
+	$scope.opt_labels = [];
+	$scope.$watch('opt_labels', function() {
+//		console.log($scope.opt_labels);
 		$scope.setPage();
 	});
 	$scope.set_label = function(label) {
-		$scope.opt_label = label;
+		var labels = $scope.opt_labels.filter(function(x) {
+			return x != label;
+		});
+		if (labels.length == $scope.opt_labels.length) {
+			labels.push(label);
+		}
+		$scope.opt_labels = labels.sort();
 	};
 
 	$scope.projects = [];
@@ -200,7 +214,7 @@ angular.module("github", [])
 		// Load issues/labels based on given filters.
 		var filter = {
 			by_project: $scope.opt_project,
-			by_label: $scope.opt_label,
+			by_labels: $scope.opt_labels,
 		};
 		var issues = Github.get_issues(filter);
 		var labels = Github.get_labels(filter);

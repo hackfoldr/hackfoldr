@@ -92,17 +92,18 @@
               li: a(href='javascript://') medium
               li: a(href='javascript://') hard
           div.issues-filter.btn-group.pull-right
-            a(href='#',data-toggle='dropdown').btn.btn-mini.dropdown-toggle Label: {{opt_label}}&nbsp;
+            a(href='#',data-toggle='dropdown').btn.btn-mini.dropdown-toggle
+              | Label: {{(opt_labels | listify) || 'all'}}&nbsp;
               span.caret
             ul.dropdown-menu
               li
                 a(ng-click="set_label('all')")
-                  span.checkbox: i.icon-check(ng-show="opt_label == 'all'")
+                  span.checkbox: i.icon-check(ng-show="opt_labels.length == 0")
                   | all labels
               li.divider
               li(ng-repeat='label in labels')
                 a(ng-click='set_label(label)')
-                  span.checkbox: i.icon-check(ng-show="opt_label == label")
+                  span.checkbox: i.icon-check(ng-show="opt_labels.indexOf(label) >= 0")
                   | {{label}}
           div.issues-filter.btn-group.pull-right
             a(href='javascript://',data-toggle='dropdown').btn.btn-mini.dropdown-toggle Project: {{opt_project}}&nbsp;
