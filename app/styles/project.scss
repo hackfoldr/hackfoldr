@@ -93,7 +93,7 @@ a .icon-hackfoldr {
 
 .mod-issues {
     border: 1px solid #ccc;
-    padding: 20px;
+    padding: 10px 20px 0 20px;
     margin-bottom: 20px;
     h2 {
         margin-top: 0;
@@ -111,8 +111,15 @@ a .icon-hackfoldr {
             margin-bottom: 0 !important;
         }
     }
+    .btn-group {
+        font-size: inherit;
+        line-height: 36px;
+    }
     .table {
-        margin-bottom: 0;
+        margin-top: 15px;
+        td {
+            padding: 5px 0;
+        }
     }
     .issues-loading {
         .loading-indicator {
@@ -122,6 +129,7 @@ a .icon-hackfoldr {
     }
     .pagination {
         margin: auto 0 !important;
+        margin-top: 10px !important;
 		a {
 			cursor: pointer;
 		}
