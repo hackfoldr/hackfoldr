@@ -183,5 +183,11 @@ angular.module("github", [])
 			}
 		});
 	});
+
+	$scope.$watch('issues', function() {
+		if ($scope.issues.length) {
+			$(".issues-loading").hide();
+		}
+	});
 }]);
 

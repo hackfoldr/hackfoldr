@@ -114,6 +114,12 @@ a .icon-hackfoldr {
     .table {
         margin-bottom: 0;
     }
+    .issues-loading {
+        .loading-indicator {
+            background: transparent image-url("/img/spin-pacman.gif") no-repeat center center;
+            min-height: 100px;
+        }
+    }
     .pagination {
         margin: auto 0 !important;
 		a {
