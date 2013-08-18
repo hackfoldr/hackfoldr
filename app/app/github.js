@@ -85,14 +85,14 @@ var Github = (function($) {
 //		get_repositories: function() { return repositories; },
 //		get_every_issues: function() { return every_issues; },
 
-		add_repository: function(url) {
+		add_repository: function(url, name_zh) {
 			var r = parse_ghurl(url);
 			if (r) {
 				// XXX: We should be able to write the url spec as: {/owner{/repo}}.
 				$.getJSON(ghapi('https://api.github.com/repos{/owner}{/repo}', r), function(repo) {
 					if (repo.has_issues) {
 						if (!repositories[repo.full_name]) {
-//							console.log(repo);
+							repo.name_zh = name_zh;
 							repositories[repo.full_name] = repo;
 							load_issues2(repo.full_name); // XXX: or trigger by setTimeout()?
 						}
@@ -146,12 +146,7 @@ angular.module("github", [])
 	};
 })
 .controller('IssueCtrl', [ '$scope', 'Hub', function($scope, Hub) {
-	$scope.github_has_issues = function(input) {
-		return input.repository != null
-		    && input.repository.url
-		    && Github.has_issues(input.repository.url);
-	};
-
+	$scope.projects = [];
 	$scope.issues = [];
 	$scope.numPerPage = 5;
 	$scope.currentPage = 1;
@@ -161,15 +156,16 @@ angular.module("github", [])
 	};
 	$scope.$watch('currentPage', $scope.setPage);
 	Github.set_on_update(function() {
+		$scope.projects = Github.get_repositories();
 		$scope.numPages = Math.ceil(Github.num_issues() / $scope.numPerPage);
 		$scope.setPage();
 	});
 
-	$scope.projects = Hub.projects;
-	$scope.$watch('projects.length', function() {
-		angular.forEach($scope.projects, function(value, key) {
+	$scope.firebase_projects = Hub.projects;
+	$scope.$watch('firebase_projects.length', function() {
+		angular.forEach($scope.firebase_projects, function(value, key) {
 			if (value.repository) {
-				Github.add_repository(value.repository.url);
+				Github.add_repository(value.repository.url, value.name_zh);
 			}
 		});
 	});

@@ -110,11 +110,11 @@
                     dt
                     dd all projects
               li.divider
-              li(ng-repeat='project in projects | filter:github_has_issues')
+              li(ng-repeat='project in projects')
                 a(href='javascript://')
                   dl.dl-horizontal
                     dt
-                      span.label.label-info {{project.repository.url | github_url_to_repo_name}}
+                      span.label.label-info {{project.name}}
                     dd {{project.name_zh || project.name}}&nbsp;
           h2 歡迎跳坑
           p 底下是一些您可以幫忙的事項，歡迎跳坑。
