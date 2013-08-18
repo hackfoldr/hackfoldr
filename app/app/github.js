@@ -243,10 +243,19 @@ angular.module("github", [])
 		});
 	});
 
-	$scope.$watch('issues', function() {
+	var unbindIssuesWatcher = $scope.$watch('issues', function() {
 		if ($scope.issues.length) {
 			$(".issues-loading").hide();
+			unbindIssuesWatcher();
+		}
+	});
+
+	var unbindLabelsWatcher = $scope.$watch('labels', function() {
+		if ($scope.labels.length) {
+			setTimeout(function() {
+				$(".issues-label-filter select").trigger("chosen:updated");
+			}, 500);
+			unbindLabelsWatcher();
 		}
 	});
 }]);
-
