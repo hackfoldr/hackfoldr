@@ -197,11 +197,14 @@ angular.module("github", [])
 		$scope.setPage();
 	});
 	$scope.set_label = function(label) {
-		var labels = $scope.opt_labels.filter(function(x) {
-			return x != label;
-		});
-		if (labels.length == $scope.opt_labels.length) {
-			labels.push(label);
+		var labels = [];
+		if (label != 'all') {
+			var labels = $scope.opt_labels.filter(function(x) {
+				return x != label;
+			});
+			if (labels.length == $scope.opt_labels.length) {
+				labels.push(label);
+			}
 		}
 		$scope.opt_labels = labels.sort();
 	};
