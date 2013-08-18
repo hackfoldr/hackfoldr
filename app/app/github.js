@@ -107,7 +107,7 @@ var Github = (function($) {
 			return Object.keys(every_issues).length;
 		},
 
-		get_issues: function(offset, limit, filter) {
+		get_issues: function(filter) {
 			var issue_keys = Object.keys(every_issues)
 			                       .sort(issue_orders['updated_at_desc']);
 			if (filter && filter.by_project && (filter.by_project != 'all')) {
@@ -115,9 +115,6 @@ var Github = (function($) {
 					return (issue_key.split('/')[1].split('#')[0] == filter.by_project);
 				});
 			}
-			var begin = offset ? offset : 0;
-			var end = limit ? offset + limit : issue_keys.length - begin + 1;
-			issue_keys = issue_keys.slice(begin, end);
 			return $.map(issue_keys, function(issue_key) {
 				return every_issues[issue_key];
 			});
@@ -165,15 +162,16 @@ angular.module("github", [])
 	$scope.numPerPage = 5;
 	$scope.currentPage = 1;
 	$scope.setPage = function() {
-		var offset = ($scope.currentPage - 1) * $scope.numPerPage;
-		$scope.issues = Github.get_issues(offset, $scope.numPerPage, /*filter*/{
+		var issues = Github.get_issues(/*filter*/{
 			by_project: $scope.opt_project,
 		});
+		$scope.numPages = Math.ceil(issues.length / $scope.numPerPage);
+		var offset = ($scope.currentPage - 1) * $scope.numPerPage;
+		$scope.issues = issues.slice(offset, offset + $scope.numPerPage);
 	};
 	$scope.$watch('currentPage', $scope.setPage);
 	Github.set_on_update(function() {
 		$scope.projects = Github.get_repositories();
-		$scope.numPages = Math.ceil(Github.num_issues() / $scope.numPerPage);
 		$scope.setPage();
 	});
 
