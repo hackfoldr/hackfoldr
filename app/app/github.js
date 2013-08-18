@@ -17,6 +17,13 @@ var Github = (function($) {
 		return new Date(Date.parse(iso2822));
 	};
 
+	// See: http://stackoverflow.com/a/10192255
+	var array_unique = function(array) {
+		return $.grep(array, function(element, index) {
+			return index == $.inArray(element, array);
+		});
+	};
+
 	var parse_ghurl = function(url) {
 		if (url) {
 			var found = url.match(/^((http|https):\/\/github\.com\/([^\/]+)\/([^\/]+))(\/.*)?$/);
@@ -115,9 +122,28 @@ var Github = (function($) {
 					return (issue_key.split('/')[1].split('#')[0] == filter.by_project);
 				});
 			}
+			if (filter && filter.by_label && (filter.by_label != 'all')) {
+				issue_keys = $.grep(issue_keys, function(issue_key) {
+					var matched = $.grep(every_issues[issue_key].labels, function(label) {
+						return label.name == filter.by_label;
+					});
+					return matched.length > 0;
+				});
+			}
 			return $.map(issue_keys, function(issue_key) {
 				return every_issues[issue_key];
 			});
+		},
+
+		get_labels: function(filter) {
+			delete filter.by_label;
+			var issues = Github.get_issues(filter);
+			var labels = array_unique($.map(issues, function(issue) {
+				return $.map(issue.labels, function(label) {
+					return label.name;
+				});
+			}).sort());
+			return labels;
 		},
 
 		get_repositories: function() {
@@ -157,14 +183,30 @@ angular.module("github", [])
 		$scope.opt_project = name;
 	};
 
+	$scope.opt_label = 'all';
+	$scope.$watch('opt_label', function() {
+//		console.log($scope.opt_label);
+		$scope.setPage();
+	});
+	$scope.set_label = function(label) {
+		$scope.opt_label = label;
+	};
+
 	$scope.projects = [];
 	$scope.issues = [];
 	$scope.numPerPage = 5;
 	$scope.currentPage = 1;
 	$scope.setPage = function() {
-		var issues = Github.get_issues(/*filter*/{
+		// Load issues/labels based on given filters.
+		var filter = {
 			by_project: $scope.opt_project,
-		});
+			by_label: $scope.opt_label,
+		};
+		var issues = Github.get_issues(filter);
+		var labels = Github.get_labels(filter);
+		// Set labels to $scope.
+		$scope.labels = labels;
+		// Set issues (of current page) to $scope.
 		$scope.numPages = Math.ceil(issues.length / $scope.numPerPage);
 		var offset = ($scope.currentPage - 1) * $scope.numPerPage;
 		$scope.issues = issues.slice(offset, offset + $scope.numPerPage);

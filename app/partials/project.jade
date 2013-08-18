@@ -91,15 +91,19 @@
               li: a(href='javascript://') easy
               li: a(href='javascript://') medium
               li: a(href='javascript://') hard
-          //div.issues-filter.btn-group.pull-right
-            a(href='#',data-toggle='dropdown').btn.btn-mini.dropdown-toggle programmer
+          div.issues-filter.btn-group.pull-right
+            a(href='#',data-toggle='dropdown').btn.btn-mini.dropdown-toggle Label: {{opt_label}}&nbsp;
               span.caret
             ul.dropdown-menu
-              li: a(href='javascript://') all
+              li
+                a(ng-click="set_label('all')")
+                  span.checkbox: i.icon-check(ng-show="opt_label == 'all'")
+                  | all labels
               li.divider
-              li: a(href='javascript://') programmer
-              li: a(href='javascript://') designer
-              li: a(href='javascript://') writer
+              li(ng-repeat='label in labels')
+                a(ng-click='set_label(label)')
+                  span.checkbox: i.icon-check(ng-show="opt_label == label")
+                  | {{label}}
           div.issues-filter.btn-group.pull-right
             a(href='javascript://',data-toggle='dropdown').btn.btn-mini.dropdown-toggle Project: {{opt_project}}&nbsp;
               span.caret
