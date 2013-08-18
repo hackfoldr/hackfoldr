@@ -101,17 +101,17 @@
               li: a(href='javascript://') designer
               li: a(href='javascript://') writer
           div.issues-filter.btn-group.pull-right
-            a(href='javascript://',data-toggle='dropdown').btn.btn-mini.dropdown-toggle all projects
+            a(href='javascript://',data-toggle='dropdown').btn.btn-mini.dropdown-toggle Project: {{opt_project}}&nbsp;
               span.caret
             ul.dropdown-menu
               li
-                a(href='javascript://')
+                a(ng-click="set_project('all')")
                   dl.dl-horizontal
                     dt
                     dd all projects
               li.divider
               li(ng-repeat='project in projects')
-                a(href='javascript://')
+                a(ng-click='set_project(project.name)')
                   dl.dl-horizontal
                     dt
                       span.label.label-info {{project.name}}
