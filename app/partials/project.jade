@@ -100,7 +100,7 @@
               li: a(href='javascript://') programmer
               li: a(href='javascript://') designer
               li: a(href='javascript://') writer
-          //div.issues-filter.btn-group.pull-right
+          div.issues-filter.btn-group.pull-right
             a(href='javascript://',data-toggle='dropdown').btn.btn-mini.dropdown-toggle all projects
               span.caret
             ul.dropdown-menu
@@ -110,7 +110,7 @@
                     dt
                     dd all projects
               li.divider
-              li(ng-repeat='project in projects',ng-show='project.repository')
+              li(ng-repeat='project in projects | filter:github_has_issues')
                 a(href='javascript://')
                   dl.dl-horizontal
                     dt

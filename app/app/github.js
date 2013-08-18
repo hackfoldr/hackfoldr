@@ -91,9 +91,10 @@ var Github = (function($) {
 				// XXX: We should be able to write the url spec as: {/owner{/repo}}.
 				$.getJSON(ghapi('https://api.github.com/repos{/owner}{/repo}', r), function(repo) {
 					if (repo.has_issues) {
-						if (!repositories[r.name]) {
-							repositories[r.name] = repo;
-							load_issues2(r.name); // XXX: or trigger by setTimeout()?
+						if (!repositories[repo.full_name]) {
+//							console.log(repo);
+							repositories[repo.full_name] = repo;
+							load_issues2(repo.full_name); // XXX: or trigger by setTimeout()?
 						}
 					}
 				});
@@ -117,6 +118,19 @@ var Github = (function($) {
 			});
 		},
 
+		get_repositories: function() {
+			return $.map(Object.keys(repositories), function(repo_full_name) {
+				return repositories[repo_full_name];
+			});
+		},
+
+		has_issues: function(url) {
+			return $.grep(Object.keys(repositories), function(key) {
+				return ((repositories[key].html_url == url)
+				     && (repositories[key].has_issues));
+			}).length > 0;
+		},
+
 		'url_to_repo_name': function(url) {
 			var r = parse_ghurl(url);
 			return r ? r.repo : null;
@@ -132,6 +146,12 @@ angular.module("github", [])
 	};
 })
 .controller('IssueCtrl', [ '$scope', 'Hub', function($scope, Hub) {
+	$scope.github_has_issues = function(input) {
+		return input.repository != null
+		    && input.repository.url
+		    && Github.has_issues(input.repository.url);
+	};
+
 	$scope.issues = [];
 	$scope.numPerPage = 5;
 	$scope.currentPage = 1;
