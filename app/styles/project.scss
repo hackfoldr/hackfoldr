@@ -44,7 +44,11 @@ a .icon-hackfoldr {
 
 .mod-project-meta {
     .label {
-        font-size: $baseFontSize;
+        font-size: inherit;
+        padding-bottom: 5px;
+        vertical-align: 1px;
+        line-height: 13px;
+        margin-bottom: 0;
     }
     dt, dd {
         border-top: 1px solid #ddd;
