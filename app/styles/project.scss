@@ -111,6 +111,34 @@ a .icon-hackfoldr {
             margin-bottom: 0 !important;
         }
     }
+    .issues-label-filter {
+        margin-top: 10px;
+        .chosen-container {
+            .chosen-choices {
+                -webkit-border-radius: 5px;
+                   -moz-border-radius: 5px;
+                        border-radius: 5px;
+            }
+            .chosen-drop {
+                -webkit-border-bottom-left-radius: 5px;
+                   -moz-border-bottom-left-radius: 5px;
+                        border-bottom-left-radius: 5px;
+                -webkit-border-bottom-right-radius: 5px;
+                   -moz-border-bottom-right-radius: 5px;
+                        border-bottom-right-radius: 5px;
+            }
+        }
+        .chosen-container-active {
+            .chosen-choices {
+                -webkit-border-bottom-left-radius: 0;
+                   -moz-border-bottom-left-radius: 0;
+                        border-bottom-left-radius: 0;
+                -webkit-border-bottom-right-radius: 0;
+                   -moz-border-bottom-right-radius: 0;
+                        border-bottom-right-radius: 0;
+            }
+        }
+    }
     .btn-group {
         font-size: inherit;
         line-height: 36px;
