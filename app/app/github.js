@@ -17,10 +17,42 @@ var Github = (function($) {
 		return new Date(Date.parse(iso2822));
 	};
 
+	// See: http://www.cplusplus.com/reference/algorithm/find_if/
+	// @return index of first element that make pred be true,
+	//         or -1 if no element matched
+	var find_if = function(array, pred) {
+		if (!$.isFunction(pred)) {
+			console.error('pred must be a function');
+		}
+		var first = -1;
+		$.each(array, function(index, element) {
+			if (pred(element, index)) {
+				first = index;
+				return false;
+			}
+		});
+		return first;
+	};
+
 	// See: http://stackoverflow.com/a/10192255
 	var array_unique = function(array) {
 		return $.grep(array, function(element, index) {
 			return index == $.inArray(element, array);
+		});
+	};
+
+	/**
+	 * @param eq functor to test whether or not any 2 array elements are equal
+	 */
+	var array_unique_if = function(array, eq) {
+		if (!$.isFunction(eq)) {
+			console.error('eq must be a function');
+		}
+		return $.grep(array, function(x, i) {
+			var prior = find_if(array.slice(0, i), function(y, j) {
+				return eq(y, x);
+			});
+			return prior < 0; // pick if there is no same prior elements
 		});
 	};
 
@@ -123,11 +155,17 @@ var Github = (function($) {
 				});
 			}
 			if (filter && filter.by_labels && (filter.by_labels.length > 0)) {
+				console.log($.map(filter.by_labels, function(x) { return x.name; }));
 				issue_keys = $.grep(issue_keys, function(issue_key) {
-					var matched = $.grep(every_issues[issue_key].labels, function(label) {
-						return ($.inArray(label.name, filter.by_labels) >= 0);
+					var matched = $.grep(filter.by_labels, function(label) {
+						return find_if(every_issues[issue_key].labels, function(x, i) {
+							return x.name == label.name;
+						}) >= 0;
 					});
-					return matched.length > 0;
+					// AND
+					return matched.length == filter.by_labels.length;
+//					// OR
+//					return matched.length > 0;
 				});
 			}
 			return $.map(issue_keys, function(issue_key) {
@@ -138,11 +176,15 @@ var Github = (function($) {
 		get_labels: function(filter) {
 			delete filter.by_labels;
 			var issues = Github.get_issues(filter);
-			var labels = array_unique($.map(issues, function(issue) {
-				return $.map(issue.labels, function(label) {
-					return label.name;
-				});
-			}).sort());
+			var labels = array_unique_if(
+				$.map(issues, function(issue) { return issue.labels; }),
+				function(a, b) { return a.name == b.name; }
+			).sort(function(a, b) {
+				var a_name = a && a.name || '';
+				var b_name = b && b.name || '';
+				return a_name.localeCompare(b_name);
+			});
+//			console.log(labels);
 			return labels;
 		},
 

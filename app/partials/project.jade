@@ -114,7 +114,7 @@
         h2 歡迎跳坑
         p 底下是一些您可以幫忙的事項，歡迎跳坑。
         .issues-label-filter
-          select(data-placeholder="Filter by Labels…", multiple, ng-model="opt_labels", ng-options="label for label in labels")
+          select(data-placeholder="Filter by Labels…", multiple, ng-model="opt_labels", ng-options="label.name for label in labels")
           script $(".issues-label-filter select").chosen({width: "100%"});
         table.table.table-condensed.table-hover
           tbody
