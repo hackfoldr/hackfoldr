@@ -12,6 +12,8 @@
   .row
     .span8
       article.mod-project.new(ui-if='opts.isnew',ng-include="'/partials/project.edit.html'")
+      article.projects-loading(ng-show="projects.length == 0")
+        .loading-indicator
       article.mod-project(ng-repeat='project in projects | filter:search')
         h2
           a(href='#') {{project.name_zh || project.name}}
