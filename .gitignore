@@ -7,7 +7,7 @@ build.xml
 .settings
 .idea/*
 app/assets/*html
-app/assets/partials/app/*.html
+app/404.static.jade
 
 _public
 node_modules/*
