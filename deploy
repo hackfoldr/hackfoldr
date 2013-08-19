@@ -5,12 +5,14 @@ npm i
 git pull $upstream master || exit -1
 git branch -f gh-pages $upstream/gh-pages
 rm -rf _public
+cp app/index.static.jade app/404.static.jade
 git clone -s . -b gh-pages _public
 BUILD=git-`git describe --always` ./node_modules/.bin/brunch b -o
 cd _public
 git add -A . && git commit -a -m 'regen' && git push origin gh-pages
 cd ..
 git push $upstream gh-pages
+rm -f app/404.static.jade
 if [ "x$FIREBASE" != "x" ]
 then
 	echo $FIREBASE
