@@ -114,7 +114,7 @@
         h2 歡迎跳坑
         p 底下是一些您可以幫忙的事項，歡迎跳坑。
         .issues-label-filter
-          select(data-placeholder="Filter by Labels…", multiple, ng-model="opt_labels", ng-options="label.name for label in labels")
+          select(data-placeholder="Filter by Labels…", multiple, ng-model="opt_labels", ng-options="label.name as label.text group by label.kind for label in labels")
           script $(".issues-label-filter select").chosen({width: "100%"});
         table.table.table-condensed.table-hover
           tbody
@@ -151,8 +151,9 @@
                   img.avatar(ng-src='{{avatarFor(issue.assignee.login)}}')
                 a(href='{{issue.html_url}}',target='_blank') {{issue.title}}
                 br
-                span.label.label-info {{issue.repo}}
-                span.label.label-important(ng-repeat='label in issue.labels')
+                span.badge.badge-info {{issue.repo}}
+                | &nbsp;
+                span.label(ng-repeat='label in issue.labels',ng-style="{'background-color':'#'+label.color}")
                   {{label.name}}
             tr
               td

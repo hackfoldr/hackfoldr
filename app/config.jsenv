@@ -1,4 +1,17 @@
 {
   BUILD: "git-unknown",
-  FIREBASE: "https://g0vhub.firebaseio.com"
+  FIREBASE: "https://g0vhub.firebaseio.com",
+  G0V_LABELS: [
+    { "color": "5CC2D6", "name": "datainput",   "url": "https://g0v.hackpad.com/g0v-issue-label--L23ntanWnv7", "zh": "資料輸入" },
+    { "color": "F2800D", "name": "translation", "url": "https://g0v.hackpad.com/g0v-issue-label--L23ntanWnv7", "zh": "翻譯" },
+    { "color": "C7F53D", "name": "OCR",         "url": "https://g0v.hackpad.com/g0v-issue-label--L23ntanWnv7", "zh": "OCR/圖文辨識" },
+    { "color": "F53D3D", "name": "research",    "url": "https://g0v.hackpad.com/g0v-issue-label--L23ntanWnv7", "zh": "研究" },
+    { "color": "40BF40", "name": "drawing",     "url": "https://g0v.hackpad.com/g0v-issue-label--L23ntanWnv7", "zh": "繪圖" },
+    { "color": "2EB88A", "name": "parser",      "url": "https://g0v.hackpad.com/g0v-issue-label--L23ntanWnv7", "zh": "爬資料" },
+    { "color": "FFE14D", "name": "bitesized",   "url": "https://g0v.hackpad.com/g0v-issue-label--L23ntanWnv7", "zh": "小工作" },
+    { "color": "3399CC", "name": "doc",         "url": "https://g0v.hackpad.com/g0v-issue-label--L23ntanWnv7", "zh": "文件（技術）" },
+    { "color": "000000", "name": "devops",      "url": "https://g0v.hackpad.com/g0v-issue-label--L23ntanWnv7", "zh": "維運" },
+    { "color": "8040BF", "name": "promote",     "url": "https://g0v.hackpad.com/g0v-issue-label--L23ntanWnv7", "zh": "宣傳" },
+    { "color": "CC66CC", "name": "writing",     "url": "https://g0v.hackpad.com/g0v-issue-label--L23ntanWnv7", "zh": "文案" }
+  ]
 }

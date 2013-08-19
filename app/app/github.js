@@ -123,6 +123,8 @@ var Github = (function($) {
 //		parse_iso8601: parse_iso8601,
 //		get_repositories: function() { return repositories; },
 //		get_every_issues: function() { return every_issues; },
+		find_if: find_if,
+		array_unique_if: array_unique_if,
 
 		add_repository: function(url, name_zh) {
 			var r = parse_ghurl(url);
@@ -155,11 +157,13 @@ var Github = (function($) {
 				});
 			}
 			if (filter && filter.by_labels && (filter.by_labels.length > 0)) {
-				console.log($.map(filter.by_labels, function(x) { return x.name; }));
+				// filter.by_labels is array of label names
+//				console.log($.map(filter.by_labels, function(x) { return x.name; }));
 				issue_keys = $.grep(issue_keys, function(issue_key) {
 					var matched = $.grep(filter.by_labels, function(label) {
+						// every_issues[issue_key].labels is array of label structures
 						return find_if(every_issues[issue_key].labels, function(x, i) {
-							return x.name == label.name;
+							return x.name == label;
 						}) >= 0;
 					});
 					// AND
@@ -233,23 +237,11 @@ angular.module("github", [])
 		$scope.opt_project = name;
 	};
 
-	$scope.opt_labels = [];
+	$scope.opt_labels = []; // array of label names.
 	$scope.$watch('opt_labels', function() {
 //		console.log($scope.opt_labels);
 		$scope.setPage();
 	});
-	$scope.set_label = function(label) {
-		var labels = [];
-		if (label != 'all') {
-			var labels = $scope.opt_labels.filter(function(x) {
-				return x != label;
-			});
-			if (labels.length == $scope.opt_labels.length) {
-				labels.push(label);
-			}
-		}
-		$scope.opt_labels = labels.sort();
-	};
 
 	$scope.projects = [];
 	$scope.issues = [];
@@ -263,8 +255,31 @@ angular.module("github", [])
 		};
 		var issues = Github.get_issues(filter);
 		var labels = Github.get_labels(filter);
+
 		// Set labels to $scope.
-		$scope.labels = labels;
+		var name_cmp = function(a, b) {
+			var a_name = a && a.name || '';
+			var b_name = b && b.name || '';
+			return a_name.localeCompare(b_name);
+		};
+		// compile label list for showing in .issue-label-filter
+		var g0v_labels = $.map(window.global.config.G0V_LABELS, function(x) {
+			x.kind = 'g0v';
+			x.text = x.zh ? (x.name + ': ' + x.zh) : x.name;
+			return x;
+		}).sort(name_cmp);
+		var other_labels = $.map(
+			$.grep(labels, function(x) {
+				return $.inArray(x.name, $.map(g0v_labels, function(y) { return y.name; })) < 0;
+			}),
+			function(x) {
+				x.kind = 'other';
+				x.text = x.name; // there is no x.zh field
+				return x;
+			}
+		).sort(name_cmp);
+		$scope.labels = g0v_labels.concat(other_labels); // array of label structures
+
 		// Set issues (of current page) to $scope.
 		$scope.numPages = Math.ceil(issues.length / $scope.numPerPage);
 		var offset = ($scope.currentPage - 1) * $scope.numPerPage;
@@ -292,12 +307,12 @@ angular.module("github", [])
 		}
 	});
 
-	var unbindLabelsWatcher = $scope.$watch('labels', function() {
+	// Do not unbind since $scope.labels may change when we load more labels.
+	$scope.$watch('labels', function() {
 		if ($scope.labels.length) {
 			setTimeout(function() {
 				$(".issues-label-filter select").trigger("chosen:updated");
 			}, 500);
-			unbindLabelsWatcher();
 		}
 	});
 }]);
