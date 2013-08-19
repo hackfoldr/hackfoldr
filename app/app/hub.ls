@@ -85,7 +85,7 @@ angular.module 'hub.g0v.tw' <[ui.state firebase github]>
                 repo = prompt "Enter github user/repo with g0v.json", ''
 
             url = "https://api.github.com/repos/#{repo}/contents/g0v.json"
-            <- $http.get url .error -> console.log it
+            <- $http.get url .error ({message}?) -> $scope.opts.warning = message ? 'unknown error'
             .success
             res = JSON.parse Base64.decode it?content
 
@@ -124,7 +124,8 @@ angular.module 'hub.g0v.tw' <[ui.state firebase github]>
 
             [_, _, _, ghUser, ghProject] = project.github.split('/')
 
-            data, status, headers, config <- $http.get "https://api.github.com/repos/#ghUser/#ghProject/contents/"
+            url = "https://api.github.com/repos/#ghUser/#ghProject/contents/"
+            data <- $http.get url .error ({message}?) -> $scope.opts.warning = message ? 'unknown error'
             .success
 
             flagG0v = false
