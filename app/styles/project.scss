@@ -13,6 +13,22 @@ a .icon-hackfoldr {
     }
 }
 
+.projects-title {
+    margin-top: 10px;
+    margin-bottom: 10px;
+    h1 {
+        display: inline-block;
+    }
+    .search-query {
+        -webkit-border-radius: 10px;
+           -moz-border-radius: 10px;
+                border-radius: 10px;
+        vertical-align: 10px;
+        margin-left: 20px;
+        width: 300px;
+    }
+}
+
 .mod-project {
     border: 1px solid #ccc;
     padding: 20px;

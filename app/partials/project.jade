@@ -1,8 +1,10 @@
 .container
   .row
-    .span8
+    .span12.projects-title
       h1 專案列表
-      p {{ people.clkao }}
+      input.search-query(type='text',placeholder='搜尋專案',ng-model="search")
+  .row
+    .span8
       article.mod-project.new(ui-if='opts.isnew',ng-include="'/partials/project.edit.html'")
       article.mod-project(ng-repeat='project in projects | filter:search')
         h2
@@ -70,11 +72,6 @@
           li
             a(href='#') Next
     .span4
-      section.mod-search
-        h2 搜尋
-        form.form-search
-          input.input-medium.search-query(type='text',ng-model="search")
-          button.btn(type='submit') Search
       section
           .mod-project
               h2 沒有你關心的議題？
