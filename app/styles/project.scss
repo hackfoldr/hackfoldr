@@ -18,13 +18,13 @@ a .icon-hackfoldr {
     margin-bottom: 10px;
     h1 {
         display: inline-block;
+        margin-right: 20px;
     }
     .search-query {
         -webkit-border-radius: 10px;
            -moz-border-radius: 10px;
                 border-radius: 10px;
         vertical-align: 10px;
-        margin-left: 20px;
         width: 300px;
     }
 }
@@ -34,11 +34,11 @@ a .icon-hackfoldr {
     h2 {
         display: inline-block;
         font-size: $baseFontSize * 1.33;
+        margin-right: 5px;
     }
     a {
         font-size: $baseFontSize * 1.15;
         vertical-align: 1.5px;
-        margin-left: 5px;
         i {
             margin-right: 7px;
         }
