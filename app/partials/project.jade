@@ -1,8 +1,14 @@
 .container
-  .row
-    .span12.projects-title
+  .row.projects-title
+    .span8
       h1 專案列表
-      input.search-query(type='text',placeholder='搜尋專案',ng-model="search")
+      input.search-query(type='text',placeholder='搜尋專案（名稱、網址、需求…）',ng-model="search")
+    .span4.create-project
+      h2 找不到您關心的議題？
+      a.btn.btn-success(ng-click='newProject()')
+        i.icon-plus
+        | 立刻新增專案
+
   .row
     .span8
       article.mod-project.new(ui-if='opts.isnew',ng-include="'/partials/project.edit.html'")
@@ -72,12 +78,6 @@
           li
             a(href='#') Next
     .span4
-      section
-          .mod-project
-              h2 沒有你關心的議題？
-              p Make one now!
-              a.btn.btn-large.btn-block(ng-click='newProject()') 新增專案
-
       section.mod-issues(ng-controller='IssueCtrl')
         //div.issues-filter.btn-group.pull-right
           a(href='#',data-toggle='dropdown').btn.btn-mini.dropdown-toggle easy
