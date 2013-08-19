@@ -62,6 +62,13 @@ a .icon-hackfoldr {
     }
 }
 
+.featured-loading {
+    .loading-indicator {
+        background: transparent image-url("/img/spin-pacman.gif") no-repeat center center;
+        min-height: 200px;
+    }
+}
+
 .mod-project {
     border: 1px solid #ccc;
     padding: 20px;

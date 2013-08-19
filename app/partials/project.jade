@@ -161,6 +161,8 @@
       section.mod-featured
         h2 特色推薦
         .mod-project
+          .featured-loading(ng-show="!featured")
+            .loading-indicator
           a(ng-href='{{featured.homepage}}')
             img(ng-src='{{featured.thumbnail.reduce ? featured.thumbnail.0 : featured.thumbnail}}')'
           h2
