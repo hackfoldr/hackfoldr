@@ -45,6 +45,16 @@ a .icon-hackfoldr {
     }
 }
 
+.project-not-found {
+    text-align: center;
+    a {
+        font-size: $baseFontSize * 1.25;
+        i {
+            margin-right: 7px;
+        }
+    }
+}
+
 .projects-loading {
     .loading-indicator {
         background: transparent image-url("/img/spin-pacman.gif") no-repeat center center;

@@ -14,6 +14,11 @@
       article.mod-project.new(ui-if='opts.isnew',ng-include="'/partials/project.edit.html'")
       article.projects-loading(ng-show="projects.length == 0")
         .loading-indicator
+      article.mod-project.project-not-found(ng-show="projects.length != 0 && (projects | filter:search).length === 0")
+        h2 找不到您關心的議題？
+        a.btn.btn-success.btn-large(ng-click="newProject()")
+          i.icon-plus
+          | 立刻新增專案！
       article.mod-project(ng-repeat='project in projects | filter:search')
         h2
           a(href='#') {{project.name_zh || project.name}}
