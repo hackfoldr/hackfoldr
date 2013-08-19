@@ -1,165 +1,165 @@
 .container
   .row
     .span8
-        h1 專案列表
-        p {{ people.clkao }}
-        article.mod-project.new(ui-if='opts.isnew',ng-include="'/partials/project.edit.html'")
-        article.mod-project(ng-repeat='project in projects | filter:search')
-          h2
-            a(href='#') {{project.name_zh || project.name}}
-            small(ng-show="project.projects")
-              | &nbsp;隸屬&nbsp;
-              a(href='#',ng-repeat="pname in project.projects") {{pname}}&nbsp;
-          p {{ project.description_zh }}
-          dl.dl-horizontal.mod-project-meta
-            dt(ng-show="project.homepage") 專案網址
-            dd(ng-show="project.homepage"): a(ng-href='{{project.homepage}}') {{project.homepage}}
-            dt 專案連結
-            dd: .mod-project-links
-              ul
-                li(ng-show="project.homepage"): a(ng-href='{{project.homepage}}',target="_blank")
-                  i.icon-link
-                  | &nbsp;
-                  | 網站
-                li(ng-show="project.document"): a(ng-href='{{project.document}}',target="_blank")
-                  i.icon-hackfoldr
-                  | &nbsp;
-                  | 文件
-                li(ng-show="project.repository"): a(href='{{project.repository.url}}',target="_blank")
-                  i.icon-github
-                  | &nbsp;
-                  | 程式源碼
-                li(ng-show="project.video"): a(href='{{project.video}}',target="_blank")
-                  i.icon-youtube
-                  | &nbsp;
-                  | 5分鐘瞭解影片
-                li(ng-show="project.trello"): a(href='{{project.trello}}',target="_blank")
-                  i.icon-trello
-                  | &nbsp;
-                  | 專案控管
-
-            dt.inline 專案進度
-            dd.inline
-                span.label(ng-class="'label-' + project.status") {{ project.status }}
-            dt.inline 專案需求
-            dd.inline-last
-              span.label.label-important(ng-repeat='need in project.needs') {{ need }}&nbsp;
-            dt(ui-if="project.author") 協調者
-            dd(ui-if="project.author")
-              span.avatar-link(data-toggle='tooltip', title='{{project.author}}')
-                img.avatar(ng-src='{{avatarFor(project.author)}}')
-            dt(ui-if="project.contributors") 參與者
-            dd(ui-if="project.contributors")
-              span.avatar-link(data-toggle='tooltip', title='{{user}}', ng-repeat="user in project.contributors")
-                img.avatar(ng-src='{{avatarFor(user)}}')
+      h1 專案列表
+      p {{ people.clkao }}
+      article.mod-project.new(ui-if='opts.isnew',ng-include="'/partials/project.edit.html'")
+      article.mod-project(ng-repeat='project in projects | filter:search')
+        h2
+          a(href='#') {{project.name_zh || project.name}}
+          small(ng-show="project.projects")
+            | &nbsp;隸屬&nbsp;
+            a(href='#',ng-repeat="pname in project.projects") {{pname}}&nbsp;
+        p {{ project.description_zh }}
+        dl.dl-horizontal.mod-project-meta
+          dt(ng-show="project.homepage") 專案網址
+          dd(ng-show="project.homepage"): a(ng-href='{{project.homepage}}') {{project.homepage}}
+          dt 專案連結
+          dd: .mod-project-links
+            ul
+              li(ng-show="project.homepage"): a(ng-href='{{project.homepage}}',target="_blank")
+                i.icon-link
                 | &nbsp;
-        //.pagination
-          ul
-            li.disabled
-              span «
-            li.active
-              span 1
-            li
-              a(href='#') 2
-            li
-              a(href='#') 3
-            li
-              a(href='#') 4
-            li
-              a(href='#') 5
-            li
-              a(href='#') Next
-      .span4
-        section.mod-search
-          h2 搜尋
-          form.form-search
-            input.input-medium.search-query(type='text',ng-model="search")
-            button.btn(type='submit') Search
-        section
-            .mod-project
-                h2 沒有你關心的議題？
-                p Make one now!
-                a.btn.btn-large.btn-block(ng-click='newProject()') 新增專案
+                | 網站
+              li(ng-show="project.document"): a(ng-href='{{project.document}}',target="_blank")
+                i.icon-hackfoldr
+                | &nbsp;
+                | 文件
+              li(ng-show="project.repository"): a(href='{{project.repository.url}}',target="_blank")
+                i.icon-github
+                | &nbsp;
+                | 程式源碼
+              li(ng-show="project.video"): a(href='{{project.video}}',target="_blank")
+                i.icon-youtube
+                | &nbsp;
+                | 5分鐘瞭解影片
+              li(ng-show="project.trello"): a(href='{{project.trello}}',target="_blank")
+                i.icon-trello
+                | &nbsp;
+                | 專案控管
 
-        section.mod-issues(ng-controller='IssueCtrl')
-          //div.issues-filter.btn-group.pull-right
-            a(href='#',data-toggle='dropdown').btn.btn-mini.dropdown-toggle easy
-              span.caret
-            ul.dropdown-menu
-              li: a(href='#') all
-              li.divider
-              li: a(href='javascript://') easy
-              li: a(href='javascript://') medium
-              li: a(href='javascript://') hard
-          div.issues-filter.btn-group.pull-right
-            a(href='javascript://',data-toggle='dropdown').btn.btn-mini.dropdown-toggle Project: {{opt_project}}&nbsp;
-              span.caret
-            ul.dropdown-menu
-              li
-                a(ng-click="set_project('all')")
-                  dl.dl-horizontal
-                    dt
-                    dd all projects
-              li.divider
-              li(ng-repeat='project in projects')
-                a(ng-click='set_project(project.name)')
-                  dl.dl-horizontal
-                    dt
-                      span.label.label-info {{project.name}}
-                    dd {{project.name_zh || project.name}}&nbsp;
-          h2 歡迎跳坑
-          p 底下是一些您可以幫忙的事項，歡迎跳坑。
-          .issues-label-filter
-            select(data-placeholder="Filter by Labels…", multiple, ng-model="opt_labels", ng-options="label for label in labels")
-            script $(".issues-label-filter select").chosen({width: "100%"});
-          table.table.table-condensed.table-hover
-            tbody
-              //tr
-                td
-                  span.avatar-link(data-toggle='tooltip', title='{{project.author}}').pull-right
-                    img.avatar(ng-src='{{avatarFor("clkao")}}')
-                  a(href='') people registry: improve load time
-                  br
-                  span.label.label-info hack.g0v.tw
-                  span.label.label-important writer
-              //tr
-                td
-                  a(href='') mobile safari main-content scrollbar not visible
-                  br
-                  span.label.label-info hack.g0v.tw
-                  span.label.label-important programmer
-                  span.label.label-important design
-              //tr
-                td
-                  span.avatar-link(data-toggle='tooltip', title='{{project.author}}').pull-right
-                    img.avatar(ng-src='{{avatarFor("clkao")}}')
-                  a(href='') integrated chat service
-                  br
-                  span.label.label-info 22k
-                  span.label.label-important programmer
-                  span.label.label-important writer
-              tr.issues-loading
-                td
-                  div.loading-indicator
-              tr(ng-repeat='issue in issues',ng-show='issue.title')
-                td
-                  span.avatar-link(ng-show='issue.assignee',data-toggle='tooltip', title='{{issue.assignee.login}}').pull-right
-                    img.avatar(ng-src='{{avatarFor(issue.assignee.login)}}')
-                  a(href='{{issue.html_url}}',target='_blank') {{issue.title}}
-                  br
-                  span.label.label-info {{issue.repo}}
-                  span.label.label-important(ng-repeat='label in issue.labels')
-                    {{label.name}}
-              tr
-                td
-                  pagination.pagination-centered.pagination-small(num-pages="numPages",current-page="currentPage",max-size="6",boundary-links="true",previous-text="'&lsaquo;'",next-text="'&rsaquo;'",first-text="'&laquo;'",last-text="'&raquo;'")
-
-        section.mod-featured
-          h2 特色推薦
+          dt.inline 專案進度
+          dd.inline
+              span.label(ng-class="'label-' + project.status") {{ project.status }}
+          dt.inline 專案需求
+          dd.inline-last
+            span.label.label-important(ng-repeat='need in project.needs') {{ need }}&nbsp;
+          dt(ui-if="project.author") 協調者
+          dd(ui-if="project.author")
+            span.avatar-link(data-toggle='tooltip', title='{{project.author}}')
+              img.avatar(ng-src='{{avatarFor(project.author)}}')
+          dt(ui-if="project.contributors") 參與者
+          dd(ui-if="project.contributors")
+            span.avatar-link(data-toggle='tooltip', title='{{user}}', ng-repeat="user in project.contributors")
+              img.avatar(ng-src='{{avatarFor(user)}}')
+              | &nbsp;
+      //.pagination
+        ul
+          li.disabled
+            span «
+          li.active
+            span 1
+          li
+            a(href='#') 2
+          li
+            a(href='#') 3
+          li
+            a(href='#') 4
+          li
+            a(href='#') 5
+          li
+            a(href='#') Next
+    .span4
+      section.mod-search
+        h2 搜尋
+        form.form-search
+          input.input-medium.search-query(type='text',ng-model="search")
+          button.btn(type='submit') Search
+      section
           .mod-project
-            a(ng-href='{{featured.homepage}}')
-              img(ng-src='{{featured.thumbnail.reduce ? featured.thumbnail.0 : featured.thumbnail}}')'
-            h2
-              a(ng-href='{{featured.homepage}}') {{featured.name_zh || featured.name}}
-              p {{featured.description_zh}}
+              h2 沒有你關心的議題？
+              p Make one now!
+              a.btn.btn-large.btn-block(ng-click='newProject()') 新增專案
+
+      section.mod-issues(ng-controller='IssueCtrl')
+        //div.issues-filter.btn-group.pull-right
+          a(href='#',data-toggle='dropdown').btn.btn-mini.dropdown-toggle easy
+            span.caret
+          ul.dropdown-menu
+            li: a(href='#') all
+            li.divider
+            li: a(href='javascript://') easy
+            li: a(href='javascript://') medium
+            li: a(href='javascript://') hard
+        div.issues-filter.btn-group.pull-right
+          a(href='javascript://',data-toggle='dropdown').btn.btn-mini.dropdown-toggle Project: {{opt_project}}&nbsp;
+            span.caret
+          ul.dropdown-menu
+            li
+              a(ng-click="set_project('all')")
+                dl.dl-horizontal
+                  dt
+                  dd all projects
+            li.divider
+            li(ng-repeat='project in projects')
+              a(ng-click='set_project(project.name)')
+                dl.dl-horizontal
+                  dt
+                    span.label.label-info {{project.name}}
+                  dd {{project.name_zh || project.name}}&nbsp;
+        h2 歡迎跳坑
+        p 底下是一些您可以幫忙的事項，歡迎跳坑。
+        .issues-label-filter
+          select(data-placeholder="Filter by Labels…", multiple, ng-model="opt_labels", ng-options="label for label in labels")
+          script $(".issues-label-filter select").chosen({width: "100%"});
+        table.table.table-condensed.table-hover
+          tbody
+            //tr
+              td
+                span.avatar-link(data-toggle='tooltip', title='{{project.author}}').pull-right
+                  img.avatar(ng-src='{{avatarFor("clkao")}}')
+                a(href='') people registry: improve load time
+                br
+                span.label.label-info hack.g0v.tw
+                span.label.label-important writer
+            //tr
+              td
+                a(href='') mobile safari main-content scrollbar not visible
+                br
+                span.label.label-info hack.g0v.tw
+                span.label.label-important programmer
+                span.label.label-important design
+            //tr
+              td
+                span.avatar-link(data-toggle='tooltip', title='{{project.author}}').pull-right
+                  img.avatar(ng-src='{{avatarFor("clkao")}}')
+                a(href='') integrated chat service
+                br
+                span.label.label-info 22k
+                span.label.label-important programmer
+                span.label.label-important writer
+            tr.issues-loading
+              td
+                div.loading-indicator
+            tr(ng-repeat='issue in issues',ng-show='issue.title')
+              td
+                span.avatar-link(ng-show='issue.assignee',data-toggle='tooltip', title='{{issue.assignee.login}}').pull-right
+                  img.avatar(ng-src='{{avatarFor(issue.assignee.login)}}')
+                a(href='{{issue.html_url}}',target='_blank') {{issue.title}}
+                br
+                span.label.label-info {{issue.repo}}
+                span.label.label-important(ng-repeat='label in issue.labels')
+                  {{label.name}}
+            tr
+              td
+                pagination.pagination-centered.pagination-small(num-pages="numPages",current-page="currentPage",max-size="6",boundary-links="true",previous-text="'&lsaquo;'",next-text="'&rsaquo;'",first-text="'&laquo;'",last-text="'&raquo;'")
+
+      section.mod-featured
+        h2 特色推薦
+        .mod-project
+          a(ng-href='{{featured.homepage}}')
+            img(ng-src='{{featured.thumbnail.reduce ? featured.thumbnail.0 : featured.thumbnail}}')'
+          h2
+            a(ng-href='{{featured.homepage}}') {{featured.name_zh || featured.name}}
+            p {{featured.description_zh}}
 
