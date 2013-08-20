@@ -227,5 +227,20 @@ a .icon-hackfoldr {
         width: 1em;
         margin-right: .5em;
     }
+    .label {
+        font-family: Helvetica, Arial, sans-serif;
+        font-size: 12px;
+        -webkit-box-shadow: rgba(0, 0, 0, 0.125) 0px -1px 0px inset;
+           -moz-box-shadow: rgba(0, 0, 0, 0.125) 0px -1px 0px inset;
+                box-shadow: rgba(0, 0, 0, 0.125) 0px -1px 0px inset;
+        &.light {
+            color: hsl(0, 0%, 20%);
+            text-shadow: rgba(255, 255, 255, 0.4) 0px 1px 0px !important;
+        }
+        &.dark {
+            color: #fff;
+            text-shadow: rgba(0, 0, 0, 0.4) 0px -1px 0px;
+        }
+    }
 }
 

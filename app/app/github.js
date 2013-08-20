@@ -188,7 +188,15 @@ var Github = (function($) {
 				var b_name = b && b.name || '';
 				return a_name.localeCompare(b_name);
 			});
-//			console.log(labels);
+
+			// determine the colotType (light, or dark) to derive foreground text color
+			$.map(labels, function(label) {
+				var colorInt = parseInt(label.color, 16);
+				var r = (colorInt & 0xff0000) >> 16, g = (colorInt & 0x00ff00) >> 8, b = (colorInt & 0x0000ff);
+				var luminance = 0.375 * r + 0.5 * g + 0.125 * b;
+				label.colorType = (luminance > 140) ? "light" : "dark";
+				return label;
+			});
 			return labels;
 		},
 
