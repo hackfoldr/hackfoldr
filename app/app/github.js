@@ -110,6 +110,10 @@ var Github = (function($) {
 				$.each(issues, function(i, issue) {
 					issue.key = name + '#' + issue.number;
 					issue.repo = name.split('/')[1];
+					issue.labels = $.map(issue.labels, function(label) {
+						label.colorType = Github.get_label_color_type(label);
+						return label;
+					});
 					every_issues[issue.key] = issue;
 				});
 				on_update_do();
@@ -187,11 +191,6 @@ var Github = (function($) {
 				var a_name = a && a.name || '';
 				var b_name = b && b.name || '';
 				return a_name.localeCompare(b_name);
-			});
-
-			$.map(labels, function(label) {
-				label.colorType = Github.get_label_color_type(label);
-				return label;
 			});
 			return labels;
 		},
@@ -298,13 +297,7 @@ angular.module("github", [])
 		// Set issues (of current page) to $scope.
 		$scope.numPages = Math.ceil(issues.length / $scope.numPerPage);
 		var offset = ($scope.currentPage - 1) * $scope.numPerPage;
-		$scope.issues = $.map(issues.slice(offset, offset + $scope.numPerPage), function(issue) {
-			issue.labels = $.map(issue.labels, function(label) {
-				label.colorType = Github.get_label_color_type(label);
-				return label;
-			})
-			return issue;
-		});
+		$scope.issues = issues.slice(offset, offset + $scope.numPerPage);
 	};
 	$scope.$watch('currentPage', $scope.setPage);
 	Github.set_on_update(function() {
