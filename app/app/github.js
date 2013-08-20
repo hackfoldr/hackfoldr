@@ -314,13 +314,6 @@ angular.module("github", [])
 		});
 	});
 
-	var unbindIssuesWatcher = $scope.$watch('issues', function() {
-		if ($scope.issues.length) {
-			$(".issues-loading").hide();
-			unbindIssuesWatcher();
-		}
-	});
-
 	// Do not unbind since $scope.labels may change when we load more labels.
 	$scope.$watch('labels', function() {
 		if ($scope.labels.length) {

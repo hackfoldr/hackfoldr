@@ -142,7 +142,7 @@
                 span.label.label-info 22k
                 span.label.label-important programmer
                 span.label.label-important writer
-            tr.issues-loading
+            tr.issues-loading(ng-show="issues.length === 0")
               td
                 div.loading-indicator
             tr(ng-repeat='issue in issues',ng-show='issue.title')
