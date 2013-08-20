@@ -21,10 +21,10 @@
           | 立刻新增專案！
       article.mod-project(ng-repeat='project in projects | filter:search')
         h2
-          a(href='#') {{project.name_zh || project.name}}
+          a(href='javascript:') {{project.name_zh || project.name}}
           small(ng-show="project.projects")
             | &nbsp;隸屬&nbsp;
-            a(href='#',ng-repeat="pname in project.projects") {{pname}}&nbsp;
+            a(href='javascript:',ng-repeat="pname in project.projects") {{pname}}&nbsp;
         p {{ project.description_zh }}
         dl.dl-horizontal.mod-project-meta
           dt(ng-show="project.homepage") 專案網址
