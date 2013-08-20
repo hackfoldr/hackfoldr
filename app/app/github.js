@@ -189,15 +189,22 @@ var Github = (function($) {
 				return a_name.localeCompare(b_name);
 			});
 
-			// determine the colotType (light, or dark) to derive foreground text color
 			$.map(labels, function(label) {
-				var colorInt = parseInt(label.color, 16);
-				var r = (colorInt & 0xff0000) >> 16, g = (colorInt & 0x00ff00) >> 8, b = (colorInt & 0x0000ff);
-				var luminance = 0.375 * r + 0.5 * g + 0.125 * b;
-				label.colorType = (luminance > 140) ? "light" : "dark";
+				label.colorType = Github.get_label_color_type(label);
 				return label;
 			});
 			return labels;
+		},
+
+		// determine the type (light || dark) of label color to derive foreground text color
+		get_label_color_type: function(label) {
+			var color_int = parseInt(label.color, 16); // label.color = AABBCC
+			var r = (color_int & 0xff0000) >> 16,
+				g = (color_int & 0x00ff00) >> 8,
+				b = (color_int & 0x0000ff);
+			var luminance = 0.375 * r + 0.5 * g + 0.125 * b;
+			var color_type = (luminance > 140) ? "light" : "dark";
+			return color_type;
 		},
 
 		get_repositories: function() {
@@ -291,7 +298,13 @@ angular.module("github", [])
 		// Set issues (of current page) to $scope.
 		$scope.numPages = Math.ceil(issues.length / $scope.numPerPage);
 		var offset = ($scope.currentPage - 1) * $scope.numPerPage;
-		$scope.issues = issues.slice(offset, offset + $scope.numPerPage);
+		$scope.issues = $.map(issues.slice(offset, offset + $scope.numPerPage), function(issue) {
+			issue.labels = $.map(issue.labels, function(label) {
+				label.colorType = Github.get_label_color_type(label);
+				return label;
+			})
+			return issue;
+		});
 	};
 	$scope.$watch('currentPage', $scope.setPage);
 	Github.set_on_update(function() {
