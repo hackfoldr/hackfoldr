@@ -69,10 +69,15 @@ a .icon-hackfoldr {
     }
 }
 
-.mod-project {
+%mod-section {
     border: 1px solid #ccc;
-    padding: 20px;
     margin-bottom: 20px;
+    background: #fcfcfc;
+}
+
+.mod-project {
+    @extend %mod-section;
+    padding: 20px;
     h2 {
         margin-top: 0;
         font-size: $baseFontSize * 1.5;
@@ -152,9 +157,8 @@ a .icon-hackfoldr {
 }
 
 .mod-issues {
-    border: 1px solid #ccc;
+    @extend %mod-section;
     padding: 10px 20px 0 20px;
-    margin-bottom: 20px;
     h2 {
         margin-top: 0;
         font-size: $baseFontSize * 1.5;
