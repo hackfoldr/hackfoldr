@@ -207,7 +207,12 @@ var Github = (function($) {
         },
 
         get_repositories: function() {
-            return $.map(Object.keys(repositories), function(repo_full_name) {
+            var repo_full_names = Object.keys(repositories).sort(function(a, b) {
+                var a_name = repositories[a].name || '';
+                var b_name = repositories[b].name || '';
+                return a_name.localeCompare(b_name);
+            });
+            return $.map(repo_full_names, function(repo_full_name) {
                 return repositories[repo_full_name];
             });
         },
