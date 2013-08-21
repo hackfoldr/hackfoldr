@@ -103,7 +103,7 @@ var Github = (function($) {
         },
     };
 
-    var load_issues2 = function(name) {
+    var load_issues = function(name) {
         var repo = repositories[name];
         if (repo) {
             $.getJSON(ghapi(repo.issues_url), function(issues) {
@@ -139,7 +139,7 @@ var Github = (function($) {
                         if (!repositories[repo.full_name]) {
                             repo.name_zh = name_zh;
                             repositories[repo.full_name] = repo;
-                            load_issues2(repo.full_name); // XXX: or trigger by setTimeout()?
+                            load_issues(repo.full_name); // XXX: or trigger by setTimeout()?
                         }
                     }
                 });
