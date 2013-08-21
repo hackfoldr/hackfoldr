@@ -228,19 +228,6 @@ var Github = (function($) {
 
 
 angular.module("github", [])
-.filter('github_url_to_repo_name', function() {
-    return function(input) {
-        return Github.url_to_repo_name(input);
-    };
-})
-.filter('listify', function() {
-    return function(input) {
-        if ($.isArray(input)) {
-            return input.join(', ');
-        }
-        return input;
-    };
-})
 .controller('IssueCtrl', [ '$scope', 'Hub', function($scope, Hub) {
     $scope.opt_project = 'all';
     $scope.$watch('opt_project', function() {
