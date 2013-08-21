@@ -18,7 +18,7 @@ angular.module 'app.controllers' <[ui.state ngCookies]>
       if doc.opts?target == '_blank'
         window.open doc.url, doc.id
         return true
-      else if doc.url.match /(https?:)?\/\/[^/]*(github|facebook)[^/]*\//
+      else if doc.url.match /(https?:)?\/\/[^/]*(github|facebook)\.com/
         window.open doc.url, doc.id
         return true
       else
@@ -30,7 +30,7 @@ angular.module 'app.controllers' <[ui.state ngCookies]>
     saveBtn: void
     saveModalOpts: dialogFade: true
     saveModalOpen: false
-    showSaveModal: (show,rm,e)-> 
+    showSaveModal: (show,rm,e)->
       $scope.saveModalOpen = show
       if e => $scope.saveBtn = $ e.target
       if rm =>
