@@ -1,6 +1,4 @@
 var Github = (function($) {
-    var API_PROXY = 'http://utcr.org:8080';
-
     // Parse date string in ISO8601 format into javascript Date object.
     // See: http://stackoverflow.com/a/4829642
     var MONTHS = [ 'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec' ];
@@ -78,7 +76,10 @@ var Github = (function($) {
      */
     var ghapi = function(url_spec, params) {
         var found = url_spec.match(/^(((http|https):\/\/(api\.github\.com)(:[0-9]+)?)(\/.*)?)$/);
-        var url = API_PROXY ? API_PROXY : found[2];
+        var url = found[2];
+        if (window.global.config.GITHUB_API_PROXY) {
+            url = window.global.config.GITHUB_API_PROXY;
+        }
         var path = found[6] ? found[6] : '';
         while (found = path.match(/^([^{}]*)({(\/([^\/{}]+))})(.*)$/)) {
             path = found[1];
