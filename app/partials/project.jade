@@ -153,7 +153,7 @@
                 br
                 span.badge.badge-info {{issue.repo}}
                 | &nbsp;
-                span.label(ng-repeat='label in issue.labels', ng-class="label.colorType", ng-style="{'background-color':'#'+label.color}") {{label.name}}
+                span.label(ng-repeat='label in issue.labels', ng-class="label_css_classes(label)", ng-style="{'background-color':'#'+label.color}") {{label.name}}
             tr
               td
                 pagination.pagination-centered.pagination-small(num-pages="numPages",current-page="currentPage",max-size="6",boundary-links="true",previous-text="'&lsaquo;'",next-text="'&rsaquo;'",first-text="'&laquo;'",last-text="'&raquo;'")

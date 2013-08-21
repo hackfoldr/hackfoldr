@@ -110,10 +110,6 @@ var Github = (function($) {
                 $.each(issues, function(i, issue) {
                     issue.key = name + '#' + issue.number;
                     issue.repo = name.split('/')[1];
-                    issue.labels = $.map(issue.labels, function(label) {
-                        label.colorType = Github.get_label_color_type(label);
-                        return label;
-                    });
                     every_issues[issue.key] = issue;
                 });
                 on_update_do();
@@ -189,17 +185,6 @@ var Github = (function($) {
                 return a_name.localeCompare(b_name);
             });
             return labels;
-        },
-
-        // determine the type (light || dark) of label color to derive foreground text color
-        get_label_color_type: function(label) {
-            var color_int = parseInt(label.color, 16); // label.color = AABBCC
-            var r = (color_int & 0xff0000) >> 16,
-                g = (color_int & 0x00ff00) >> 8,
-                b = (color_int & 0x0000ff);
-            var luminance = 0.375 * r + 0.5 * g + 0.125 * b;
-            var color_type = (luminance > 140) ? "light" : "dark";
-            return color_type;
         },
 
         get_repositories: function() {
@@ -280,6 +265,25 @@ angular.module("github", [])
         $scope.projects = Github.get_repositories();
         $scope.setPage();
     });
+
+    // Determine CSS classes of given label.
+    $scope.label_css_classes = function(label) {
+        var classes = [];
+
+        // label text color by label (background) color
+        var color_int = parseInt(label.color, 16); // label.color = AABBCC
+        var r = (color_int & 0xff0000) >> 16,
+            g = (color_int & 0x00ff00) >> 8,
+            b = (color_int & 0x0000ff);
+        var luminance = 0.375 * r + 0.5 * g + 0.125 * b;
+        if (luminance > 140) {
+            classes.push('light');
+        } else {
+            classes.push('dark');
+        }
+
+        return classes;
+    };
 
     $scope.$on('event:hub-ready', function() {
         $scope.firebase_projects = Hub.projects;
