@@ -127,8 +127,8 @@ var Github = (function($) {
 //      parse_iso8601: parse_iso8601,
 //      get_repositories: function() { return repositories; },
 //      get_every_issues: function() { return every_issues; },
-        find_if: find_if,
-        array_unique_if: array_unique_if,
+//      find_if: find_if,
+//      array_unique_if: array_unique_if,
 
         add_repository: function(url, name_zh) {
             var r = parse_ghurl(url);
@@ -147,10 +147,6 @@ var Github = (function($) {
         },
 
         set_on_update: function(fn) { on_update_do = fn; },
-
-        num_issues: function() {
-            return Object.keys(every_issues).length;
-        },
 
         get_issues: function(filter) {
             var issue_keys = Object.keys(every_issues)
@@ -215,18 +211,6 @@ var Github = (function($) {
             return $.map(repo_full_names, function(repo_full_name) {
                 return repositories[repo_full_name];
             });
-        },
-
-        has_issues: function(url) {
-            return $.grep(Object.keys(repositories), function(key) {
-                return ((repositories[key].html_url == url)
-                     && (repositories[key].has_issues));
-            }).length > 0;
-        },
-
-        'url_to_repo_name': function(url) {
-            var r = parse_ghurl(url);
-            return r ? r.repo : null;
         },
     };
 })(jQuery);
