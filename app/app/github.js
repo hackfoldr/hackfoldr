@@ -90,7 +90,17 @@ var Github = (function($) {
             path += found[5];
         }
         url += path;
+//      console.log(url);
         return url;
+    };
+
+    var ghcalled = {}; // url => callback
+    var ghcall = function(url, callback) {
+        if (!ghcalled[url]) {
+            ghcalled[url] = callback;
+//          console.log(url);
+            $.getJSON(url, callback);
+        }
     };
 
     var on_update_do = function() {};
@@ -107,7 +117,7 @@ var Github = (function($) {
     var load_issues = function(name) {
         var repo = repositories[name];
         if (repo) {
-            $.getJSON(ghapi(repo.issues_url), function(issues) {
+            ghcall(ghapi(repo.issues_url), function(issues) {
                 $.each(issues, function(i, issue) {
                     issue.key = name + '#' + issue.number;
                     issue.repo = name.split('/')[1];
@@ -130,17 +140,12 @@ var Github = (function($) {
         add_repository: function(url, name_zh) {
             var r = parse_ghurl(url);
             if (r) {
-                if (repositories[r.name]) {
-                    return;
-                }
                 // XXX: We should be able to write the url spec as: {/owner{/repo}}.
-                $.getJSON(ghapi('https://api.github.com/repos{/owner}{/repo}', r), function(repo) {
+                ghcall(ghapi('https://api.github.com/repos{/owner}{/repo}', r), function(repo) {
                     if (repo.has_issues) {
-                        if (!repositories[repo.full_name]) {
-                            repo.name_zh = name_zh;
-                            repositories[repo.full_name] = repo;
-                            load_issues(repo.full_name); // XXX: or trigger by setTimeout()?
-                        }
+                        repo.name_zh = name_zh;
+                        repositories[repo.full_name] = repo;
+                        load_issues(repo.full_name); // XXX: or trigger by setTimeout()?
                     }
                 });
             }
