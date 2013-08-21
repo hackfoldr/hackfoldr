@@ -130,6 +130,9 @@ var Github = (function($) {
         add_repository: function(url, name_zh) {
             var r = parse_ghurl(url);
             if (r) {
+                if (repositories[r.name]) {
+                    return;
+                }
                 // XXX: We should be able to write the url spec as: {/owner{/repo}}.
                 $.getJSON(ghapi('https://api.github.com/repos{/owner}{/repo}', r), function(repo) {
                     if (repo.has_issues) {
