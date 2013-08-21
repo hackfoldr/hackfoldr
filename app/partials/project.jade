@@ -148,7 +148,8 @@
             tr(ng-repeat='issue in issues',ng-show='issue.title')
               td
                 span.avatar-link(ng-show='issue.assignee',data-toggle='tooltip', title='{{issue.assignee.login}}').pull-right
-                  img.avatar(ng-src='{{avatarFor(issue.assignee.login)}}')
+                  //img.avatar(ng-src='{{avatarFor(issue.assignee.login)}}')
+                  img.avatar(ng-src='{{issue.assignee.avatar_url}}')
                 a(href='{{issue.html_url}}',target='_blank') {{issue.title}}
                 br
                 span.badge.badge-info {{issue.repo}}
