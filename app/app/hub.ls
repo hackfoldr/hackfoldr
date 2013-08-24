@@ -267,8 +267,7 @@ angular.module 'hub.g0v.tw' <[ui.state firebase github]>
         info.displayName = self.auth-user.displayName if self.auth-user.displayName
         info.avatar = match self.auth-user.provider
         | 'github'
-            [_, gravatar] = self.auth-user.avatar_url.match // https:\/\/secure.gravatar.com/avatar/(\w+) //
-            "http://avatars.io/gravatar/#gravatar"
+            self.auth-user.avatar_url
         | 'twitter'
             "http://avatars.io/twitter/#{self.auth-user.username}"
         | 'persona'
