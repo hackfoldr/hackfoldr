@@ -11,8 +11,12 @@ engines:
   node: '0.8.x'
   npm: '1.1.x'
 scripts:
-  prepublish: 'node ./node_modules/LiveScript/bin/lsc -cj package.ls'
+  prepublish: """
+    node ./node_modules/LiveScript/bin/lsc -cj package.ls
+    node ./node_modules/LiveScript/bin/lsc -c karma.conf.js.ls
+  """
   start: 'node ./node_modules/brunch/bin/brunch watch --server'
+  test: './node_modules/.bin/karma start --single-run --browsers PhantomJS'
 dependencies: {}
 devDependencies:
   LiveScript: '1.1.x'
@@ -28,3 +32,6 @@ devDependencies:
   'clean-css-brunch': '1.5.x'
   'jade-angularjs-brunch': '0.0.5'
   'jsenv-brunch': '1.4.2'
+  karma: '~0.9.3'
+  'karma-live-preprocessor': '~0.1.0'
+  'karma-mocha': '~0.1.0'
