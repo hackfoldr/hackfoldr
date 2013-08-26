@@ -7,9 +7,12 @@ git branch -f gh-pages $upstream/gh-pages
 rm -rf _public
 cp app/index.static.jade app/404.static.jade
 git clone -s . -b gh-pages _public
-BUILD=git-`git describe --always` ./node_modules/.bin/brunch b -o
+REV=`git describe --always`
+BUILD=git-$REV ./node_modules/.bin/brunch b -o
 cd _public
-git add -A . && git commit -a -m 'regen' && git push origin gh-pages
+git add -A .
+git commit-tree -m "regen for $REV" -p `git rev-parse HEAD` -p $REV `git write-tree` | xargs git reset --hard
+git push origin gh-pages
 cd ..
 git push $upstream gh-pages
 rm -f app/404.static.jade
