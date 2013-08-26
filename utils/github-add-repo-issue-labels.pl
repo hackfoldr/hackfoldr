@@ -98,7 +98,7 @@ $github->set_default_user_repo($org, $repo);
 my $issue = $github->issue;
 my @current_labels = $issue->labels;
 
-my @labels_to_update_tmp = split(/,/, $labels);
+my @labels_to_update_tmp = split(/,|\n/, $labels);
 my @labels_to_update;
 
 foreach (@labels_to_update_tmp) {
