@@ -13,6 +13,9 @@
     { "color": "3399CC", "name": "doc",         "url": "https://g0v.hackpad.com/g0v-issue-label--L23ntanWnv7", "zh": "文件（技術）" },
     { "color": "000000", "name": "devops",      "url": "https://g0v.hackpad.com/g0v-issue-label--L23ntanWnv7", "zh": "維運" },
     { "color": "8040BF", "name": "promote",     "url": "https://g0v.hackpad.com/g0v-issue-label--L23ntanWnv7", "zh": "宣傳" },
-    { "color": "CC66CC", "name": "writing",     "url": "https://g0v.hackpad.com/g0v-issue-label--L23ntanWnv7", "zh": "文案" }
+    { "color": "CC66CC", "name": "writing",     "url": "https://g0v.hackpad.com/g0v-issue-label--L23ntanWnv7", "zh": "文案" },
+    { "color": "004C99", "name": "design",      "url": "https://g0v.hackpad.com/g0v-issue-label--L23ntanWnv7", "zh": "設計" },
+    { "color": "A30000", "name": "code",        "url": "https://g0v.hackpad.com/g0v-issue-label--L23ntanWnv7", "zh": "程式" },
+    { "color": "66E6FF", "name": "frontend",    "url": "https://g0v.hackpad.com/g0v-issue-label--L23ntanWnv7", "zh": "前端" }
   ]
 }
