@@ -1,8 +1,8 @@
 {
-  BUILD: "git-unknown",
-  FIREBASE: "https://g0vhub.firebaseio.com",
-  GITHUB_API_PROXY: "http://utcr.org:8080",
-  G0V_LABELS: [
+  "BUILD": "git-unknown",
+  "FIREBASE": "https://g0vhub.firebaseio.com",
+  "GITHUB_API_PROXY": "http://utcr.org:8080",
+  "G0V_LABELS": [
     { "color": "5CC2D6", "name": "datainput",   "url": "https://g0v.hackpad.com/g0v-issue-label--L23ntanWnv7", "zh": "資料輸入" },
     { "color": "F2800D", "name": "translation", "url": "https://g0v.hackpad.com/g0v-issue-label--L23ntanWnv7", "zh": "翻譯" },
     { "color": "C7F53D", "name": "OCR",         "url": "https://g0v.hackpad.com/g0v-issue-label--L23ntanWnv7", "zh": "OCR/圖文辨識" },
