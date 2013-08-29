@@ -44,4 +44,4 @@ labels: check-jq
 	@cat ../app/config.jsenv | $(JQ) -r  '.G0V_LABELS | .[] | .name + "|" + .color' > labels
 	@cat ./labels
 
-.PHONY: check-jq clean
+.PHONY: check-jq clean all update-labels
