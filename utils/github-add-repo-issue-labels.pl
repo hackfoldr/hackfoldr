@@ -144,7 +144,7 @@ foreach (@labels_to_update) {
 
     if ( $action eq 'update' ) {
         # update
-        print STDERR 'Updating label ' . $label_name . '...'; 
+        print STDERR '[' . $org . '/' . $repo . '] Updating label ' . $label_name . '...'; 
         %label_update_res  = $issue->update_label( $label_name, {
                 "color" => $label_color
                 } );
@@ -153,7 +153,7 @@ foreach (@labels_to_update) {
         
     } else {
         # create
-        print STDERR 'Creating label ' . $label_name . '...'; 
+        print STDERR '[' . $org . '/' . $repo . '] Creating label ' . $label_name . '...'; 
         %label_create_res = $issue->create_label( {
                 "name" => $label_name,
                 "color" => $label_color
