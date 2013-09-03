@@ -51,12 +51,17 @@ angular.module 'app.controllers' <[ui.state ngCookies]>
     debug: -> console?log it, @
     reload: (hackId) -> HackFolder.getIndex hackId, true ->
 
+  $scope.pgname = $state.params.pgname
   $scope.$watch 'hackId' (hackId) ->
     <- HackFolder.getIndex hackId, false
     $scope.$watch 'docId' (docId) -> HackFolder.activate docId if docId
     unless $scope.docId
       if HackFolder.docs.0?id
-        $state.transitionTo 'hack.doc', { docId: that, hackId: $scope.hackId }
+        if $state.params.pgname != '__index'
+          $state.transitionTo 'hack.doc', { docId: that, hackId: $scope.hackId}
+        else
+          $state.transitionTo 'hack.doc', { hackId: $scope.hackId,pgname:$scope.pgname}
+
 
   $scope.hackId = if $state.params.hackId => that else 'g0v-hackath4n'
   $scope.$watch '$state.params.docId' (docId) ->
