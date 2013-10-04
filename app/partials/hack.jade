@@ -12,6 +12,8 @@
             li(ng-repeat='doc in doc.children', ng-title="{{doc.title || doc.id}}",ngx-noclick,ng-class='{active: doc.id == docId}')
               .entry(ng-include="'/partials/hackitem.html'")
     .pad-container(ng-style='{height: contentHeight}')
+      article.pad(ng-show='showIndex')
+        h1 This is index
       article.pad(ng-repeat='(key, iframe) in iframes',ng-show='docId == key')
         span.docmode(ng-show="hasViewMode(iframe.doc.type) && iframe.mode != 'edit'",ng-click="activate(iframe.doc.id, true)") edit
         span.docmode(ng-show="(iframe.doc.type=='hackpad') && showSaveBtn()",ng-click='showSaveModal(true,false,$event)') save / 存檔

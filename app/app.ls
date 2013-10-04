@@ -35,13 +35,15 @@ angular.module \app <[ui partials app.controllers irc.g0v.tw hub.g0v.tw ui.state
       templateUrl: '/partials/tag.html'
       controller: \TagControl
     .state 'hack' do
-      url: '/{hackId}/{pgname}'
+      url: '/{hackId}'
       templateUrl: '/partials/hack.html'
       controller: \HackFolderCtrl
       onEnter: ->
         $ \body .addClass \hide-overflow
       onExit: ->
         $ \body .removeClass \hide-overflow
+    .state 'hack.index' do
+      url: '/__index'
     .state 'hack.doc' do
       url: '/{docId}'
 
