@@ -72,7 +72,7 @@ angular.module 'app.controllers' <[ui.state ngCookies]>
       if HackFolder.docs.0?id
         $state.transitionTo 'hack.doc', { docId: that, hackId: $scope.hackId}
 
-  $scope.hackId = if $state.params.hackId => that else 'g0v-hackath4n'
+  $scope.hackId = if $state.params.hackId => that else 'g0v-hackath5n'
   $scope.$watch '$state.params.docId' (docId) ->
     $scope.docId = encodeURIComponent encodeURIComponent docId if docId
 
