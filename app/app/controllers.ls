@@ -64,7 +64,7 @@ angular.module 'app.controllers' <[ui.state ngCookies]>
         .success
         docs = []
         tree = []
-        <- HackFolder.load-csv csv, docs, tree
+        folder-title <- HackFolder.load-csv csv, docs, tree
         $scope.indexDocs = docs
     $scope.show-index = $state.current.name is \hack.index
     return if $scope.show-index
@@ -209,7 +209,9 @@ angular.module 'app.controllers' <[ui.state ngCookies]>
 
 
     process-csv: (csv, cb) ->
-      @load-csv csv, docs, tree, cb
+      folder-title, docs <- @load-csv csv, docs, tree
+      self.folder-title = folder-title
+      cb docs
 
     load-csv: (csv, docs, tree, cb) ->
       var folder-title
@@ -285,5 +287,4 @@ angular.module 'app.controllers' <[ui.state ngCookies]>
           it.expand = it.opts?expand ? it.children.length < 5
         it
       tree.splice 0, tree.length, ...nested
-      self.folder-title = folder-title
-      cb docs
+      cb folder-title, docs
