@@ -6,7 +6,7 @@ angular.module 'app.controllers' <[ui.state ngCookies]>
   <- $timeout _, 10s * 1000ms
   $rootScope.hideGithubRibbon = true
 
-.controller HackFolderCtrl: <[$scope $state $cookies HackFolder]> ++ ($scope, $state, $cookies, HackFolder) ->
+.controller HackFolderCtrl: <[$scope $state $cookies HackFolder $http]> ++ ($scope, $state, $cookies, HackFolder, $http) ->
   $scope <<< do
     hasViewMode: -> it.match /g(doc|present|draw)/
     sortableOptions: do
@@ -26,7 +26,10 @@ angular.module 'app.controllers' <[ui.state ngCookies]>
     open: (doc) ->
       window.open doc.url, doc.id
       return false
-    activate: HackFolder.activate
+    activate: ->
+      doc = HackFolder.activate it
+      if doc?type is \hackfoldr
+        console.log \folder!!
     saveBtn: void
     saveModalOpts: dialogFade: true
     saveModalOpen: false
@@ -53,7 +56,16 @@ angular.module 'app.controllers' <[ui.state ngCookies]>
 
   $scope.$watch 'hackId' (hackId) ->
     <- HackFolder.getIndex hackId, false
-    $scope.$watch 'docId' (docId) -> HackFolder.activate docId if docId
+    $scope.$watch 'docId' (docId) ->
+      doc = HackFolder.activate docId if docId
+      if doc?type is \hackfoldr
+        $scope.show-index = true
+        csv <~ $http.get "https://www.ethercalc.org/_/#{doc.id}/csv"
+        .success
+        docs = []
+        tree = []
+        <- HackFolder.load-csv csv, docs, tree
+        $scope.indexDocs = docs
     $scope.show-index = $state.current.name is \hack.index
     return if $scope.show-index
     unless $scope.docId
@@ -175,10 +187,12 @@ angular.module 'app.controllers' <[ui.state ngCookies]>
 
       src += doc.hashtag if doc.hashtag
 
+      return doc if doc.type is \hackfoldr
       if iframes[id]
           that <<< {src, mode}
       else
           iframes[id] = {src, doc, mode}
+      return doc
 
     getIndex: (id, force, cb) ->
       return cb docs if hackId is id and !force
@@ -190,10 +204,14 @@ angular.module 'app.controllers' <[ui.state ngCookies]>
 
         hackId := id
         docs.length = 0
-        @load-csv csv, cb
+        @process-csv csv, cb
       doit!
 
-    load-csv: (csv, cb) ->
+
+    process-csv: (csv, cb) ->
+      @load-csv csv, docs, tree, cb
+
+    load-csv: (csv, docs, tree, cb) ->
       var folder-title
       csv -= /^\"?#.*\n/gm
       entries = for line in csv.split /\n/ when line
@@ -212,6 +230,9 @@ angular.module 'app.controllers' <[ui.state ngCookies]>
             title: title
             type: \dummy
             id: \dummy
+        | // ^\/\/(.*) //
+            type: \hackfoldr
+            id: that.1
         | // ^https?:\/\/www\.ethercalc\.(?:com|org)/(.*) //
             type: \ethercalc
             id: that.1
