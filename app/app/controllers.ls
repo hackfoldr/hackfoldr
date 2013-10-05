@@ -65,6 +65,10 @@ angular.module 'app.controllers' <[ui.state ngCookies]>
         docs = []
         tree = []
         folder-title <- HackFolder.load-csv csv, docs, tree
+        [entry] = [entry for entry in HackFolder.tree when entry.id is docId]
+        unless entry.chidlren
+          entry.children ?= tree?0.children
+          HackFolder.docs ++= docs
         $scope.indexDocs = docs
     $scope.show-index = $state.current.name is \hack.index
     return if $scope.show-index
