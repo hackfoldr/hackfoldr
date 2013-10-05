@@ -6,7 +6,7 @@ angular.module 'app.controllers' <[ui.state ngCookies]>
   <- $timeout _, 10s * 1000ms
   $rootScope.hideGithubRibbon = true
 
-.controller HackFolderCtrl: <[$scope $state $cookies HackFolder $http]> ++ ($scope, $state, $cookies, HackFolder, $http) ->
+.controller HackFolderCtrl: <[$scope $state $cookies HackFolder]> ++ ($scope, $state, $cookies, HackFolder) ->
   $scope <<< do
     hasViewMode: -> it.match /g(doc|present|draw)/
     sortableOptions: do
@@ -60,11 +60,7 @@ angular.module 'app.controllers' <[ui.state ngCookies]>
       doc = HackFolder.activate docId if docId
       if doc?type is \hackfoldr
         $scope.show-index = true
-        csv <~ $http.get "https://www.ethercalc.org/_/#{doc.id}/csv"
-        .success
-        docs = []
-        tree = []
-        folder-title <- HackFolder.load-csv csv, docs, tree
+        folder-title, docs, tree <- HackFolder.load-remote-csv doc.id
         [entry] = [entry for entry in HackFolder.tree when entry.id is docId]
         entry.tagFilter = entry.tags?0?content
         unless entry.chidlren
@@ -219,6 +215,14 @@ angular.module 'app.controllers' <[ui.state ngCookies]>
       folder-title, docs <- @load-csv csv, docs, tree
       self.folder-title = folder-title
       cb docs
+
+    load-remote-csv: (id, cb) ->
+      csv <~ $http.get "https://www.ethercalc.org/_/#{id}/csv"
+      .success
+      docs = []
+      tree = []
+      folder-title <~ @load-csv csv, docs, tree
+      cb folder-title, docs, tree
 
     load-csv: (csv, docs, tree, cb) ->
       var folder-title
