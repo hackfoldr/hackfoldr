@@ -1,0 +1,6 @@
+.hackindex
+  .search-label Search:
+  input(ng-model='indexSearch')
+  article.index-item(ng-repeat='doc in (indexDocs || docs) | filter:indexSearch')
+    h2.title {{doc.title || doc.id}}
+    p.summary {{ doc.summary }}

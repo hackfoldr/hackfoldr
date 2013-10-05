@@ -217,13 +217,13 @@ angular.module 'app.controllers' <[ui.state ngCookies]>
       var folder-title
       csv -= /^\"?#.*\n/gm
       entries = for line in csv.split /\n/ when line
-        [url, title, opts, tags, ...rest] = line.split /,/
+        [url, title, opts, tags, summary, ...rest] = line.split /,/
         title -= /^"|"$/g
         opts -= /^"|"$/g if opts
         opts.=replace /""/g '"' if opts
         tags -= /^"|"$/g if tags
         [_, prefix, url, hashtag] = url.match /^"?(\s*)(\S+?)?(#\S+?)?\s*"?$/
-        entry = { hashtag, url, title, indent: prefix.length, opts: try JSON.parse opts ? '{}' } <<< match url
+        entry = { summary, hashtag, url, title, indent: prefix.length, opts: try JSON.parse opts ? '{}' } <<< match url
         | void
             unless folder-title
               if title
