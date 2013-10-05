@@ -66,6 +66,7 @@ angular.module 'app.controllers' <[ui.state ngCookies]>
         tree = []
         folder-title <- HackFolder.load-csv csv, docs, tree
         [entry] = [entry for entry in HackFolder.tree when entry.id is docId]
+        entry.tagFilter = entry.tags?0?content
         unless entry.chidlren
           entry.children ?= tree?0.children
           HackFolder.docs.splice docs.length, 0, ...docs
@@ -236,9 +237,10 @@ angular.module 'app.controllers' <[ui.state ngCookies]>
             title: title
             type: \dummy
             id: \dummy
-        | // ^\/\/(.*) //
+        | // ^\/\/(.*?)(?:\#(.*))?$ //
             type: \hackfoldr
             id: that.1
+            tag: that.2
         | // ^https?:\/\/www\.ethercalc\.(?:com|org)/(.*) //
             type: \ethercalc
             id: that.1
