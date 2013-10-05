@@ -71,6 +71,8 @@ angular.module 'app.controllers' <[ui.state ngCookies]>
           entry.children ?= tree?0.children
           HackFolder.docs.splice docs.length, 0, ...docs
         $scope.indexDocs = docs
+      else
+        $scope.show-index = false
     $scope.show-index = $state.current.name is \hack.index
     return if $scope.show-index
     unless $scope.docId
