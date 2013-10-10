@@ -69,6 +69,23 @@ angular.module 'hub.g0v.tw' <[ui.state firebase github]>
       featured = [p for p in Hub.projects when p.thumbnail]
       $scope.featured = featured[Math.floor Math.random! * *]
     $scope <<< do
+        newprj:
+          name: ""
+          desc: ""
+          hackathons: [{name:"hackath0n"},{name:"hackath1n"},{name:"hackath2n"},{name:"hackath3n"},{name:"hackath4n"}]
+          url: ""
+          submit: ->
+            @name = @name.replace /,/g, " "
+            @desc = @desc.replace /,/g, " "
+            @url = @url.replace /,/g, " "
+            csv = "#{@url},#{@name},,#{[it.name for it in @hackathons.filter(->it.checked)].join(' ')},#{@desc}"
+            $.ajax \https://ethercalc.org/_/g0v-t-ideaPool,
+              type: \POST
+              contentType: "Content-type: text/csv; charset=utf-8"
+              data: csv
+            .done ->
+              $ \#newprj-uploaded .css \opacity, \1 .show!delay 2000 .fadeOut \slow
+
         avatarFor: (user) -> Hub.people.getByName user ?.avatar ? "http://avatars.io/github/#user"
         people: Hub.people
         projects: Hub.projects

@@ -67,6 +67,7 @@ angular.module 'app.controllers' <[ui.state ngCookies]>
           entry.children ?= tree?0.children
           HackFolder.docs.splice docs.length, 0, ...docs
         $scope.indexDocs = docs
+        $scope.indexSearch = hackId.replace /^g0v-/,''
       else
         $scope.show-index = false
     $scope.show-index = $state.current.name is \hack.index

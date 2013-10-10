@@ -12,6 +12,10 @@ angular.module \app <[ui partials app.controllers irc.g0v.tw hub.g0v.tw ui.state
     .state 'about' do
       url: '/about'
       templateUrl: '/partials/about.html'
+    .state 'project-new' do
+      url: '/project-new'
+      templateUrl: '/partials/project.new.html'
+      controller: \ProjectCtrl
     .state 'irc' do
       url: '/irc'
       onEnter: ->
