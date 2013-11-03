@@ -24,10 +24,42 @@ For example, with an index like http://ethercalc.org/g0v-hackath2n, you'll get h
 * Hackpad
 * EtherCalc
 
+# Prerequisites
+
+On Mac, use [Homebrew](https://github.com/mxcl/homebrew) and install gems in `$HOME`:
+
+	$ brew install node
+	$ gem install compass --user-install
+	$ export PATH="$HOME/.gem/ruby/1.8/bin:$PATH"
+
+On Mac, use [Homebrew](https://github.com/mxcl/homebrew) and install gems in local directory: (doesn't work)
+
+	$ brew install node
+	$ export GEM_HOME="$PWD/gems"
+	$ mkdir -p $GEM_HOME
+	$ gem install compass
+	$ export PATH="$PWD/gem/bin:$PATH"
+
 # Install
 
     % npm i
     % npm run start
+
+# Using vagrant to develop
+
+[Vagrant](http://docs.vagrantup.com/v2/why-vagrant/index.html) provides easy to configure, reproducible, and portable work environments.
+
+To use vagrant, you need to install:
+
+- vagrant (> 1.1.x)
+- virtualbox
+
+To setup up work environment:
+
+    % vagrant box add g0v https://dl.dropboxusercontent.com/u/4339854/g0v/g0v-ubuntu-precise64.box
+    % vagrant up
+
+After `vagrant up`, browse http://localhost:6987/ in your favorite browser. You are all set!
 
 # CC0 1.0 Universal
 

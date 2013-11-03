@@ -1,26 +1,41 @@
 .hackfolder(resize,ng-cloak)
-    .index(ng-class="{collapsed: collapsed}", ng-click="collapsed=!collapsed",ng-style='{height: contentHeight}')
+    .index(ng-class="{collapsed: collapsed, scrollbar: hasScrollbar}",ng-click="collapsed=!collapsed",ng-style='{height: contentHeight}',scrollbar)
       div.hackid
         i.icon-home
         &nbsp;
-        a.indexlink.expanded-content(ng-href="http://ethercalc.org/{{hackId}}",target="_blank",ngx-final) {{HackFolder.folderTitle || hackId}} 
-        small: a.reload(ng-click="reload(hackId)",ngx-noclick) &#x21BA;
-      ul(ui-sortable='sortableOptions', ng-model='tree')
+        a.indexlink.expanded-content(ng-href="http://ethercalc.org/{{hackId}}",target="_blank",ngx-final) {{HackFolder.folderTitle || hackId}}
+        small {{ {"true": "&#x25C2;", "false": "&#x25B8;"}[!collapsed] }}
+      ul.wrap(ui-sortable='sortableOptions',ng-model='tree')
         li(ng-repeat='doc in tree', ng-title="{{doc.title || doc.id}}",ngx-noclick,ng-class='{active: doc.id == docId}')
           .entry(ng-include="'/partials/hackitem.html'")
-          ul(ng-show='doc.children && doc.expand',ui-sortable='sortableOptions', ng-model='doc.children',ng-animate="'fade'")
-            li(ng-repeat='doc in doc.children', ng-title="{{doc.title || doc.id}}",ngx-noclick,ng-class='{active: doc.id == docId}')
+          ul(ng-show='doc.children && doc.expand',ui-sortable='sortableOptions',ng-model='doc.children',ng-animate="'fade'")
+            li(ng-repeat='doc in doc.children | filter:doc.tagFilter:tags', ng-title="{{doc.title || doc.id}}",ngx-noclick,ng-class='{active: doc.id == docId}')
               .entry(ng-include="'/partials/hackitem.html'")
     .pad-container(ng-style='{height: contentHeight}')
+      article.pad(ng-show='showIndex',ng-include="'/partials/hackindex.html'")
       article.pad(ng-repeat='(key, iframe) in iframes',ng-show='docId == key')
         span.docmode(ng-show="hasViewMode(iframe.doc.type) && iframe.mode != 'edit'",ng-click="activate(iframe.doc.id, true)") edit
-        .noiframe.unsure(ui-if="iframe.doc.iframeunsure") Click the link below to open the link in a new window: 
+        span.docmode(ng-show="(iframe.doc.type=='hackpad') && showSaveBtn()",ng-click='showSaveModal(true,false,$event)') save / 存檔
+        div(modal="saveModalOpen",close="showSaveModal(false)",options="saveModalOpts")
+          .modal-header
+            h3#saveModalLabel 歡迎來到二十一世紀
+          .modal-body
+            p 在這個時代，存檔是不需要的。
+            p 你所要做的就是把你想要寫的東西寫上去，別人就能看到了。若有同時在編輯同份文件的人，他甚至會看到你打的字一個接一個的出現。
+            p 如果不能理解的話，你可以把他當成是自動存檔，只是你的任何編輯都會隨時被自動存檔到網站上。
+            p 總而言之，歡迎來到二十一世紀。
+          .modal-footer
+             button.btn-primary(ng-click="showSaveModal(false,true)") 我瞭解了
+             |
+             button.btn(ng-click="showSaveModal(false)") 我不管，我就是要存檔
+
+        .noiframe.unsure(ui-if="iframe.doc.iframeunsure") Click the link below to open the link in a new window:
           br
           span.link
             img(ng-src="{{iframe.doc.icon}}",title="{{iframe.doc.title || iframe.doc.id}}")
             a(ng-href="{{iframe.src}}",target="{{iframe.doc.id}}") {{iframe.src}}
           .icon.icon-close(ng-click='iframe.doc.iframeunsure = false') &#x274c;
-        .noiframe(ui-if="iframe.doc.noiframe") It looks like this site blocks embedding.  Click the link below to open it in a new window: 
+        .noiframe(ui-if="iframe.doc.noiframe") It looks like this site blocks embedding.  Click the link below to open it in a new window:
           br
           span.link
             img(ng-src="{{iframe.doc.icon}}",title="{{iframe.doc.title || iframe.doc.id}}")

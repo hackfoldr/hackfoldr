@@ -2,11 +2,22 @@ exports.config =
   # See docs at http://brunch.readthedocs.org/en/latest/config.html.
   modules:
     wrapper: (path, data) ->
-      """
+      if [_, name]? = path.match /([^/\\]+)\.jsenv/
+        """
+(function() {
+  var module = {};
+  #{data};
+  if (!window.global)
+    window.global = {};
+  window.global['#name'] = module.exports;
+}).call(this);\n\n
+        """
+      else
+        """
 (function() {
   #{data}
 }).call(this);\n\n
-      """
+        """
   paths:
     public: '_public'
   files:
@@ -38,7 +49,7 @@ exports.config =
       options:
         pretty: yes
       locals:
-        segmentio: '8s9jmbv9q5'
+        googleAnalytics: 'UA-41326468-1'
     static_jade:
       extension: '.static.jade'
       path: [ /^app/ ]

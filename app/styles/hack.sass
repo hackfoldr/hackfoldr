@@ -1,18 +1,29 @@
-@import "compass/css3/box"
-@import "compass/css3/transition"
+@import "compass/utilities/general/clearfix"
+@import "compass/css3"
+//@import "compass/css3/box"
+//@import "compass/css3/transition"
 
 
+.navbar .nav > li.dropdown-split-left > a
+  padding-right: 5px
+
+.navbar .nav > li.dropdown-split-right > a
+  padding-left: 5px
+  padding-right: 5px
+
+.navbar .label
+  margin: 0 0 -10px 3px
+  position: relative
+  top: -2px
 
 body
   font-size: 16px
-  overflow: hidden
   background: url(/img/tiles.png)
   @media (max-width: 767px)
     padding-left: 0
     padding-right: 0
-a
-  text-shadow: 0px 0px 2px rgba(32,32,32,0.2)
-  color: #333
+  &.hide-overflow
+    overflow: hidden
 .navbar
   margin-bottom: 0px
   box-shadow: 0px 1px 8px rgba(0,0,0,0.5)
@@ -25,6 +36,14 @@ a
   color: #fff!important
   text-shadow: 0 0px 16px rgba(128,128,128,1)
   background-color: rgba(255,255,255,0.1)
+.navbar .build-id
+  margin-top: 10px
+  color: hsl(0, 0%, 75%)
+
+/* hide nav labels when window.width < 1200px */
+@media (max-width: 1200px)
+  .navbar ul.nav span.label
+    display: none
 
 #brand
   float: right
@@ -38,107 +57,100 @@ a
     top: 0px
 
 .hackfolder
-  width: 100%
   +display-box
+  width: 100%
+  a
+    text-shadow: 0px 0px 2px rgba(32,32,32,0.2)
+    color: #333
   .label
     margin-left: 5px
-  .link
-    width: 100%
-    display: inline-block
-    img
-      width: 16px
-      height: 16px
-      margin-right: 9px
-      vertical-align: text-bottom
 
   .index
-    margin: 14px 0px 10px 0px
+    $bar-width: 16px
+    $pad: 15px
+    $width: 300px
+    &,a,li
+      color: #666
+      line-height: 25px
+    a:hover
+      color: black
+      text-decoration: none
+    background-color: white
+    border-right: 3px solid #888
     cursor: w-resize
-    width: 210px
-    +transition(margin-left 0.5s)
+    font-family: "XinGothic Citicpress", "Lantinghei TC", "Hiragino Kaku Gothic Pro", "Apple LiGothic", "Heiti TC", "LiHei Pro", "Microsoft YaHei", "微軟正黑體", "文泉驿正黑", sans-serif
+    font-size: 16px
+    overflow-x: hidden
+    overflow-y: auto
+    +transition(.15s)
+    width: $width
     &.collapsed
-      margin-left: -184px
-      width: 223px
       cursor: e-resize
-      ul
-        overflow: visible
-      .expanded-content
-        right: -100px
+      margin-left: -$width+27px
+      .hackid small
+        margin-right: 8px
       img
+        margin-top: 5px
         position: absolute
-        right: 7px
-        margin-top: 3px
-      li
-        margin-top: 1px
-        ul
-          margin-right: -10px
+        right: 0
       span.collapser
-        right: -1px
+        display: none
 
     .hackid
-      font-size: 19px
-      padding: 6px 0 4px 10px
-      background: rgba(64,64,64,0.1)
-      box-shadow: 0 0 15px -5px #999 inset
+      background-color: #ddd
       margin-bottom: 10px
-
+      padding: 15px 0 10px $pad
       i
         margin-top: 4px
       small
         float: right
-        margin-right: 12px
+        font-size: 16px
+        margin-right: $pad
         a
-          color: #09f
+          cursor: pointer
+    &.scrollbar
+      width: $width+$bar-width
 
-    > ul
-      padding: 5px
     ul
       margin: 0
       li
-        margin-top: 1px
-        padding: 2px 5px 2px 11px
-        min-height: 1.2em
-        font-size: 16px
-        &:hover
-          background: rgba(255,255,255,0.7)
-          box-shadow: 0 0 10px rgba(0,0,0,0.1)
-          a
-            text-decoration: none
+        list-style: none
+        padding: 0
+        position: relative
+        &.active .link
+          background-color: #bbb
+          color: white
+        .link
+          +box-sizing(border-box)
+          cursor: pointer
+          display: inline-block
+          left: 0
+          padding-left: $pad
+          +transition(.15s)
+          width: $width
+          &:hover
+            background-color: #ddd
+            padding-left: $pad+22px
+          img
+            width: 16px
+            height: 16px
+            margin-right: 5px
+            vertical-align: -2px
+        li .link
+          padding-left: $pad+22px
+          &:hover
+            padding-left: $pad+44px
+        span.collapser
+          position: absolute
+          right: $pad
+          top: 0px
         span.label
           vertical-align: text-bottom
-
-  ul
-    overflow-x: hidden
-    overflow-y: auto
-    height: 100%
-    margin-left: 10px
-    margin-right: 20px
-    li
-      position: relative
-      list-style: none
-      cursor: pointer
-      margin: 0
-      padding: 2px 5px
-      &:first-child
-        padding: 5px 0 15px -3px
-        margin-top: 5px
-        font-weight: 700
-      &.active > .entry
-        background: orange
-        margin-left: -30px
-        margin-right: -20px
-        padding-left: 30px
-      span.collapser
-        position: absolute
-        right: 5px
-        top: 0px
-
 
   .pad-container
     position: relative
     background: url(/img/ps_neutral.png) #f4f4f4
     +box-flex(20)
-    border-left: 2px solid orange
     article
       position: absolute
       top: 0
@@ -178,7 +190,7 @@ a
         width: 20%
         margin-left: -10%
         text-align: center
-        z-index: 9999
+        z-index: 99
         background: #fff
         border: 2px dotted #999
         border-top: none
@@ -190,22 +202,58 @@ a
         padding: 3px
         cursor: pointer
 
-.fade-show-setup, .fade-hide-setup
-  +transition(0.5s linear all)
-  position: relative
+.tooltip.right
+  margin-left: -5px
+  +opacity(100)
+  .tooltip-arrow
+    border-width: 0
+.tooltip-inner
+  background-color: #ddd
+  +border-radius(0)
+  color: black
+  font-family: "XinGothic Citicpress", "Lantinghei TC", "Hiragino Kaku Gothic Pro", "Apple LiGothic", "Heiti TC", "LiHei Pro", "Microsoft YaHei", "微軟正黑體", "文泉驿正黑", sans-serif
+  font-size: 16px
+  padding: 4px 6px 1px 0
 
-.fade-hide-setup
-  max-height: 999px
-  opacity: 1
+.hackindex
+  article.index-item
+    position: inherit
+    top: inherit
+    bottom: inherit
 
-.fade-hide-setup.fade-hide-start
-  max-height: 0px
-  opacity: 0
+/* hack.g0v.tw/tag/ */
 
-.fade-show-setup
-  max-height: 0px
-  opacity: 0
+.tag-content
+  ul
+    margin-left: 0
+  li
+    border-top: 1px #ccc dashed
+    +clearfix
+  .person
+    margin-top: 0.5rem
+    min-height: 70px
+    img
+      float: left
+      margin-right: 1rem
+    .name
+      font-weight: normal
+      font-size: 1rem
 
-.fade-show-setup.fade-show-start
-  max-height: 999px
-  opacity: 1
+/* hack.g0v.tw/tag/ */
+
+body.about
+  overflow: auto
+.about
+  width: 80%
+  max-width: 800px
+  margin: 3rem auto 8rem auto
+  h1
+    margin: 0 0 1rem 0
+  h2
+    font-size: 1.5rem
+    margin-top: 2rem
+    +box-shadow(#ccc 0 1px 0, #fff 0 2px 0)
+  h3
+    font-size: 1rem
+  p, ol, ul, li
+    line-height: 1.5rem
