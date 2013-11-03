@@ -17,5 +17,12 @@
     { "color": "004C99", "name": "design",      "url": "https://g0v.hackpad.com/g0v-issue-label--L23ntanWnv7", "zh": "設計" },
     { "color": "A30000", "name": "code",        "url": "https://g0v.hackpad.com/g0v-issue-label--L23ntanWnv7", "zh": "程式" },
     { "color": "66E6FF", "name": "frontend",    "url": "https://g0v.hackpad.com/g0v-issue-label--L23ntanWnv7", "zh": "前端" }
+  ],
+  "CATEGORIZATION": [
+    {"class": "btn-primary", "name": "專案類",     tags: ["立法院", "鄉民關心你"]},
+    {"class": "",            "name": "議題類",     tags: ["環保", "農業", "服貿", "通訊", "資訊自由"]},
+    {"class": "btn-success", "name": "專業類",     tags: ["法律", "設計", "文字", "程式", "繪圖","攝影" ]},
+    {"class": "btn-info",    "name": "特殊技能類", tags: ["手沖咖啡", "3D printing"]},
+    {"class": "btn-warning", "name": "以技能分類", tags: ["爬資料", "轉換資料"]}
   ]
 }
