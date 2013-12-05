@@ -184,6 +184,9 @@ angular.module 'hub.g0v.tw' <[ui.state firebase github]>
 
 .controller PeopleCtrl: <[$scope $state Hub angularFire]> ++ ($scope, $state, Hub, angularFire) ->
 
+    $scope.tagCategorizations = window.global.config.CATEGORIZATION
+    $scope.displayTagList = false
+
     $scope <<< do
         gotag: (tag) -> $scope.go "/tag/#{ encodeURIComponent tag }"
         togglePerson: (person) ->
@@ -248,6 +251,7 @@ angular.module 'hub.g0v.tw' <[ui.state firebase github]>
                 for tag in tags
                     tagcloud[tag] ?= 0
                     tagcloud[tag]++
+            $scope.tagcloudMap = tagcloud
             $scope.tagcloud = [{tag, count} for tag, count of tagcloud when count > 1].sort (a, b) -> b.count - a.count
         do-tagcloud $scope.people if Hub.people.length
         <- setTimeout _, 100ms
