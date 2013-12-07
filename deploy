@@ -1,21 +1,33 @@
 #!/bin/sh
+set -e
 upstream=$1
 : ${upstream:=origin}
+: ${REPO:=git@github.com:g0v/hack.g0v.tw}
+git fetch $upstream
+if [ `git rev-list HEAD...$upstream/master --count` -ne 0 ]; then
+  echo "not deploying"
+  exit 1
+fi
 npm i
-git pull $upstream master || exit -1
-git branch -f gh-pages $upstream/gh-pages
-rm -rf _public
 cp app/index.static.jade app/404.static.jade
-git clone -s . -b gh-pages _public
+rm -rf _public
+# XXX: use --reference when not in shallow clone
+#git clone $REPO --reference . -b gh-pages _public
+git clone $REPO -b gh-pages _public
+
+./node_modules/.bin/brunch b --config brunch-templates.ls
 REV=`git describe --always`
+BUILD=git-$REV ./node_modules/.bin/brunch b -o
+# build twice, for static.html to propogate for now
 BUILD=git-$REV ./node_modules/.bin/brunch b -o
 cd _public
 git add -A .
 git commit-tree -m "regen for $REV" -p `git rev-parse HEAD` -p $REV `git write-tree` | xargs git reset --hard
 git push origin gh-pages
 cd ..
-git push $upstream gh-pages
 rm -f app/404.static.jade
+
+# this is not automated with travis yet
 if [ "x$FIREBASE" != "x" ]
 then
 	echo $FIREBASE
