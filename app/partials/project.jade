@@ -11,7 +11,7 @@
 
   .row
     .span8
-      article.mod-project.new(ui-if='opts.isnew',ng-include="'/partials/project.edit.html'")
+      article.mod-project.new(ng-if='opts.isnew',ng-include="'/partials/project.edit.html'")
       article.projects-loading(ng-show="projects.length == 0")
         .loading-indicator
       article.mod-project.project-not-found(ng-show="projects.length != 0 && (projects | filter:search).length === 0")
@@ -59,12 +59,12 @@
           dt.inline 專案需求
           dd.inline-last
             span.label.label-important(ng-repeat='need in project.needs') {{ need }}&nbsp;
-          dt(ui-if="project.author") 協調者
-          dd(ui-if="project.author")
+          dt(ng-if="project.author") 協調者
+          dd(ng-if="project.author")
             span.avatar-link(data-toggle='tooltip', title='{{project.author}}')
               img.avatar(ng-src='{{avatarFor(project.author)}}')
-          dt(ui-if="project.contributors") 參與者
-          dd(ui-if="project.contributors")
+          dt(ng-if="project.contributors") 參與者
+          dd(ng-if="project.contributors")
             span.avatar-link(data-toggle='tooltip', title='{{user}}', ng-repeat="user in project.contributors")
               img.avatar(ng-src='{{avatarFor(user)}}')
               | &nbsp;

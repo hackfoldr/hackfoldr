@@ -1,9 +1,9 @@
-span.link(ui-if="doc.type == 'dummy'",ng-click='doc.expand=!doc.expand',tooltip="{{ {'true': (doc.title || doc.id), 'false': ''}[!!collapsed] }}",tooltip-placement="right",tooltip-trigger="hover",title="{{ {'true': (doc.title || doc.id), 'false': ''}[!!collapsed] }}",tooltip-append-to-body="true",tooltip-animation="false")
+span.link(ng-if="doc.type == 'dummy'",ng-click='doc.expand=!doc.expand',tooltip="{{ {'true': (doc.title || doc.id), 'false': ''}[!!collapsed] }}",tooltip-placement="right",tooltip-trigger="hover",title="{{ {'true': (doc.title || doc.id), 'false': ''}[!!collapsed] }}",tooltip-append-to-body="true",tooltip-animation="false")
   img(src="/img/folder.png")
   span.expanded-content {{doc.title || doc.id}}
-a.link(ng-click='godoc(doc)',ngx-click-meta='open(doc)',ngx-final,ui-if="doc.type != 'dummy'",tooltip="{{ {'true': (doc.title || doc.id), 'false': ''}[!!collapsed] }}",tooltip-placement="right",tooltip-trigger="hover",title="{{ {'true': (doc.title || doc.id), 'false': ''}[!!collapsed] }}",tooltip-append-to-body="true",tooltip-animation="false")
+a.link(ng-click='godoc(doc)',ngx-click-meta='open(doc)',ngx-final,ng-if="doc.type != 'dummy'",tooltip="{{ {'true': (doc.title || doc.id), 'false': ''}[!!collapsed] }}",tooltip-placement="right",tooltip-trigger="hover",title="{{ {'true': (doc.title || doc.id), 'false': ''}[!!collapsed] }}",tooltip-append-to-body="true",tooltip-animation="false")
   img(ng-src="{{doc.icon}}")
   span.expanded-content {{doc.title || doc.id}}
   span.expanded-content(ng-show='doc.tagFilter') [{{doc.tagFilter}}]
   span.label(ng-repeat='tag in doc.tags',class="label-{{tag.class}}") {{tag.content}}
-span.collapser(ui-if='doc.children',ng-class='{collapsed: !doc.expand}',ng-click='doc.expand=!doc.expand',title="{{ {'true': (doc.title || doc.id), 'false': ''}[!!collapsed] }}") {{ {"true": "&#x25B8;", "false": "&#x25BE;"}[!doc.expand] }}
+span.collapser(ng-if='doc.children',ng-class='{collapsed: !doc.expand}',ng-click='doc.expand=!doc.expand',title="{{ {'true': (doc.title || doc.id), 'false': ''}[!!collapsed] }}") {{ {"true": "&#x25B8;", "false": "&#x25BE;"}[!doc.expand] }}
