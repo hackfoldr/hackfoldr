@@ -14,6 +14,6 @@ branches:
 env:
   global:
     - REPO="git@github.com:g0v/hack.g0v.tw"
-    - secure: "bByZ4K5B6ssDFuM6EAQyfiR4tqXWm+RVZAk9UFDxz/bKkiq55VRI9o+AUvXU\nHRtxGwUAU+f31AQVkv95/OBvp30YVntPs0qwi/rdHerNgOEq/yxn3PfaFBBr\nb7KUIMqdUgIi4vf0owVzEIo3p8OMy/xKut9PiZnA9g0e5HRjPtg="
+    - secure: "ijNdxgn/u65qneErGypdELU9bGkiJbzCT2M2oJEKml3H6uf9M3rCbfU8dxwD\nx2qwqO9kpxCjFxz7324OZPDlmZfdVrZwW30Ecyrnxhr1EhuSB5KsF2Q92+J3\nF+fkMnsC/NTHEDCxI1ge4A7tBaPA3oQRjvrj3shilxIOn+z+SkM="
 
 after_success: .travis/after_success.sh
