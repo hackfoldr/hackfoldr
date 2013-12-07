@@ -156,7 +156,7 @@ angular.module 'app.controllers' <[ui.state ngCookies]>
     scope.$watch 'docs' has-scrollbar
     has-scrollbar()
 
-.factory HackFolder: <[$http]> ++ ($http) ->
+.factory HackFolder: <[$http $sce]> ++ ($http, $sce) ->
   iframes = {}
   docs = []
   tree = []
@@ -191,6 +191,7 @@ angular.module 'app.controllers' <[ui.state ngCookies]>
 
       src += doc.hashtag if doc.hashtag
 
+      src = $sce.trustAsResourceUrl src if src
       return doc if doc.type is \hackfoldr
       if iframes[id]
           that <<< {src, mode}
