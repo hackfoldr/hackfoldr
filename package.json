@@ -13,9 +13,10 @@
     "npm": "1.1.x"
   },
   "scripts": {
-    "prepublish": "node ./node_modules/LiveScript/bin/lsc -cj package.ls\nnode ./node_modules/LiveScript/bin/lsc -c karma.conf.js.ls",
-    "start": "node ./node_modules/brunch/bin/brunch watch --server",
-    "test": "./node_modules/.bin/karma start --single-run --browsers PhantomJS"
+    "prepublish": "node ./node_modules/LiveScript/bin/lsc -cj package.ls\nnode ./node_modules/LiveScript/bin/lsc -c test/*.js.ls",
+    "build": "brunch b",
+    "test": "npm run build && bower i && karma start --browsers PhantomJS --single-run true test/karma.conf.js",
+    "start": "node ./node_modules/brunch/bin/brunch watch --server"
   },
   "dependencies": {},
   "devDependencies": {
@@ -32,8 +33,13 @@
     "clean-css-brunch": "1.5.x",
     "jade-angularjs-brunch": "0.0.5",
     "jsenv-brunch": "1.4.2",
-    "karma": "~0.9.3",
-    "karma-live-preprocessor": "~0.1.0",
-    "karma-mocha": "~0.1.0"
+    "karma": "~0.10.5",
+    "karma-live-preprocessor": "~0.2.0",
+    "karma-mocha": "~0.1.0",
+    "karma-chai": "~0.0.2",
+    "karma-ng-scenario": "0.1.0",
+    "bower": "1.2.x",
+    "mocha": "~1.14.0",
+    "chai": "~1.8.0"
   }
 }

@@ -11,8 +11,9 @@ app/404.static.jade
 
 _public
 node_modules/*
+bower_components/*
 npm-debug.log
 
 *.swp
 .vagrant*
-karma.conf.js
+test/karma.*.js
