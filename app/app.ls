@@ -52,7 +52,7 @@ angular.module \app <[ui partials app.controllers irc.g0v.tw hub.g0v.tw ui.state
       url: '/{docId}'
 
   $urlRouterProvider
-    .otherwise('/g0v-hackath4n')
+    .otherwise('/g0v-hackath6n')
 
   $locationProvider.html5Mode true
 
