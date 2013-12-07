@@ -15,7 +15,6 @@ rm -rf _public
 #git clone $REPO --reference . -b gh-pages _public
 git clone $REPO -b gh-pages _public
 
-./node_modules/.bin/brunch b --config brunch-templates.ls
 REV=`git describe --always`
 BUILD=git-$REV ./node_modules/.bin/brunch b -o
 # build twice, for static.html to propogate for now
