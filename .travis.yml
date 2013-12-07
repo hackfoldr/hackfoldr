@@ -2,3 +2,18 @@ language: node_js
 
 node_js:
   - "0.10"
+
+before_install:
+  - gem install sass compass
+  - sass --version
+
+branches:
+  except:
+    - gh-pages
+
+env:
+  global:
+    - REPO="git@github.com:g0v/hack.g0v.tw"
+    - secure: "bByZ4K5B6ssDFuM6EAQyfiR4tqXWm+RVZAk9UFDxz/bKkiq55VRI9o+AUvXU\nHRtxGwUAU+f31AQVkv95/OBvp30YVntPs0qwi/rdHerNgOEq/yxn3PfaFBBr\nb7KUIMqdUgIi4vf0owVzEIo3p8OMy/xKut9PiZnA9g0e5HRjPtg="
+
+after_success: .travis/after_success.sh
