@@ -13,9 +13,9 @@
     "angular": "1.2.4",
     "angular-cookies": "1.2.4",
     "angular-ui": "0.4.0",
-    "angular-mocks": "1.2.3",
+    "angular-mocks": "1.2.4",
     "angular-ui-router": "0.2.0",
-    "angular-scenario": "1.2.3"
+    "angular-scenario": "1.2.4"
   },
   "overrides": {
     "angular-mocks": {
