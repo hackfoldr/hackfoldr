@@ -10,6 +10,7 @@ if [ `git rev-list HEAD...$upstream/master --count` -ne 0 ]; then
   exit 1
 fi
 npm i
+cp app/index.static.jade app/404.static.jade
 rm -rf _public
 # XXX: use --reference when not in shallow clone
 #git clone $REPO --reference . -b gh-pages _public
