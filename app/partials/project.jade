@@ -1,13 +1,13 @@
 .container
   .row.projects-title
     .span7
-      h1 專案列表
+      h1 開發中專案
       input.search-query(type='text',placeholder='搜尋專案（名稱、網址、需求…）',ng-model="search")
     .span5.create-project
-      h2 找不到您關心的議題？
-      a.btn.btn-success(ng-click='newProject()')
-        i.icon-plus
-        | 立刻新增專案
+      //h2 找不到您關心的議題？
+      //a.btn.btn-success(ng-click='newProject()')
+        //i.icon-plus
+        //| 立刻新增專案
 
   .row
     .span8
@@ -111,7 +111,7 @@
                   dt
                     span.label.label-info {{project.name}}
                   dd {{project.name_zh || project.name}}&nbsp;
-        h2 歡迎跳坑
+        h2 找點事作！
         p 底下是一些您可以幫忙的事項，歡迎跳坑。
         .issues-label-filter
           select(data-placeholder="Filter by Labels…", multiple, ng-model="opt_labels", ng-options="label.name as label.text group by label.kind for label in labels")
