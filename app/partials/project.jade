@@ -108,8 +108,8 @@
                   dt
                     span.label.label-info {{project.name}}
                   dd {{project.name_zh || project.name}}&nbsp;
-        h2 找點事作！
-        p 底下是一些您可以幫忙的事項，歡迎跳坑。
+        h2 想要幫忙？
+        p 底下是一些各專案的任務清單，您可以幫忙的事項，歡迎跳坑。請先申請 github 帳號，開始加入討論 :)
         .issues-label-filter
           select(data-placeholder="Filter by Labels…", multiple, ng-model="opt_labels", ng-options="label.name as label.text group by label.kind for label in labels")
           script $(".issues-label-filter select").chosen({width: "100%"});
