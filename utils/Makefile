@@ -1,3 +1,4 @@
+SHELL=/bin/bash
 JQ=$(shell which jq )
 all:
 	@echo "Nothing for all"
