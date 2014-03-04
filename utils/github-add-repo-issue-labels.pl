@@ -70,9 +70,13 @@ if (!$token) {
 
     $github_token = Net::GitHub::V3->new( login => $username, pass => $password );
     $oauth = $github_token->oauth;
+
+    # Looks like github added a unique index to token description
+    # Refer to https://github.com/defunkt/gist/issues/166
+    my $date_string = localtime();
     $oauth_result = $oauth->create_authorization( {
-            scopes => ['public_repo'], # just ['public_repo']
-            note   => 'Create labels',
+            scopes => ['public_repo'],
+            note   => "Create labels $date_string",
             } );
 
     if ($is_output_token_only) {
