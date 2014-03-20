@@ -1,66 +1,13 @@
 ul.nav
   li
     a(ng-href='/') 首頁
-  li.dropdown-split-left
-    a(ng-href='/g0v-hackath7n') 自由時代黑客松
-  li.dropdown-split-right.dropdown
-    a.dropdown-toggle
-      i.icon-caret-down
-    ul.dropdown-menu.pull-right(role='menu', aria-labelledby='projects')
-      li
-        a(ng-href='/g0v-hackath6n') 勞動基準黑客松
-      li
-        a(ng-href='/g0v-hackath5n') 美麗島
-      li
-        a(ng-href='/g0v-hackath4n') 國民大會
-      li
-        a(ng-href='/g0v-hackath3n') 客廳工廠
-      li
-        a(ng-href='/g0v-hackath2n') 九大建設
-      li
-        a(href='https://hackpad.com/lIoCjaeMWzC') 公地放領
-      li
-        a(href='https://hackpad.com/ul6fMthof2S') 動員戡亂
-  li.dropdown
-    a.dropdown-toggle
-      | 長期專案
-      i.icon-caret-down
-    ul.dropdown-menu.pull-right(role='menu', aria-labelledby='projects')
-      li(role='presentation')
-        a(role='menuitem', tabindex='-1',ng-href='/meta') 基礎建設
-      li(role='presentation')
-        a(role='menuitem', tabindex='-1',ng-href='/g0v-ly') 立法院專案
-      li(role='presentation')
-        a(role='menuitem', tabindex='-1',ng-href='/3du') 萌典
-      li(role='presentation')
-        a(role='menuitem', tabindex='-1',ng-href='/don-democracy') 動民主家族
-      li(role='presentation')
-        a(role='menuitem', tabindex='-1',ng-href='/g0vwelfare') 福利請聽
-      li(role='presentation')
-        a(role='menuitem', tabindex='-1',ng-href='/kuansim') 鄉民關心你
-      li(role='presentation')
-        a(role='menuitem', tabindex='-1',ng-href='/tisa') 服貿協議
   li
-    a(ng-href='/people')
-      | Hub
-  li
-    a(ng-href='/project')
+    a(target="_blank",href='http://g0v.github.io/g0vis/')
       | 專案列表
       span.label.label-important new
   li
     a(target="_blank",href='http://g0v.github.io/leve1up/')
       | 新手上路
-  li.irc.dropdown-split-left(ng-class="{ active: $state.includes('irc') }")
-    a(target="_blank",href='/irc')
-      i.icon-link(ng-class="{'irc-enabled': ircEnabled}")
-      | 聊天室
-  li.dropdown-split-right.dropdown(ng-class="{ active: $state.includes('irc') }")
-    a.dropdown-toggle
-      i.icon-caret-down
-    ul.dropdown-menu.pull-right(role='menu', aria-labelledby='irc')
-      li
-        a(ng-href='/irc/log') 紀錄
-
 
 ul.nav.pull-right
   li(ng-class="{ active: $state.includes('about') }")
