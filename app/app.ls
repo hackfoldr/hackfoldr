@@ -16,7 +16,7 @@ angular.module \app <[ui partials app.controllers ui.state ui.bootstrap]>
       url: '/{docId}'
 
   $urlRouterProvider
-    .otherwise('/hackfoldr')
+    .otherwise('/congressoccupied')
 
   $locationProvider.html5Mode true
 

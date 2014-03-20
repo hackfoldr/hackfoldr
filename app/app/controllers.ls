@@ -54,7 +54,7 @@ angular.module 'app.controllers' <[ui.state]>
       if HackFolder.docs.0?id
         $state.transitionTo 'hack.doc', { docId: that, hackId: $scope.hackId }
 
-  $scope.hackId = if $state.params.hackId => that else 'hackfoldr'
+  $scope.hackId = if $state.params.hackId => that else 'congressoccupied'
   $scope.$watch '$state.params.docId' (docId) ->
     $scope.docId = encodeURIComponent encodeURIComponent docId if docId
 
