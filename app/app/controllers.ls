@@ -49,7 +49,7 @@ angular.module 'app.controllers' <[ui.state ngCookies]>
     HackFolder: HackFolder
     iframeCallback: (doc) -> (status) -> $scope.$apply ->
       console?log \iframecb status, doc
-      $state.current.title = "#{doc.title} – hack.g0v.tw"
+      $state.current.title = "#{doc.title} – g0v.today"
       if status is \fail
         doc.noiframe = true
       else
@@ -175,7 +175,8 @@ angular.module 'app.controllers' <[ui.state ngCookies]>
     docs: docs
     tree: tree
     activate: (id, edit=false) ->
-      [{type}:doc] = [d for d in docs when d.id is id]
+      [doc] = [d for d in docs when d.id is id]
+      type = doc?type
       for t in tree
         if t?children?map (.id)
           t.expand = true if id in that
@@ -198,7 +199,7 @@ angular.module 'app.controllers' <[ui.state ngCookies]>
       | \url => decodeURIComponent decodeURIComponent id
       | otherwise => ''
 
-      src += doc.hashtag if doc.hashtag
+      src += doc?hashtag if doc?hashtag
 
       src = $sce.trustAsResourceUrl src if src
       return doc if doc.type is \hackfoldr
