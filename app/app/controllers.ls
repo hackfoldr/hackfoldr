@@ -6,7 +6,7 @@ angular.module 'app.controllers' <[ui.state ngCookies]>
   <- $timeout _, 10s * 1000ms
   $rootScope.hideGithubRibbon = true
 
-.controller HackFolderCtrl: <[$scope $state $cookies HackFolder]> ++ ($scope, $state, $cookies, HackFolder) ->
+.controller HackFolderCtrl: <[$scope $window $state $cookies HackFolder]> ++ ($scope, $window, $state, $cookies, HackFolder) ->
   $scope <<< do
     hasViewMode: -> it.match /g(doc|present|draw)/
     sortableOptions: do
@@ -75,6 +75,10 @@ angular.module 'app.controllers' <[ui.state ngCookies]>
     unless $scope.docId
       if HackFolder.docs.0?id
         $state.transitionTo 'hack.doc', { docId: that, hackId: $scope.hackId}
+
+  $scope.collapsed = $cookies.collapsed ? $window.innerWidth < 768
+  $scope.$watch 'collapsed' -> if it?
+    $cookies.collapsed = it
 
   $scope.hackId = if $state.params.hackId => that else 'congressoccupied'
   $scope.$watch '$state.params.docId' (docId) ->
