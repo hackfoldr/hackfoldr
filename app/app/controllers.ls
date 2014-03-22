@@ -1,7 +1,12 @@
 angular.module 'app.controllers' <[ui.state ngCookies]>
-.controller AppCtrl: <[$scope $state $rootScope $timeout]> ++ ($scope, $state, $rootScope, $timeout) ->
+.controller AppCtrl: <[$scope $window $state $rootScope $timeout]> ++ ($scope, $window, $state, $rootScope, $timeout) ->
   $scope.$watch '$state.current.name' ->
     $scope.irc-enabled = true if it is \irc
+
+  # mobile
+  window.addEventListener "load" ->
+    <- $timeout _, 0
+    window.scrollTo 0, 1
 
   <- $timeout _, 10s * 1000ms
   $rootScope.hideGithubRibbon = true
