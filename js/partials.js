@@ -1,11 +1,11 @@
 angular.module('partials', [])
 .run(['$templateCache', function($templateCache) {
-  return $templateCache.put('/partials/authz.html', [
-'<div class="h1">authz request</div>',''].join("\n"));
-}])
-.run(['$templateCache', function($templateCache) {
   return $templateCache.put('/partials/about.html', [
 '<div class="about"><h1>Welcome to Hackfoldr</h1><p>Hackfoldr 是你的黑客公事包，用一個網址就可以和夥伴們分享所有的專案文件！ :D</p><h2>為你的專案製作 hackfoldr</h2><h3>建立 hackfoldr</h3><ol><li>想好專案英文網址名稱（例如：g0v.tw-hackfoldr）</li><li>在瀏覽器網址列輸入「hack.g0v.tw/(你的專案的英文網址名稱)」</li></ol><p>恭喜！你已經建立自己的 hackfoldr 了！</p><h3>自訂 hackfoldr</h3><ol><li>點左上 home 圖案旁文字連結，會自動在新分頁打開 ethercalc</li><li>在 B2 格子中輸入本 hackfoldr 名稱（通常是中文）</li><li>接著從第3行開始，可以增加你想收集的網址</li><li>輸入格式為：在 B3 中輸入第一份文件名稱，A3 格子中輸入第一份文件網址</li><li>以此類推，把所有文件的顯示名稱和網址都輸入進去</li><li>切回「hack.g0v.tw/(你的專案的英文網址名稱)」這個瀏覽器分頁</li><li>按 home 圖示旁的 ↺ 按鈕，或者 F5 / Ctrl + R 重新整理頁面</li></ol><p>恭喜！你已經打造出屬於自己的 hackfoldr 了！</p><h3>hackfoldr 進階用法</h3><ol><li>第3欄的格子為參數設定，常用的有：\'{"expand":true} 為資料夾預設展開、false為關；\'{"target":"_blank"} 為此連結開啟新視窗</li><li>第4欄的格子為註解，主要有三種型別：warning、important、issue，打法為 \'註解:型別</li><li>第1欄的格子網址多空一格會成為子目錄，例：A3為\'www.example.com，A4為\' www.google.com，則A3變為資料夾，A4為A3子目錄</li></ol><p>註：使用 ethercalc 不需登入，編輯後即自動存檔。如果想修改 ethercalc 試算表的名稱，直接開新的 etherclac.org 網址後，將舊試算表的內容剪貼過來即可。</p><h3>hackfoldr</h3><p>hackfoldr 是 clkao 為了 g0v 黑客松活動而開發的開源專案，原始碼也在<a href="https://github.com/hackfoldr/hackfoldr">github</a></p></div>',''].join("\n"));
+}])
+.run(['$templateCache', function($templateCache) {
+  return $templateCache.put('/partials/authz.html', [
+'<div class="h1">authz request</div>',''].join("\n"));
 }])
 .run(['$templateCache', function($templateCache) {
   return $templateCache.put('/partials/hack.html', [
@@ -16,12 +16,12 @@ angular.module('partials', [])
 '<div class="hackindex"><div class="search-label">Search:</div><input ng-model="indexSearch" placeholder="搜尋關鍵字.."/><article ng-repeat="doc in (indexDocs || docs) | filter:indexSearch" class="index-item"><h2 class="title">{{doc.title || doc.id}}</h2><p class="summary">{{ doc.summary }}</p></article></div>',''].join("\n"));
 }])
 .run(['$templateCache', function($templateCache) {
-  return $templateCache.put('/partials/hackitem.html', [
-'<span ng-if="doc.type == \'dummy\'" ng-click="doc.expand=!doc.expand" tooltip="{{ {\'true\': (doc.title || doc.id), \'false\': \'\'}[!!collapsed] }}" tooltip-placement="right" tooltip-trigger="hover" title="{{ {\'true\': (doc.title || doc.id), \'false\': \'\'}[!!collapsed] }}" tooltip-append-to-body="true" tooltip-animation="false" class="link"><img src="/img/folder.png"/><span class="expanded-content">{{doc.title || doc.id}}</span></span><a ng-click="godoc(doc)" ngx-click-meta="open(doc)" ngx-final="ngx-final" ng-if="doc.type != \'dummy\'" tooltip="{{ {\'true\': (doc.title || doc.id), \'false\': \'\'}[!!collapsed] }}" tooltip-placement="right" tooltip-trigger="hover" title="{{ {\'true\': (doc.title || doc.id), \'false\': \'\'}[!!collapsed] }}" tooltip-append-to-body="true" tooltip-animation="false" class="link"><img ng-src="{{doc.icon}}"/><span class="expanded-content">{{doc.title || doc.id}}</span><span ng-show="doc.tagFilter" class="expanded-content">[{{doc.tagFilter}}]</span><span ng-repeat="tag in doc.tags" class="label label-{{tag.class}}">{{tag.content}}</span></a><span ng-if="doc.children" ng-class="{collapsed: !doc.expand}" ng-click="doc.expand=!doc.expand" title="{{ {\'true\': (doc.title || doc.id), \'false\': \'\'}[!!collapsed] }}" class="collapser">{{ {"true": "&#x25B8;", "false": "&#x25BE;"}[!doc.expand] }}</span>',''].join("\n"));
-}])
-.run(['$templateCache', function($templateCache) {
   return $templateCache.put('/partials/irc.html', [
 '<iframe ng-if="ircEnabled" ng-show="$state.current.name == \'irc\'" ng-src="https://kiwiirc.com/client/irc.freenode.net/#g0v.tw"></iframe><iframe ng-if="irclogEnabled" ng-show="$state.current.name == \'irc.log\'" ng-src="http://logbot.g0v.tw/channel/g0v.tw/today"></iframe>',''].join("\n"));
+}])
+.run(['$templateCache', function($templateCache) {
+  return $templateCache.put('/partials/hackitem.html', [
+'<span ng-if="doc.type == \'dummy\'" ng-click="doc.expand=!doc.expand" tooltip="{{ {\'true\': (doc.title || doc.id), \'false\': \'\'}[!!collapsed] }}" tooltip-placement="right" tooltip-trigger="hover" title="{{ {\'true\': (doc.title || doc.id), \'false\': \'\'}[!!collapsed] }}" tooltip-append-to-body="true" tooltip-animation="false" class="link"><img src="/img/folder.png"/><span class="expanded-content">{{doc.title || doc.id}}</span></span><a ng-click="godoc(doc)" ngx-click-meta="open(doc)" ngx-final="ngx-final" ng-if="doc.type != \'dummy\'" tooltip="{{ {\'true\': (doc.title || doc.id), \'false\': \'\'}[!!collapsed] }}" tooltip-placement="right" tooltip-trigger="hover" title="{{ {\'true\': (doc.title || doc.id), \'false\': \'\'}[!!collapsed] }}" tooltip-append-to-body="true" tooltip-animation="false" class="link"><img ng-src="{{doc.icon}}"/><span class="expanded-content">{{doc.title || doc.id}}</span><span ng-show="doc.tagFilter" class="expanded-content">[{{doc.tagFilter}}]</span><span ng-repeat="tag in doc.tags" class="label label-{{tag.class}}">{{tag.content}}</span></a><span ng-if="doc.children" ng-class="{collapsed: !doc.expand}" ng-click="doc.expand=!doc.expand" title="{{ {\'true\': (doc.title || doc.id), \'false\': \'\'}[!!collapsed] }}" class="collapser">{{ {"true": "&#x25B8;", "false": "&#x25BE;"}[!doc.expand] }}</span>',''].join("\n"));
 }])
 .run(['$templateCache', function($templateCache) {
   return $templateCache.put('/partials/nav.html', [
