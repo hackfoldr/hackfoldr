@@ -49,7 +49,7 @@ exports.config =
       options:
         pretty: yes
       locals:
-        googleAnalytics: 'UA-41326468-1'
+        googleAnalytics: 'UA-39804485-1'
     static_jade:
       extension: '.static.jade'
       path: [ /^app/ ]
