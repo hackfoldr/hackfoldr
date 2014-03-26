@@ -13,7 +13,7 @@ angular.module 'app.controllers' <[ui.state ngCookies]>
 
 .controller HackFolderCtrl: <[$scope $window $state $cookies HackFolder]> ++ ($scope, $window, $state, $cookies, HackFolder) ->
   $scope <<< do
-    hasViewMode: -> it.match /g(doc|present|draw)/
+    hasViewMode: -> it?match /g(doc|present|draw)/
     sortableOptions: do
       update: -> console?log \notyetupdated
     iframes: HackFolder.iframes
@@ -34,7 +34,7 @@ angular.module 'app.controllers' <[ui.state ngCookies]>
     activate: ->
       doc = HackFolder.activate it
       if doc?type is \hackfoldr
-        console.log \folder!!
+        console?log \folder!!
     saveBtn: void
     saveModalOpts: dialogFade: true
     saveModalOpen: false
