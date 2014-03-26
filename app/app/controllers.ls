@@ -20,16 +20,16 @@ angular.module 'app.controllers' <[ui.state ngCookies]>
     docs: HackFolder.docs
     tree: HackFolder.tree
     godoc: (doc) ->
-      if doc.opts?target == '_blank'
+      if doc?opts?target == '_blank'
         window.open doc.url, doc.id
         return true
-      else if doc.url.match /(https?:)?\/\/[^/]*(github|facebook)\.com/
+      else if doc?url.match /(https?:)?\/\/[^/]*(github|facebook)\.com/
         window.open doc.url, doc.id
         return true
       else
         $scope.go "/#{ $scope.hackId }/#{ decodeURIComponent doc.id }"
     open: (doc) ->
-      window.open doc.url, doc.id
+      window.open doc?url, doc.id
       return false
     activate: ->
       doc = HackFolder.activate it
@@ -202,7 +202,7 @@ angular.module 'app.controllers' <[ui.state ngCookies]>
       src += doc?hashtag if doc?hashtag
 
       src = $sce.trustAsResourceUrl src if src
-      return doc if doc.type is \hackfoldr
+      return doc if doc?type is \hackfoldr
       if iframes[id]
           that <<< {src, mode}
       else
