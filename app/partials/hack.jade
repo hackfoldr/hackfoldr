@@ -29,13 +29,13 @@
              |
              button.btn(ng-click="showSaveModal(false)") 我不管，我就是要存檔
 
-        .noiframe.unsure(ng-if="iframe.doc.iframeunsure") Click the link below to open the link in a new window:
+        .noiframe.unsure(ng-if="iframe.doc.iframeunsure") 按以下連結，可開啟到新頁籤:
           br
           span.link
             img(ng-src="{{iframe.doc.icon}}",title="{{iframe.doc.title || iframe.doc.id}}")
             a(ng-href="{{iframe.src}}",target="{{iframe.doc.id}}") {{iframe.src}}
           .icon.icon-close(ng-click='iframe.doc.iframeunsure = false') &#x274c;
-        .noiframe(ng-if="iframe.doc.noiframe") It looks like this site blocks embedding.  Click the link below to open it in a new window:
+        .noiframe(ng-if="iframe.doc.noiframe") 按以下連結，可開啟到新頁籤:
           br
           span.link
             img(ng-src="{{iframe.doc.icon}}",title="{{iframe.doc.title || iframe.doc.id}}")
