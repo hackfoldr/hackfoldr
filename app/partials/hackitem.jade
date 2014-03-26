@@ -1,7 +1,7 @@
 span.link(ng-if="doc.type == 'dummy'",ng-click='doc.expand=!doc.expand',tooltip="{{ {'true': (doc.title || doc.id), 'false': ''}[!!collapsed] }}",tooltip-placement="right",tooltip-trigger="hover",title="{{ {'true': (doc.title || doc.id), 'false': ''}[!!collapsed] }}",tooltip-append-to-body="true",tooltip-animation="false")
   img(src="/img/folder.png")
   span.expanded-content {{doc.title || doc.id}}
-a.link(ng-click='godoc(doc)',ngx-click-meta='open(doc)',ngx-final,ng-if="doc.type != 'dummy'",tooltip="{{ {'true': (doc.title || doc.id), 'false': ''}[!!collapsed] }}",tooltip-placement="right",tooltip-trigger="hover",title="{{ {'true': (doc.title || doc.id), 'false': ''}[!!collapsed] }}",tooltip-append-to-body="true",tooltip-animation="false")
+a.link(fast-click='godoc(doc)',ngx-click-meta='open(doc)',ngx-final,ng-if="doc.type != 'dummy'",tooltip="{{ {'true': (doc.title || doc.id), 'false': ''}[!!collapsed] }}",tooltip-placement="right",tooltip-trigger="hover",title="{{ {'true': (doc.title || doc.id), 'false': ''}[!!collapsed] }}",tooltip-append-to-body="true",tooltip-animation="false")
   img(ng-src="{{doc.icon}}")
   span.expanded-content {{doc.title || doc.id}}
   span.expanded-content(ng-show='doc.tagFilter') [{{doc.tagFilter}}]
