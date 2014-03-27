@@ -13,7 +13,7 @@ angular.module 'app.controllers' <[ui.state ngCookies]>
 
 .controller HackFolderCtrl: <[$scope $window $state $cookies HackFolder]> ++ ($scope, $window, $state, $cookies, HackFolder) ->
   $scope <<< do
-    hasViewMode: -> it.match /g(doc|present|draw)/
+    hasViewMode: -> it?match /g(doc|present|draw)/
     sortableOptions: do
       update: -> console?log \notyetupdated
     iframes: HackFolder.iframes
@@ -34,7 +34,7 @@ angular.module 'app.controllers' <[ui.state ngCookies]>
     activate: ->
       doc = HackFolder.activate it
       if doc?type is \hackfoldr
-        console.log \folder!!
+        console?log \folder!!
     saveBtn: void
     saveModalOpts: dialogFade: true
     saveModalOpen: false
@@ -175,7 +175,8 @@ angular.module 'app.controllers' <[ui.state ngCookies]>
     docs: docs
     tree: tree
     activate: (id, edit=false) ->
-      [{type}:doc] = [d for d in docs when d.id is id]
+      [doc] = [d for d in docs when d.id is id]
+      type = doc?type
       for t in tree
         if t?children?map (.id)
           t.expand = true if id in that
@@ -198,10 +199,10 @@ angular.module 'app.controllers' <[ui.state ngCookies]>
       | \url => decodeURIComponent decodeURIComponent id
       | otherwise => ''
 
-      src += doc.hashtag if doc.hashtag
+      src += doc?hashtag if doc?hashtag
 
       src = $sce.trustAsResourceUrl src if src
-      return doc if doc.type is \hackfoldr
+      return doc if doc?type is \hackfoldr
       if iframes[id]
           that <<< {src, mode}
       else
