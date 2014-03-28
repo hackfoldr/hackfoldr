@@ -72,7 +72,7 @@ body
     $pad: 15px
     $width: 300px
     &,a,li
-      color: #666
+      color: #333
       line-height: 25px
     a:hover
       color: black
@@ -119,9 +119,10 @@ body
         list-style: none
         padding: 0
         position: relative
+        line-height: 1.6
         &.active .link
-          background-color: #bbb
-          color: white
+          background-color: #333
+          color: #eee
         .link
           +box-sizing(border-box)
           cursor: pointer
@@ -130,9 +131,12 @@ body
           padding-left: $pad
           +transition(.15s)
           width: $width
+          padding-top: 5px
+          padding-bottom: 5px
           &:hover
-            background-color: #ddd
-            padding-left: $pad+22px
+            background-color: #444
+            // padding-left: $pad+22px
+            color: #fff
           img
             width: 16px
             height: 16px
@@ -141,7 +145,7 @@ body
         li .link
           padding-left: $pad+22px
           &:hover
-            padding-left: $pad+44px
+            // padding-left: $pad+44px
         span.collapser
           position: absolute
           right: $pad
