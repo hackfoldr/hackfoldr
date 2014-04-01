@@ -16,3 +16,6 @@ dependencies:
 overrides:
   "angular-mocks":
     main: "README.md"
+  # FIX a typo in bootstrap-stylus 2.3.2
+  "bootstrap-stylus":
+    main: "stylus/bootstrap.styl"

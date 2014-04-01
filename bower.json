@@ -21,6 +21,9 @@
   "overrides": {
     "angular-mocks": {
       "main": "README.md"
+    },
+    "bootstrap-stylus": {
+      "main": "stylus/bootstrap.styl"
     }
   }
 }

@@ -29,24 +29,22 @@ require! <[gulp-filter gulp-bower gulp-bower-files gulp-stylus gulp-cssmin]>
 gulp.task 'bower' -> gulp-bower!
 
 gulp.task 'js:vendor' <[bower]> ->
-  #bower = gulp-bower-files!
-  #  .pipe gulp-filter (.path is /\.js$/)
+  bower = gulp-bower-files!
+    .pipe gulp-filter (.path is /\.js$/)
 
   s = streamqueue { +objectMode }
-    .done /*bower, */gulp.src 'vendor/scripts/*.js'
+    .done bower, gulp.src 'vendor/scripts/*.js'
     .pipe gulp-concat 'vendor.js'
   s .= pipe gulp-uglify! if gutil.env.env is \production
   s .pipe gulp.dest '_public/js'
     .pipe livereload!
 
 gulp.task 'css' <[bower]> ->
-  #bower = gulp-bower-files!
-  #  .pipe gulp-filter (.path is /\.css$/)
+  bower = gulp-bower-files!
+    .pipe gulp-filter (.path is /\.css$/)
 
   bower-styl = gulp-bower-files!
-    .pipe gulp-filter ->
-      console.log it.path
-      it.path is /\.styl$/
+    .pipe gulp-filter (.path is /\.styl$/)
     .pipe gulp-stylus use: <[nib]>
 
   styl = gulp.src 'app/styles/**/*.styl'
@@ -54,7 +52,7 @@ gulp.task 'css' <[bower]> ->
     .pipe gulp-stylus use: <[nib]>
 
   s = streamqueue { +objectMode }
-    .done /*bower, */bower-styl, styl, gulp.src 'app/styles/**/*.css'
+    .done bower, bower-styl, styl, gulp.src 'app/styles/**/*.css'
     .pipe gulp-concat 'app.css'
   s .= pipe gulp-cssmin! if gutil.env.env is \production
   s .pipe gulp.dest './_public/css'
