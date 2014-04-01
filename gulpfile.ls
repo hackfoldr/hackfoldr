@@ -4,7 +4,7 @@ gutil = gulp-util
 livereload-server = require(\tiny-lr)!
 livereload = -> gulp-livereload livereload-server
 
-gulp.task 'dev' <[assets template js:app js:vendor css]>
+gulp.task 'dev' <[static assets template js:app js:vendor css]>
 
 require! <[gulp-json-editor gulp-insert gulp-commonjs gulp-uglify]>
 gulp.task 'js:app' ->
