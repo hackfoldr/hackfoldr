@@ -4,12 +4,13 @@ version: "0.1.1"
 main: "_public/js/app.js"
 ignore: ["**/.*", "node_modules", "components"]
 dependencies:
+  "commonjs-require-definition": "~0.1.2"
   jquery: "~2.0.3"
   angular: "1.2.4"
   "angular-cookies": "1.2.4"
-  "angular-ui": "0.4.0"
-  "angular-mocks": "1.2.4"
+  "angular-ui-sortable": "0.12.2"
   "angular-ui-router": "0.2.0"
+  "angular-mocks": "1.2.4"
   "angular-scenario": "1.2.4"
   "bootstrap-stylus": "2.3.2"
 

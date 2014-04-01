@@ -1,14 +1,43 @@
+paths =
+  pub: '_public'
+  static: 'app/index.static.jade'
+  template: 'app/partials/**/*.jade'
+  assets: 'app/assets/**'
+  js-vendor: 'vendor/scripts/*.js'
+  js-env: 'app/*.jsenv'
+  ls-app: 'app/**/*.ls'
+  css-vendor: 'vendor/styles/*.css'
+  stylus: 'app/styles/*.styl'
+
 require! <[gulp gulp-util gulp-concat gulp-livescript gulp-livereload streamqueue]>
 gutil = gulp-util
 
 livereload-server = require(\tiny-lr)!
 livereload = -> gulp-livereload livereload-server
 
-gulp.task 'dev' <[static assets template js:app js:vendor css]>
+require! <[express path]>
+gulp.task \httpServer ->
+  port = 3333
+  app = require('express')!
+  app.use require('connect-livereload')!
+  app.use express.static path.resolve paths.pub
+  http-server = require \http .create-server app
+  http-server.listen port, ->
+    gutil.log "Running on http://localhost:#port"
+
+gulp.task 'build' <[static assets template js:app js:vendor css]>
+gulp.task 'dev' <[build httpServer]> ->
+  port = 35729
+  livereload-server.listen port, -> gutil.log it if it
+  gulp.watch paths.static, <[static]>
+  gulp.watch paths.template, <[template]>
+  gulp.watch paths.assets, <[assets]>
+  gulp.watch [paths.js-env, paths.ls-app] <[js:app]>
+  gulp.watch paths.stylus, <[css]>
 
 require! <[gulp-json-editor gulp-insert gulp-commonjs gulp-uglify]>
 gulp.task 'js:app' ->
-  env = gulp.src 'app/*.jsenv'
+  env = gulp.src paths.js-env
     .pipe gulp-json-editor (json) ->
       for key of json when process.env[key]?
         json[key] = that
@@ -16,14 +45,14 @@ gulp.task 'js:app' ->
     .pipe gulp-insert.prepend 'module.exports = '
     .pipe gulp-commonjs!
 
-  app = gulp.src 'app/**/*.ls'
+  app = gulp.src paths.ls-app
     .pipe gulp-livescript({+bare}).on \error gutil.log
 
   s = streamqueue { +objectMode }
     .done env, app
     .pipe gulp-concat 'app.js'
   s .= pipe gulp-uglify! if gutil.env.env is \production
-  s .pipe gulp.dest '_public/js'
+  s .pipe gulp.dest "#{paths.pub}/js"
 
 require! <[gulp-filter gulp-bower gulp-bower-files gulp-stylus gulp-cssmin]>
 gulp.task 'bower' -> gulp-bower!
@@ -33,10 +62,10 @@ gulp.task 'js:vendor' <[bower]> ->
     .pipe gulp-filter (.path is /\.js$/)
 
   s = streamqueue { +objectMode }
-    .done bower, gulp.src 'vendor/scripts/*.js'
+    .done bower, gulp.src paths.js-vendor
     .pipe gulp-concat 'vendor.js'
   s .= pipe gulp-uglify! if gutil.env.env is \production
-  s .pipe gulp.dest '_public/js'
+  s .pipe gulp.dest "#{paths.pub}/js"
     .pipe livereload!
 
 gulp.task 'css' <[bower]> ->
@@ -47,38 +76,38 @@ gulp.task 'css' <[bower]> ->
     .pipe gulp-filter (.path is /\.styl$/)
     .pipe gulp-stylus use: <[nib]>
 
-  styl = gulp.src 'app/styles/**/*.styl'
+  styl = gulp.src paths.stylus
     .pipe gulp-filter (.path isnt /\/_[^/]+\.styl$/) # isnt files for including
     .pipe gulp-stylus use: <[nib]>
 
   s = streamqueue { +objectMode }
-    .done bower, bower-styl, styl, gulp.src 'app/styles/**/*.css'
+    .done bower, bower-styl, styl, gulp.src paths.css-vendor
     .pipe gulp-concat 'app.css'
   s .= pipe gulp-cssmin! if gutil.env.env is \production
-  s .pipe gulp.dest '_public/css'
+  s .pipe gulp.dest "#{paths.pub}/css"
     .pipe livereload!
 
 require! <[gulp-angular-templatecache gulp-jade]>
 gulp.task 'static' ->
-  gulp.src 'app/*.static.jade'
+  gulp.src paths.static
     .pipe gulp-jade do
       pretty: yes
       locals:
         googleAnalytics: 'UA-39804485-1'
     .pipe gulp-concat 'index.html'
-    .pipe gulp.dest '_public'
+    .pipe gulp.dest paths.pub
 
 gulp.task 'template' ->
-  gulp.src 'app/partials/**/*.jade'
+  gulp.src paths.template
     .pipe gulp-jade!
-    .pipe gulp-angular-templatecache 'app.templates.js' do
-      base: process.cwd!
-      filename: 'app.templates.js'
-      module: 'app.templates'
+    .pipe gulp-angular-templatecache 'partials.js' do
+      base: "#{process.cwd!}/app"
+      filename: 'partials.js'
+      module: 'partials'
       standalone: true
-    .pipe gulp.dest '_public/js'
+    .pipe gulp.dest "#{paths.pub}/js"
     .pipe livereload!
 
 gulp.task 'assets' ->
-  gulp.src 'app/assets/**'
-    .pipe gulp.dest '_public'
+  gulp.src paths.assets
+    .pipe gulp.dest paths.pub

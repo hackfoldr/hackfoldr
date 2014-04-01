@@ -108,7 +108,7 @@ angular.module 'app.controllers' <[ui.state ngCookies]>
       ok = !try
         iframe.location ~= \about:blank
       # access denied, meaning the iframe is loaded. wait for .load to fire
-      if loading and $.browser.mozilla
+      if loading #and $.browser.mozilla
         # check if the failure is actually XFO denied. this doesn't work
         # req = $.ajax do
         #   type: \OPTION
