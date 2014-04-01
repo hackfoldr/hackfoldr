@@ -5,7 +5,7 @@ main: "_public/js/app.js"
 ignore: ["**/.*", "node_modules", "components"]
 dependencies:
   "commonjs-require-definition": "~0.1.2"
-  jquery: "~2.0.3"
+  jquery: "1.8.2"
   angular: "1.2.4"
   "angular-cookies": "1.2.4"
   "angular-ui-sortable": "0.12.2"
