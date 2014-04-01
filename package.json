@@ -16,7 +16,8 @@
     "prepublish": "node ./node_modules/LiveScript/bin/lsc -cj package.ls\nnode ./node_modules/LiveScript/bin/lsc -c test/*.js.ls",
     "build": "brunch b",
     "test": "npm run build && bower i && karma start --browsers PhantomJS --single-run true test/karma.conf.js",
-    "start": "node ./node_modules/brunch/bin/brunch watch --server"
+    "start": "node ./node_modules/brunch/bin/brunch watch --server",
+    "dev": "gulp dev --require LiveScript"
   },
   "dependencies": {},
   "devDependencies": {
@@ -40,6 +41,22 @@
     "karma-ng-scenario": "0.1.0",
     "bower": "1.2.x",
     "mocha": "~1.14.0",
-    "chai": "~1.8.0"
+    "chai": "~1.8.0",
+    "gulp": "^3.6.0",
+    "gulp-util": "^2.2.14",
+    "gulp-livescript": "^0.2.1",
+    "gulp-insert": "^0.2.0",
+    "gulp-json-editor": "^2.0.2",
+    "gulp-commonjs": "^0.1.0",
+    "streamqueue": "0.0.6",
+    "gulp-uglify": "^0.2.1",
+    "gulp-concat": "^2.2.0",
+    "gulp-bower-files": "^0.2.1",
+    "gulp-filter": "^0.3.1",
+    "gulp-bower": "0.0.3",
+    "gulp-livereload": "^1.2.0",
+    "tiny-lr": "0.0.5",
+    "gulp-cssmin": "^0.1.4",
+    "gulp-stylus": "^0.1.0"
   }
 }

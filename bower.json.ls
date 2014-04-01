@@ -11,6 +11,7 @@ dependencies:
   "angular-mocks": "1.2.4"
   "angular-ui-router": "0.2.0"
   "angular-scenario": "1.2.4"
+  "bootstrap-stylus": "2.3.2"
 
 overrides:
   "angular-mocks":
