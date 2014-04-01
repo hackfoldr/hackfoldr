@@ -4,7 +4,7 @@ gutil = gulp-util
 livereload-server = require(\tiny-lr)!
 livereload = -> gulp-livereload livereload-server
 
-gulp.task 'dev' <[js:app js:vendor css]>
+gulp.task 'dev' <[assets template js:app js:vendor css]>
 
 require! <[gulp-json-editor gulp-insert gulp-commonjs gulp-uglify]>
 gulp.task 'js:app' ->
@@ -55,5 +55,30 @@ gulp.task 'css' <[bower]> ->
     .done bower, bower-styl, styl, gulp.src 'app/styles/**/*.css'
     .pipe gulp-concat 'app.css'
   s .= pipe gulp-cssmin! if gutil.env.env is \production
-  s .pipe gulp.dest './_public/css'
+  s .pipe gulp.dest '_public/css'
     .pipe livereload!
+
+require! <[gulp-angular-templatecache gulp-jade]>
+gulp.task 'static' ->
+  gulp.src 'app/*.static.jade'
+    .pipe gulp-jade do
+      pretty: yes
+      locals:
+        googleAnalytics: 'UA-39804485-1'
+    .pipe gulp-concat 'index.html'
+    .pipe gulp.dest '_public'
+
+gulp.task 'template' ->
+  gulp.src 'app/partials/**/*.jade'
+    .pipe gulp-jade!
+    .pipe gulp-angular-templatecache 'app.templates.js' do
+      base: process.cwd!
+      filename: 'app.templates.js'
+      module: 'app.templates'
+      standalone: true
+    .pipe gulp.dest '_public/js'
+    .pipe livereload!
+
+gulp.task 'assets' ->
+  gulp.src 'app/assets/**'
+    .pipe gulp.dest '_public'

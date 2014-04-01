@@ -57,6 +57,8 @@
     "gulp-livereload": "^1.2.0",
     "tiny-lr": "0.0.5",
     "gulp-cssmin": "^0.1.4",
-    "gulp-stylus": "^0.1.0"
+    "gulp-stylus": "^0.1.0",
+    "gulp-jade": "^0.4.2",
+    "gulp-angular-templatecache": "^1.1.1"
   }
 }
