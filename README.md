@@ -1,4 +1,4 @@
-hack.g0v.tw
+Hackfoldr
 ===========
 
 Organize gdoc and hackpad documents for hackathons.
@@ -13,7 +13,7 @@ Hackpad collections are great too, but we also want to include spreadsheets as o
 
 So we build this small single-page static web application that reads a list of url from an EtherCalc document, rendering it in a way similar to a google docs folder.  If the document supports read-only mode, we use that by default when it is opened by the user, and provide an additional edit link.
 
-For example, with an index like http://ethercalc.org/g0v-hackath2n, you'll get http://hack.g0v.tw/#/g0v-hackath2n/BfddbG2JBOi
+For example, with an index like http://ethercalc.org/g0v-hackath2n, you'll get http://hackfoldr.org/g0v-hackath2n/BfddbG2JBOi
 
 ## Supported document types
 

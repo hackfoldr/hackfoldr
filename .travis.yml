@@ -9,8 +9,8 @@ branches:
 
 env:
   global:
-    - REPO="git@github.com:g0v/hack.g0v.tw"
-    - secure: "DapyDZSu35Ho3FwiI7CLl/u5XPouKOo9ELkaYAHJO1PQwdSV5Y6BOpJvZkue\nLr/hRupqRemZNUiRD0XbhBn9EjCCvbNYePRs6SlQoq1SSc9RE1YO33qWAlqP\n4YuxGwPFmd0Q87jAYIdMmTzvmzUV8BvfS27jXvcCfPGX3YcgjAA="
+    - REPO="git@github.com:hackfoldr/hackfoldr"
+    - secure: "RI6I/GmBk25+vLkzzxE96TApubipiAnwUu8DoCBbaMlkeMDc+JRS4LDC+Utx\nEDIisAUYyXOXIWsOg2CgTH5zSZL+fOTqHa98uY/OWqUTz+jT49QS7mccvZid\nA0liRzo6pKw5KrvAtFi5yZ0ixE9JS6zE4Gk7+7nrP3js+BL/ZJU="
     - GOOGLE_API_BROWSER_APPLICATION_KEY="AIzaSyCHm8NgD_p5F_-e7euH8BZiB4wSB8pOZ2A"
 
 after_success: .travis/after_success.sh
