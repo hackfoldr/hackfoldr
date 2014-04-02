@@ -10,7 +10,7 @@ branches:
 env:
   global:
     - REPO="git@github.com:hackfoldr/hackfoldr"
-    - secure: "RI6I/GmBk25+vLkzzxE96TApubipiAnwUu8DoCBbaMlkeMDc+JRS4LDC+Utx\nEDIisAUYyXOXIWsOg2CgTH5zSZL+fOTqHa98uY/OWqUTz+jT49QS7mccvZid\nA0liRzo6pKw5KrvAtFi5yZ0ixE9JS6zE4Gk7+7nrP3js+BL/ZJU="
+    - secure: "Z0x2sQ0zWwLF3DAAggqLoYI5gs6Ys2b5wrfmt5CYEJY0JiYiaAdIHiSd3v4g\n4fGEIQJusV/2qbNSMinpsyyGStMyjL5mTk3NKUip72tKbKb8H+6HtbYPK91B\ngKFchLxTrfY596ulsX752BlkFM8b4jcGRlpjIaX9RAdIncU9Qc0="
     - GOOGLE_API_BROWSER_APPLICATION_KEY="AIzaSyCHm8NgD_p5F_-e7euH8BZiB4wSB8pOZ2A"
 
 after_success: .travis/after_success.sh
