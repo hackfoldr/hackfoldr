@@ -25,7 +25,7 @@ html(lang='en')
     script(src='//ajax.googleapis.com/ajax/libs/angularjs/1.2.4/angular-animate.min.js')
     script(src='//cdnjs.cloudflare.com/ajax/libs/angular-ui/0.4.0/angular-ui.min.js')
     script(src='/js/vendor.js?#{new Date().getTime()}')
-    script(src='/js/partials.js?#{new Date().getTime()}')
+    script(src='/js/app.templates.js?#{new Date().getTime()}')
     script(src='/js/app.js?#{new Date().getTime()}')
     script(src='//apis.google.com/js/client.js?onload=googleOnLoadCallback')
   body(ng-controller='AppCtrl',data-spy="scroll")
@@ -42,7 +42,7 @@ html(lang='en')
             a(href="http://g0v.tw", target="_blank")
               #brand.brand: img(src="/img/g0v-horizontal-transparent-darkbackground-s.png")
             .nav-collapse
-              div(ng-include="'/partials/nav.html'")
+              div(ng-include="'partials/nav.html'")
       .main-content
         div(ui-view)
       .push

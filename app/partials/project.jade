@@ -8,7 +8,7 @@
 
   .row
     .span8
-      article.mod-project.new(ng-if='opts.isnew',ng-include="'/partials/project.edit.html'")
+      article.mod-project.new(ng-if='opts.isnew',ng-include="'partials/project.edit.html'")
       article.projects-loading(ng-show="projects.length == 0")
         .loading-indicator
       article.mod-project.project-not-found(ng-show="projects.length != 0 && (projects | filter:search).length === 0")
@@ -162,7 +162,7 @@
           .featured-loading(ng-show="!featured")
             .loading-indicator
           a(ng-href='{{featured.homepage}}')
-            img(ng-src='{{featured.thumbnail.reduce ? featured.thumbnail.0 : featured.thumbnail}}')'
+            img(ng-src='{{featured.thumbnail.reduce ? featured.thumbnail.0 : featured.thumbnail}}')
           h2
             a(ng-href='{{featured.homepage}}') {{featured.name_zh || featured.name}}
             p {{featured.description_zh}}

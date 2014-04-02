@@ -2,15 +2,15 @@
 
 angular.module('scroll', []).value('$anchorScroll', angular.noop)
 
-angular.module \app <[ui partials app.controllers ui.state ui.bootstrap]>
+angular.module \app <[ui app.templates app.controllers ui.state ui.bootstrap]>
 .config <[$stateProvider $urlRouterProvider $locationProvider]> ++ ($stateProvider, $urlRouterProvider, $locationProvider) ->
   $stateProvider
     .state 'about' do
       url: '/about'
-      templateUrl: '/partials/about.html'
+      templateUrl: 'partials/about.html'
     .state 'hack' do
       url: '/{hackId}'
-      templateUrl: '/partials/hack.html'
+      templateUrl: 'partials/hack.html'
       controller: \HackFolderCtrl
       onEnter: ->
         $ \body .addClass \hide-overflow
@@ -30,7 +30,7 @@ angular.module \app <[ui partials app.controllers ui.state ui.bootstrap]>
   $rootScope.$state = $state
   $rootScope.$stateParam = $stateParams
   $rootScope.go = -> $location.path it
-  $rootScope._build = window.global.config.BUILD
+  $rootScope._build = require 'config.jsenv' .BUILD
   $rootScope.$on \$stateChangeSuccess (e, {name}) ->
     window?ga? 'send' 'pageview' page: $location.$$url, title: name
   $rootScope.safeApply = ($scope, fn) ->

@@ -1,0 +1,265 @@
+@import "nib/clearfix"
+@import "nib/vendor"
+@import "nib/flex"
+
+
+.navbar .nav > li.dropdown-split-left > a
+  padding-right 5px
+
+.navbar .nav > li.dropdown-split-right > a
+  padding-left 5px
+  padding-right 5px
+
+.navbar .label
+  margin 0 0 -10px 3px
+  position relative
+  top -2px
+
+body
+  font-size 16px
+  background url(/img/tiles.png)
+  @media (max-width: 767px)
+    padding-left 0
+    padding-right 0
+  &.hide-overflow
+    overflow hidden
+.navbar
+  margin-bottom 0px
+  box-shadow 0px 1px 8px rgba(0,0,0,0.5)
+.navbar-inner
+  background-image -webkit-linear-gradient(top,#444,#111)!important
+.navbar-inverse .nav > li > a
+  color #ccc!important
+  text-shadow 0 0 1px rgba(255,255,255,0.3)
+.navbar-inverse .nav > li > a:hover
+  color #fff!important
+  text-shadow 0 0px 16px rgba(128,128,128,1)
+  background-color rgba(255,255,255,0.1)
+.navbar .build-id
+  margin-top 10px
+  color hsl(0, 0%, 75%)
+
+/* hide nav labels when window.width < 1200px */
+@media (max-width: 1200px)
+  .navbar ul.nav span.label
+    display none
+
+#brand
+  float right
+  margin-left 5px
+  padding 0
+  img
+    height 38px
+
+.main-content
+  position relative
+  top 42px
+  @media (max-width: 979px)
+    top 0px
+
+.hackfolder
+  display flex
+  width 100%
+  a
+    text-shadow 0px 0px 2px rgba(32,32,32,0.2)
+    color #333
+  .label
+    margin-left 5px
+
+  .index
+    $bar-width = 16px
+    $pad = 15px
+    $width = 300px
+    &,a,li
+      color #333
+      line-height 25px
+    a:hover
+      color black
+      text-decoration none
+    background-color white
+    border-right 3px solid #888
+    cursor w-resize
+    font-family "XinGothic Citicpress", "Lantinghei TC", "Hiragino Kaku Gothic Pro", "Apple LiGothic", "Heiti TC", "LiHei Pro", "Microsoft YaHei", "微軟正黑體", "文泉驿正黑", sans-serif
+    font-size 16px
+    overflow-x hidden
+    overflow-y auto
+    transition .15s
+    width $width
+    &.collapsed
+      cursor e-resize
+      margin-left 27px - $width
+      .hackid small
+        margin-right 8px
+      img
+        margin-top 5px
+        position absolute
+        right 0
+      span.collapser
+        display none
+
+    .hackid
+      background-color #ddd
+      margin-bottom 10px
+      padding 15px 0 10px $pad
+      i
+        margin-top 4px
+      small
+        float right
+        font-size 16px
+        margin-right $pad
+        a
+          cursor pointer
+    &.scrollbar
+      width $width + $bar-width
+
+    ul
+      margin 0
+      li
+        list-style none
+        padding 0
+        position relative
+        line-height 1.6
+        &.active .link
+          background-color #333
+          color #eee
+        .link
+          box-sizing border-box
+          cursor pointer
+          display inline-block
+          left 0
+          padding-left $pad
+          transition .15s
+          width $width
+          padding-top 5px
+          padding-bottom 5px
+          &:hover
+            background-color #444
+            // padding-left $pad+22px
+            color #fff
+          img
+            width 16px
+            height 16px
+            margin-right 5px
+            vertical-align -2px
+        li .link
+          padding-left $pad+22px
+          &:hover
+            // padding-left $pad+44px
+        span.collapser
+          position absolute
+          right $pad
+          top 0px
+        span.label
+          vertical-align text-bottom
+
+  .pad-container
+    position relative
+    background url(/img/ps_neutral.png) #f4f4f4
+    flex 20
+    article
+      -webkit-overflow-scrolling touch
+      position absolute
+      top 0
+      bottom 0px
+      height 100%
+      width 100%
+      overflow auto
+      .noiframe
+        position absolute
+        top 50%
+        margin-top -60px
+        text-align center
+        width 80%
+        left 10%
+        .link
+          padding 1em
+          font-size larger
+        &.unsure
+          top 60px
+          z-index 1000
+          background rgba(255,255,255,0.8)
+          .icon-close
+            cursor pointer
+
+      iframe.embed
+        position absolute
+        top 0px
+        bottom 0px
+        height 100%
+        width 100%
+        border 0
+
+      .docmode
+        position absolute
+        top 0px
+        left 50%
+        width 20%
+        margin-left -10%
+        text-align center
+        z-index 99
+        background #fff
+        border 2px dotted #999
+        border-top none
+        border-radius 0px
+        border-bottom-left-radius 32px
+        border-bottom-right-radius 32px
+        box-shadow 0 0 16px rgba(0,0,0,0.2)
+        color #e98344
+        padding 3px
+        cursor pointer
+
+.tooltip.right
+  margin-left -5px
+  opacity 100
+  .tooltip-arrow
+    border-width 0
+.tooltip-inner
+  background-color #ddd
+  border-radius 0
+  color black
+  font-family "XinGothic Citicpress", "Lantinghei TC", "Hiragino Kaku Gothic Pro", "Apple LiGothic", "Heiti TC", "LiHei Pro", "Microsoft YaHei", "微軟正黑體", "文泉驿正黑", sans-serif
+  font-size 16px
+  padding 4px 6px 1px 0
+
+.hackindex
+  article.index-item
+    position inherit
+    top inherit
+    bottom inherit
+
+/* hack.g0v.tw/tag/ */
+
+.tag-content
+  ul
+    margin-left 0
+  li
+    border-top 1px #ccc dashed
+    clearfix
+  .person
+    margin-top 0.5rem
+    min-height 70px
+    img
+      float left
+      margin-right 1rem
+    .name
+      font-weight normal
+      font-size 1rem
+
+/* hack.g0v.tw/tag/ */
+
+body.about
+  overflow auto
+.about
+  width 80%
+  max-width 800px
+  margin 3rem auto 8rem auto
+  h1
+    margin 0 0 1rem 0
+  h2
+    font-size 1.5rem
+    margin-top 2rem
+    box-shadow #ccc 0 1px 0, #fff 0 2px 0
+  h3
+    font-size 1rem
+  p, ol, ul, li
+    line-height 1.5rem

@@ -34,7 +34,7 @@
             input#set-username-input(ng-model="newUsername")
             button.btn(type="submit", ng-click="setUsername(newUsername)") 設定
       .alert.alert-error(ng-show='usernameInUse')
-        已有 G0V 成員使用此名稱，請選擇其他使用者名稱
+        |已有 G0V 成員使用此名稱，請選擇其他使用者名稱
         ul
           li(ng-repeat="(provider, auth) in usernameInUse.auth")
             a.btn(ng-click="loginAndMerge(provider)")
@@ -87,7 +87,7 @@
           span.badge.badge-info.font-se {{entry.count}}
       span(style="-webkit-flex:100 1 auto") &nbsp;
     div.people-list
-      .person(ng-class="{{person.status}}", ng-class="{'show-detail': showPerson == person}", ng-repeat="person in filteredpeople | filter:search", ng-click="togglePerson(person)")
+      .person(class="ng-class:{{person.status}};", ng-class="{'show-detail': showPerson == person}", ng-repeat="person in filteredpeople | filter:search", ng-click="togglePerson(person)")
         .avatar(ng-mouseenter="tofollow=1", ng-mouseleave="tofollow=0")
           img.img-polaroid(ng-src="{{person.avatar}}?size=medium")
           i.icon-star-empty(ng-show="followlist[person.$id]", ng-click="unfollow_person(person.$id)", ngx-final)
@@ -102,4 +102,4 @@
             span.label.label-info 聯絡資訊
             a.btn(ng-repeat="provider in ['facebook', 'twitter', 'github']", ng-show='person.auth[provider]', ng-href="http://{{provider}}.com/{{person.auth[provider].username || person.auth[provider].id}}", target="_blank")
               i.contact-icon.icon-large(class="icon-{{provider}}")
-              {{person.auth[provider].username || provider.charAt(0).toUpperCase() + provider.slice(1)}}
+              |{{person.auth[provider].username || provider.charAt(0).toUpperCase() + provider.slice(1)}}
