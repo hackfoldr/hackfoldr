@@ -44,6 +44,8 @@ On Mac, use [Homebrew](https://github.com/mxcl/homebrew) and install gems in loc
 
     % npm i
     % npm run start
+    
+Then after the building message completes, connect to http://localhost:3333/.
 
 # Using vagrant to develop
 
