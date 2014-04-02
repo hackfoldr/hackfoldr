@@ -21,6 +21,8 @@ gulp.task \httpServer ->
   app = require('express')!
   app.use require('connect-livereload')!
   app.use express.static path.resolve paths.pub
+  app.all '/**' (req, res, next) ->
+    res.sendfile __dirname + '/_public/index.html'
   http-server = require \http .create-server app
   http-server.listen port, ->
     gutil.log "Running on http://localhost:#port"
