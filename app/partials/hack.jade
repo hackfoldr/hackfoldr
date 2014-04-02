@@ -2,7 +2,7 @@
     .index(ng-class="{collapsed: collapsed, scrollbar: hasScrollbar}",ng-click="collapsed=!collapsed",ng-style='{height: contentHeight}',scrollbar)
       div.hackid
         i.icon-home
-        &nbsp;
+        |&nbsp;
         a.indexlink.expanded-content(ng-href="http://ethercalc.org/{{hackId}}",target="_blank",ngx-final) {{HackFolder.folderTitle || hackId}}
         small.icon(ng-class='{"icon-caret-right": collapsed, "icon-caret-left": !collapsed}')
       ul.wrap(ui-sortable='sortableOptions',ng-model='tree')
