@@ -300,12 +300,12 @@ angular.module 'app.controllers' <[ui.state ngCookies]>
           videoId = videoToken[1]
           request = gapi.client.youtube.videos.list({'id':videoId, 'part':'snippet'})
           response <~ request.execute()
-          if 'live' == response.items[0].snippet.liveBroadcastContent
+          if 'live' == response.items?[0].snippet.liveBroadcastContent
             it.tags ++= {class: 'warning', content: 'LIVE'}
         else if videoToken = it.url.match(/ustream.tv\/embed\/(.*)/)
           videoId = videoToken[1]
           response <- $.get ("http://query.yahooapis.com/v1/public/yql?q=select%20*%20from%20html%20where%20url%3D'http%3A%2F%2Fapi.ustream.tv%2Fjson%2Fchannel%2F" + videoId + "%2FgetValueOf%2Fstatus'&format=json&diagnostics=true&callback=")
-          if 'live' == JSON.parse(response.query.results.body.p).results
+          if 'live' == JSON.parse(response.query?.results?.body?.p).results
             it.tags ++= {class: 'warning', content: 'LIVE'}
       )
       docs.splice 0, docs.length, ...(entries.filter -> it?)

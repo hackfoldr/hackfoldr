@@ -8,6 +8,7 @@ build.xml
 .idea/*
 app/assets/*html
 app/404.static.jade
+app/developer-key.ls
 
 _public
 node_modules/*
