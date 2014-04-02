@@ -17,9 +17,9 @@ rm -rf _public
 git clone $REPO --depth 1 -b gh-pages _public
 
 REV=`git describe --always`
-BUILD=git-$REV ./node_modules/.bin/brunch b -o
+GOOGLE_API_BROWSER_APPLICATION_KEY="AIzaSyCHm8NgD_p5F_-e7euH8BZiB4wSB8pOZ2A" BUILD=git-$REV ./node_modules/.bin/brunch b -o
 # build twice, for static.html to propogate for now
-BUILD=git-$REV ./node_modules/.bin/brunch b -o
+GOOGLE_API_BROWSER_APPLICATION_KEY="AIzaSyCHm8NgD_p5F_-e7euH8BZiB4wSB8pOZ2A" BUILD=git-$REV ./node_modules/.bin/brunch b -o
 cd _public
 git fetch --depth 1 origin master:master
 git add -A .
