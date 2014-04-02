@@ -11,10 +11,11 @@ engines:
   node: '0.8.x'
   npm: '1.1.x'
 scripts:
-  prepublish: 'node ./node_modules/LiveScript/bin/lsc -cj package.ls'
-  build: 'brunch b'
-  test: 'npm run build && bower i && karma start --browsers PhantomJS --single-run true test/karma.conf.js'
-  start: 'node ./node_modules/brunch/bin/brunch watch --server'
+  prepublish: 'lsc -cj package.ls && lsc -cj bower.json.ls'
+  build: 'gulp --require LiveScript build'
+  test: 'gulp --require LiveScript test:unit'
+  start: 'gulp --require LiveScript dev'
+  protractor: 'gulp --require LiveScript test:e2e'
 dependencies: {}
 devDependencies:
   express: '3.4.x'
@@ -43,7 +44,7 @@ devDependencies:
   "gulp-bower-files": '>= 0.1.8'
   "gulp-uglify": '~0.2.1'
   #"gulp-cssmin": '~0.1.0' # failed with gulp-if
-  'gulp-csso': '~1.3.11'
+  'gulp-csso': '~0.2.6'
   "gulp-filter": '~0.2.1'
   "gulp-mocha": '~0.4.1'
   "gulp-karma": '^0.0.4'
