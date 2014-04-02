@@ -69,6 +69,8 @@ gulp.task 'js:vendor' <[bower]> ->
     .pipe livereload!
 
 gulp.task 'css' <[bower]> ->
+  vendor = gulp.src paths.css-vendor
+
   bower = gulp-bower-files!
     .pipe gulp-filter (.path is /\.css$/)
 
@@ -81,7 +83,7 @@ gulp.task 'css' <[bower]> ->
     .pipe gulp-stylus use: <[nib]>
 
   s = streamqueue { +objectMode }
-    .done bower, bower-styl, styl, gulp.src paths.css-vendor
+    .done vendor, bower, bower-styl, styl
     .pipe gulp-concat 'app.css'
   s .= pipe gulp-cssmin! if gutil.env.env is \production
   s .pipe gulp.dest "#{paths.pub}/css"

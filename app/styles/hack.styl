@@ -1,6 +1,12 @@
 @import "nib/clearfix"
 @import "nib/vendor"
 
+// FIXME: should use box-flex in Nib
+box-flex(flex)
+  -webkit-box-flex flex
+  -moz-box-flex flex
+  -ms-box-flex flex
+  box-flex flex
 
 .navbar .nav > li.dropdown-split-left > a
   padding-right 5px
