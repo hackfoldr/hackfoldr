@@ -61,6 +61,10 @@ To setup up work environment:
 
 After `vagrant up`, browse http://localhost:6987/ in your favorite browser. You are all set!
 
+# Google API key
+
+To use the google APIs client to query YouTube Data API and check live status of Youtube videos, you need to apply your own Google API Key for browser applications at [https://code.google.com/apis/console#:access](https://code.google.com/apis/console#:access). After getting your API key, commit it into app/config.jsenv
+
 # CC0 1.0 Universal
 
 To the extent possible under law, Chia-liang Kao has waived all copyright

@@ -27,6 +27,7 @@ html(lang='en')
     script(src='/js/vendor.js?#{new Date().getTime()}')
     script(src='/js/partials.js?#{new Date().getTime()}')
     script(src='/js/app.js?#{new Date().getTime()}')
+    script(src='//apis.google.com/js/client.js?onload=googleOnLoadCallback')
   body(ng-controller='AppCtrl',data-spy="scroll")
     .wrapper
       .navbar.navbar-inverse.navbar-fixed-top.visible-desktop
