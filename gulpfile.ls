@@ -29,7 +29,7 @@ gulp.task \httpServer ->
     res.sendfile __dirname + '/_public/index.html'
   http-server := require \http .create-server app
   http-server.listen port, ->
-    gutil.log "Running on http://localhost:#port"
+    gutil.log "Running on " + gutil.colors.bold.inverse "http://localhost:#port"
 
 gulp.task 'build' <[assets template js:app js:vendor css]>
 gulp.task 'dev' <[build httpServer]> ->
