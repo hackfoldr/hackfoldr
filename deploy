@@ -25,7 +25,7 @@ git add -A .
 echo "regen for $REV" | git commit-tree `git write-tree` -p `git rev-parse HEAD` -p $REV | xargs git reset --hard
 git push origin gh-pages
 cd ..
-rm -f app/404.static.jade
+rm -f app/404.jade
 
 # this is not automated with travis yet
 if [ "x$FIREBASE" != "x" ]
