@@ -24,5 +24,6 @@
     {"class": "btn-success", "name": "專業類",     "tags": ["法律", "設計", "文字", "程式", "新聞", "行銷", "廣告", "繪圖","攝影" ]},
     {"class": "btn-info",    "name": "特殊技能類", "tags": ["手沖咖啡", "3D printing"]},
     {"class": "btn-warning", "name": "以技能分類", "tags": ["爬資料", "轉換資料"]}
-  ]
+  ],
+  "GOOGLE_API_BROWSER_APPLICATION_KEY": "AIzaSyDN3lT4KenTRpKGvoD1Cbw5yqMxR2iKBes"
 }
