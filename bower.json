@@ -29,7 +29,10 @@
       "main": "README.md"
     },
     "bootstrap-stylus": {
-      "main": "stylus/bootstrap.styl"
+      "main": [
+        "stylus/bootstrap.styl",
+        "stylus/responsive.styl"
+      ]
     },
     "angular-scenario": {
       "main": "README.md"
