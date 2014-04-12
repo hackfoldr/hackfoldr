@@ -4,9 +4,20 @@
 # a known issue that symbolic link can not be created in virtualbox shared fold
 # we have to workround npm modules installaltion.
 $script = <<SCRIPT
+#Install npm with nvm
+apt-get -y install curl 
+
+curl https://raw.github.com/creationix/nvm/v0.4.0/install.sh | sh
+source /root/.profile
+nvm install v0.10.10
+nvm use v0.10.10
+nvm alias default v0.10.10
+npm update npm -g
+
 mkdir -p /tmp/node_modules /vagrant/node_modules
-sudo mount --bind /tmp/node_modules /vagrant/node_modules
+mount --bind /tmp/node_modules /vagrant/node_modules
 cd /vagrant
+source /root/.profile
 npm i
 npm run start
 SCRIPT
@@ -17,13 +28,13 @@ Vagrant.configure("2") do |config|
   # please see the online documentation at vagrantup.com.
 
   # Every Vagrant virtual environment requires a box to build off of.
-  config.vm.box = "g0v"
+  config.vm.box = "precise64"
   config.vm.provision :shell, :inline => $script
   config.vm.network :forwarded_port, host: 6987, guest: 3333
 
   # The url from where the 'config.vm.box' box will be fetched if it
   # doesn't already exist on the user's system.
-   config.vm.box_url = "https://dl.dropboxusercontent.com/u/4339854/g0v/g0v-ubuntu-precise64.box"
+   config.vm.box_url = "http://files.vagrantup.com/precise64.box"
 
   # Create a forwarded port mapping which allows access to a specific port
   # within the machine from a port on the host machine. In the example below,
