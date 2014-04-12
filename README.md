@@ -56,7 +56,8 @@ To use vagrant, you need to install:
 - vagrant (> 1.1.x)
 - virtualbox
 
-To setup up work environment:
+To setup up work environment,
+This install ubuntu from stock [(more info)](https://docs.vagrantup.com/v2/providers/basic_usage.html):
 
     % vagrant up
 
