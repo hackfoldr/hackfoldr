@@ -199,6 +199,8 @@ angular.module 'app.controllers' <[ui.state ngCookies]>
       | \video =>
           if doc.provider is \youtube
               "https://www.youtube.com/embed/#{id}"
+          else if doc.provider is \ustream
+              "http://www.ustream.tv/embed/#{id}?v=3"
       | \url => decodeURIComponent decodeURIComponent id
       | otherwise => ''
 
@@ -284,6 +286,11 @@ angular.module 'app.controllers' <[ui.state ngCookies]>
         | // https?:\/\/(?:youtu\.be/|(?:www\.)?youtube\.com/(?:embed/|watch\?v=))([-\w]+) //
             type: \video
             provider: \youtube
+            id: that.1
+            icon: "http://g.etfv.co/#{ url }"
+        | // https?:\/\/(?:www\.)?ustream\.tv/(?:embed|channel)/([-\w]+) //
+            type: \video
+            provider: \ustream
             id: that.1
             icon: "http://g.etfv.co/#{ url }"
         | // ^(https?:\/\/[^/]+) //
