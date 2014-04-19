@@ -246,21 +246,26 @@ angular.module 'app.controllers' <[ui.state ngCookies]>
 
     load-csv: (csv, docs, tree, cb) ->
       var folder-title
+      folder-opts = {}
       csv -= /^\"?#.*\n/gm
       entries = for line in csv.split /\n/ when line
         [url, title, opts, tags, summary, ...rest] = line.split /,/
         continue unless title
         title -= /^"|"$/g
         opts -= /^"|"$/g if opts
-        opts.=replace /""/g '"' if opts
+        if opts
+          opts = try JSON.parse opts.replace /""/g '"'
+        opts ?= {}
         tags -= /^"|"$/g if tags
         [_, prefix, url, hashtag] = url.match /^"?(\s*)(\S+?)?(#\S+?)?\s*"?$/
-        entry = { summary, hashtag, url, title, indent: prefix.length, opts: try JSON.parse opts ? '{}' } <<< match url
+        entry = { summary, hashtag, url, title, indent: prefix.length, opts: {} <<< folder-opts <<< opts } <<< match url
         | void
             unless folder-title
               if title
                 folder-title = title
                 title = null
+              if opts
+                folder-opts = opts
             title: title
             type: \dummy
             id: \dummy
