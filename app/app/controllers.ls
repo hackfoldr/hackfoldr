@@ -196,6 +196,9 @@ angular.module 'app.controllers' <[ui.state ngCookies]>
         "https://#{ doc.site ? '' }hackpad.com/#{id}"
       | \ethercalc =>
           "https://ethercalc.org/#id"
+      | \video =>
+          if doc.provider is \youtube
+              "https://www.youtube.com/embed/#{id}"
       | \url => decodeURIComponent decodeURIComponent id
       | otherwise => ''
 
@@ -278,6 +281,11 @@ angular.module 'app.controllers' <[ui.state ngCookies]>
             type: \hackpad
             site: that.1
             id: that.2
+        | // https?:\/\/(?:youtu\.be/|(?:www\.)?youtube\.com/(?:embed/|watch\?v=))([-\w]+) //
+            type: \video
+            provider: \youtube
+            id: that.1
+            icon: "http://g.etfv.co/#{ url }"
         | // ^(https?:\/\/[^/]+) //
             type: \url
             id: encodeURIComponent encodeURIComponent url
