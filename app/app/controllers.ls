@@ -11,7 +11,7 @@ angular.module 'app.controllers' <[ui.state ngCookies]>
   <- $timeout _, 10s * 1000ms
   $rootScope.hideGithubRibbon = true
 
-.controller HackFolderCtrl: <[$scope $window $state $cookies HackFolder]> ++ ($scope, $window, $state, $cookies, HackFolder) ->
+.controller HackFolderCtrl: <[$scope $sce $window $state $cookies HackFolder]> ++ ($scope, $sce, $window, $state, $cookies, HackFolder) ->
   $scope <<< do
     hasViewMode: -> it?match /g(doc|present|draw)/
     sortableOptions: do
@@ -47,6 +47,9 @@ angular.module 'app.controllers' <[ui.state ngCookies]>
     showSaveBtn: ->
       $cookies.savebtn != \consumed
     HackFolder: HackFolder
+    barframeSrc: (entry) ->
+      src = entry.opts.bar.replace /\{(\w+)\}/g, -> entry[&1]
+      $sce.trustAsResourceUrl src
     iframeCallback: (doc) -> (status) -> $scope.$apply ->
       console?log \iframecb status, doc
       $state.current.title = "#{doc.title} – hackfoldr"
