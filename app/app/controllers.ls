@@ -247,9 +247,8 @@ angular.module 'app.controllers' <[ui.state ngCookies]>
     load-csv: (csv, docs, tree, cb) ->
       var folder-title
       folder-opts = {}
-      csv -= /^\"?#.*\n/gm
-      entries = for line in csv.split /\n/ when line
-        [url, title, opts, tags, summary, ...rest] = line.split /,/
+      entries = for line in CSV.parse(csv)
+        [url, title, opts, tags, summary, ...rest] = line
         continue unless title
         title -= /^"|"$/g
         opts -= /^"|"$/g if opts
