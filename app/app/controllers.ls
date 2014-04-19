@@ -246,6 +246,7 @@ angular.module 'app.controllers' <[ui.state ngCookies]>
       csv -= /^\"?#.*\n/gm
       entries = for line in csv.split /\n/ when line
         [url, title, opts, tags, summary, ...rest] = line.split /,/
+        continue unless title
         title -= /^"|"$/g
         opts -= /^"|"$/g if opts
         opts.=replace /""/g '"' if opts
