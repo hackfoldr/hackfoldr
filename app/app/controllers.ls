@@ -245,6 +245,7 @@ angular.module 'app.controllers' <[ui.state ngCookies]>
       cb folder-title, docs, tree
 
     load-csv: (csv, docs, tree, cb) ->
+      csv -= /^\"?#.*\n/gm
       var folder-title
       folder-opts = {}
       entries = for line in CSV.parse(csv)
