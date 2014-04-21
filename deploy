@@ -18,7 +18,7 @@ rm -rf _public
 git clone $REPO --depth 1 -b gh-pages _public
 
 REV=`git describe --always`
-GOOGLE_API_BROWSER_APPLICATION_KEY="AIzaSyCHm8NgD_p5F_-e7euH8BZiB4wSB8pOZ2A" BUILD=git-$REV ./node_module/.bin/gulp --require LiveScript build --env production
+GOOGLE_API_BROWSER_APPLICATION_KEY="AIzaSyCHm8NgD_p5F_-e7euH8BZiB4wSB8pOZ2A" BUILD=git-$REV ./node_modules/.bin/gulp --require LiveScript build --env production
 cd _public
 git fetch --depth 1 origin master:master
 git add -A .
@@ -31,5 +31,5 @@ rm -f app/404.jade
 if [ "x$FIREBASE" != "x" ]
 then
 	echo $FIREBASE
-	./node_module/.bin/lsc -j < etc/rules.ls | curl -X PUT -d @- $FIREBASE/.settings/rules.json?auth=$FIREBASE_SECRET
+	./node_modules/.bin/lsc -j < etc/rules.ls | curl -X PUT -d @- $FIREBASE/.settings/rules.json?auth=$FIREBASE_SECRET
 fi
