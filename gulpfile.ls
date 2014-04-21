@@ -1,3 +1,7 @@
+GITHUB_ACCOUNT = 'hackfoldr'         # YOUR GITHUB ACCOUNT HERE
+HACKFOLDR_ID   = 'congressoccupied'  # YOUR HACKFOLDR ID HERE
+DOMAIN_NAME    = 'hackfoldr.org'     # YOUR DOMAIN NAME HERE
+
 paths =
   pub: '_public'
   template: 'app/partials/**/*.jade'
@@ -111,7 +115,7 @@ gulp.task 'js:app' ->
   s = streamqueue { +objectMode }
     .done env, app
     .pipe gulp-concat 'app.js'
-    .pipe gulp-if production, gulp-uglify! 
+    .pipe gulp-if production, gulp-uglify!
     .pipe gulp.dest "#{paths.pub}/js"
 
 require! <[gulp-filter gulp-bower gulp-bower-files gulp-stylus gulp-csso]>
@@ -124,7 +128,7 @@ gulp.task 'js:vendor' <[bower]> ->
   s = streamqueue { +objectMode }
     .done bower, gulp.src paths.js-vendor
     .pipe gulp-concat 'vendor.js'
-    .pipe gulp-if production, gulp-uglify! 
+    .pipe gulp-if production, gulp-uglify!
     .pipe gulp.dest "#{paths.pub}/js"
     .pipe livereload!
 
@@ -177,3 +181,22 @@ gulp.task 'assets' ->
     .pipe gulp.dest paths.pub
 
 gulp.task 'default' <[build]>
+
+require! <[gulp-replace]>
+
+gulp.task 'replace', ->
+  gulp.src 'templates/deploy'
+    .pipe gulp-replace /GITHUB_ACCOUNT/, GITHUB_ACCOUNT
+    .pipe gulp.dest '.'
+
+  gulp.src 'templates/app.ls'
+    .pipe gulp-replace /HACKFOLDR_ID/, HACKFOLDR_ID
+    .pipe gulp.dest 'app'
+
+  gulp.src 'templates/controllers.ls'
+    .pipe gulp-replace /HACKFOLDR_ID/, HACKFOLDR_ID
+    .pipe gulp.dest 'app/app'
+
+  gulp.src 'templates/CNAME'
+    .pipe gulp-replace /DOMAIN_NAME/, DOMAIN_NAME
+    .pipe gulp.dest 'app/assets'
