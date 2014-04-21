@@ -16,6 +16,7 @@ scripts:
   test: 'gulp --require LiveScript test:unit'
   start: 'gulp --require LiveScript dev'
   protractor: 'gulp --require LiveScript test:e2e'
+  fork: 'gulp --require LiveScript replace'
 dependencies: {}
 devDependencies:
   express: '3.4.x'

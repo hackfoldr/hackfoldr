@@ -17,7 +17,8 @@
     "build": "gulp --require LiveScript build",
     "test": "gulp --require LiveScript test:unit",
     "start": "gulp --require LiveScript dev",
-    "protractor": "gulp --require LiveScript test:e2e"
+    "protractor": "gulp --require LiveScript test:e2e",
+    "fork": "gulp --require LiveScript replace"
   },
   "dependencies": {},
   "devDependencies": {

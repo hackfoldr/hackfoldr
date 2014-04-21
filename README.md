@@ -44,7 +44,7 @@ On Mac, use [Homebrew](https://github.com/mxcl/homebrew) and install gems in loc
 
     % npm i
     % npm run start
-    
+
 Then after the building message completes, connect to http://localhost:3333/.
 
 # Using vagrant to develop
@@ -66,6 +66,16 @@ After `vagrant up`, browse http://localhost:6987/ in your favorite browser. You 
 # Google API key
 
 To use the google APIs client to query YouTube Data API and check live status of Youtube videos, you need to apply your own Google API Key for browser applications at [https://code.google.com/apis/console#:access](https://code.google.com/apis/console#:access). After getting your API key, commit it into app/config.jsenv
+
+# Fork
+
+1. fork to your github account
+2. git clone git@github.com/GITHUB_ACCOUNT/hackfoldr
+3. `$ npm install`
+4. replace GITHUB_ACCOUNT, HACKFOLDR_ID, DOMAIN_NAME in gulpfile.ls
+5. `$ npm run fork`
+6. `$ npm run build`
+7. `$ ./deploy`
 
 # CC0 1.0 Universal
 
