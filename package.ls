@@ -56,3 +56,4 @@ devDependencies:
   "connect-livereload": '~0.3.2'
   "tiny-lr": '~0.0.5'
   'gulp-if': '~0.0.5'
+  'gulp-replace': '~0.2.0'
