@@ -1,6 +1,7 @@
 GITHUB_ACCOUNT = 'hackfoldr'         # YOUR GITHUB ACCOUNT HERE
 HACKFOLDR_ID   = 'congressoccupied'  # YOUR HACKFOLDR ID HERE
 DOMAIN_NAME    = 'hackfoldr.org'     # YOUR DOMAIN NAME HERE
+GA_ID          = 'UA-39804485-1'     # YOUR Google Analytics ID HERE
 
 paths =
   pub: '_public'
@@ -161,7 +162,7 @@ gulp.task 'index' ->
     .pipe gulp-jade do
       pretty: pretty
       locals:
-        googleAnalytics: 'UA-39804485-1'
+        googleAnalytics: GA_ID
     .pipe gulp.dest '_public'
     .pipe livereload!
 
