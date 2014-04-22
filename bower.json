@@ -1,6 +1,6 @@
 {
-  "name": "ly.g0v.tw",
-  "repo": "g0v/ly.g0v.tw",
+  "name": "hackfoldr",
+  "repo": "hackfoldr/hackfoldr",
   "version": "0.1.1",
   "main": "_public/js/app.js",
   "ignore": [

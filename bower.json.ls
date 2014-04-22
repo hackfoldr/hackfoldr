@@ -1,5 +1,5 @@
-name: "ly.g0v.tw"
-repo: "g0v/ly.g0v.tw"
+name: "hackfoldr"
+repo: "hackfoldr/hackfoldr"
 version: "0.1.1"
 main: "_public/js/app.js"
 ignore: ["**/.*", "node_modules", "components"]
@@ -22,7 +22,7 @@ overrides:
     main: "README.md"
   # FIX a typo in bootstrap-stylus 2.3.2
   "bootstrap-stylus":
-    main: 
+    main:
       * "stylus/bootstrap.styl"
       * "stylus/responsive.styl"
   "angular-scenario":
