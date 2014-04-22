@@ -70,9 +70,9 @@ To use the google APIs client to query YouTube Data API and check live status of
 # Fork
 
 1. fork to your github account
-2. git clone git@github.com/GITHUB_ACCOUNT/hackfoldr
+2. `$ git clone git@github.com/GITHUB_ACCOUNT/hackfoldr`
 3. `$ npm install`
-4. replace GITHUB_ACCOUNT, HACKFOLDR_ID, DOMAIN_NAME in gulpfile.ls
+4. replace GITHUB_ACCOUNT, HACKFOLDR_ID, DOMAIN_NAME, GA_ID in gulpfile.ls
 5. `$ npm run fork`
 6. `$ npm run build`
 7. `$ ./deploy`
