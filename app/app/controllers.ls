@@ -50,9 +50,9 @@ angular.module 'app.controllers' <[ui.state ngCookies]>
     barframeSrc: (entry) ->
       src = entry.opts.bar.replace /\{(\w+)\}/g, -> entry[&1]
       $sce.trustAsResourceUrl src
-    iframeCallback: (doc) -> (status) -> $scope.$apply ->
+    iframeCallback: (doc={}) -> (status) -> $scope.$apply ->
       console?log \iframecb status, doc
-      $state.current.title = "#{doc.title} – hackfoldr"
+      document.title = "#{doc.title} – hackfoldr" if doc.title
       if status is \fail
         doc.noiframe = true
       else
