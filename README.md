@@ -56,9 +56,9 @@ To use vagrant, you need to install:
 - vagrant (> 1.1.x)
 - virtualbox
 
-To setup up work environment:
+To setup up work environment,
+This install ubuntu from stock [(more info)](https://docs.vagrantup.com/v2/providers/basic_usage.html):
 
-    % vagrant box add g0v https://dl.dropboxusercontent.com/u/4339854/g0v/g0v-ubuntu-precise64.box
     % vagrant up
 
 After `vagrant up`, browse http://localhost:6987/ in your favorite browser. You are all set!
