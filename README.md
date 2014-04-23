@@ -25,20 +25,12 @@ For example, with an index like http://ethercalc.org/g0v-hackath2n, you'll get h
 * EtherCalc
 
 # Prerequisites
+[Node.js](http://nodejs.org/) is required on your system.
 
-On Mac, use [Homebrew](https://github.com/mxcl/homebrew) and install gems in `$HOME`:
+Check it with the following commands:
 
-	$ brew install node
-	$ gem install compass --user-install
-	$ export PATH="$HOME/.gem/ruby/1.8/bin:$PATH"
-
-On Mac, use [Homebrew](https://github.com/mxcl/homebrew) and install gems in local directory: (doesn't work)
-
-	$ brew install node
-	$ export GEM_HOME="$PWD/gems"
-	$ mkdir -p $GEM_HOME
-	$ gem install compass
-	$ export PATH="$PWD/gem/bin:$PATH"
+    % npm -v
+    % node -v
 
 # Install
 
