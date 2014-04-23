@@ -1,10 +1,10 @@
 .hackfolder(resize,ng-cloak)
-    .index(ng-class="{collapsed: collapsed, scrollbar: hasScrollbar}",ng-click="collapsed=!collapsed",ng-style='{height: contentHeight}',scrollbar)
+    .index(ng-class="{collapsed: collapsed, scrollbar: hasScrollbar, index_show: sidebar}",ng-click="collapsed=!collapsed",ng-style='{height: contentHeight}',scrollbar)
       div.hackid
         i.icon-home
         |&nbsp;
         a.indexlink.expanded-content(ng-href="http://ethercalc.org/{{hackId}}",target="_blank",ngx-final) {{HackFolder.folderTitle || hackId}}
-        small.icon(ng-class='{"icon-caret-right": collapsed, "icon-caret-left": !collapsed}')
+        small.icon.visible-desktop(ng-class='{"icon-caret-right": collapsed, "icon-caret-left": !collapsed}')
       ul.wrap(ui-sortable='sortableOptions',ng-model='tree')
         li(ng-repeat='doc in tree', ng-title="{{doc.title || doc.id}}",ngx-noclick,ng-class='{active: doc.id == docId}')
           .entry(ng-include="'partials/hackitem.html'")
@@ -12,6 +12,15 @@
             li(ng-repeat='doc in doc.children | filter:doc.tagFilter:tags', ng-title="{{doc.title || doc.id}}",ngx-noclick,ng-class='{active: doc.id == docId}')
               .entry(ng-include="'partials/hackitem.html'")
     .pad-container(ng-style='{height: contentHeight}')
+      .navbar.navbar-inverse.navbar-fixed-top.hidden-desktop
+        .navbar-inner
+          .container
+            a.btn.btn-navbar(ng-click="toggleSidebar()")
+              span.icon-bar
+              span.icon-bar
+              span.icon-bar
+            #brand(ng-bind="$state.current.title", href="#")
+
       article.pad(ng-show='showIndex',ng-include="'partials/hackindex.html'")
       article.pad(ng-repeat='(key, iframe) in iframes',ng-show='docId == key',ng-if="docId == key || iframe.doc.type != 'video'")
         span.docmode(ng-show="hasViewMode(iframe.doc.type) && iframe.mode != 'edit'",ng-click="activate(iframe.doc.id, true)") edit
