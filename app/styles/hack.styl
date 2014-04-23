@@ -65,11 +65,14 @@ body
     color #333
   .label
     margin-left 5px
-
   .index
+    @media (max-width: 979px)
+      display none
+      &.index_show
+        display block
     $bar-width = 16px
     $pad = 15px
-    $width = 300px
+    $width = 250px
     &,a,li
       color #333
       line-height 25px
@@ -153,10 +156,23 @@ body
           vertical-align text-bottom
 
   .pad-container
+    .navbar
+      margin 0
+      .btn-navbar
+        float left
+      #brand
+        @media (max-width: 360px)
+          margin-left 10px
+        color #fff
+        width 250px
+        margin 10px auto
+        float none
     position relative
     background url(/img/ps_neutral.png) #f4f4f4
     flex 20
     article
+      @media (max-width: 979px)
+        top 51px
       -webkit-overflow-scrolling touch
       position absolute
       top 0
