@@ -163,6 +163,7 @@ gulp.task 'index' ->
       pretty: pretty
       locals:
         googleAnalytics: GA_ID
+        domainName: DOMAIN_NAME
     .pipe gulp.dest '_public'
     .pipe livereload!
 
