@@ -39,21 +39,24 @@ Check it with the following commands:
 
 Then after the building message completes, connect to http://localhost:3333/.
 
-# Using vagrant to develop
+# Using Vagrant to develop
 
-[Vagrant](http://docs.vagrantup.com/v2/why-vagrant/index.html) provides easy to configure, reproducible, and portable work environments.
+[Vagrant](http://docs.vagrantup.com/v2/why-vagrant/index.html) provides easy-to-configure, reproducible, and portable work environments. It will create a headless VirtualBox VM, then prepare the development environment and launch the server for you. You can then develop and test the code anywhere :).
 
-To use vagrant, you need to install:
+To use Vagrant, you need to install:
 
-- vagrant (> 1.1.x)
-- virtualbox
+- Vagrant (>= 1.6.x)
+- VirtualBox
 
 To setup up work environment:
 
-    % vagrant box add g0v https://dl.dropboxusercontent.com/u/4339854/g0v/g0v-ubuntu-precise64.box
     % vagrant up
 
-After `vagrant up`, browse http://localhost:6987/ in your favorite browser. You are all set!
+It will take several minutes for the first time, since it will have to configure its Ubuntu VM image. After the operation is finished, browse to `http://localhost:6987/` in your favorite browser. You are all set!
+
+`vagrant halt` if you need to shut down the Vagrant VM. For more information about Vagrant, see the [documentation of Vagrant](http://docs.vagrantup.com).
+
+Note: Have to use older Vagrant (1.3.0+)? Change the `Vagrantfile`.
 
 # Google API key
 

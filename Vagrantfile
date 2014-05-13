@@ -1,15 +1,31 @@
 # -*- mode: ruby -*-
 # vi: set ft=ruby :
 
-# a known issue that symbolic link can not be created in virtualbox shared fold
+# Install the Git and node.js from PPA
+$setup_script = <<RUNONCE
+sudo apt-get update
+sudo apt-get install -y python-software-properties
+sudo add-apt-repository ppa:chris-lea/node.js
+sudo apt-get update
+sudo apt-get install -y nodejs git-core
+RUNONCE
+
+# a known issue that symbolic link cannot be created in VirtualBox shared folder.
 # we have to workround npm modules installaltion.
-$script = <<SCRIPT
-mkdir -p /tmp/node_modules /vagrant/node_modules
-sudo mount --bind /tmp/node_modules /vagrant/node_modules
+$up_script = <<ALWAYSRUN
+mkdir -p /home/vagrant/tmp_node_modules /vagrant/node_modules
+sudo mount --bind /home/vagrant/tmp_node_modules /vagrant/node_modules
 cd /vagrant
-npm i
+npm install
 npm run start
-SCRIPT
+ALWAYSRUN
+
+# Vagrant dependencies:
+# * 1.6.0 -> Allow shell provision always run with :run => 'always'
+# * 1.3.0 -> Run shell provision with SSH user by :privileged => false
+
+# Delete this line for Vagrant 1.3 ~ 1.5
+Vagrant.require_version ">= 1.6.0"
 
 Vagrant.configure("2") do |config|
   # All Vagrant configuration is done here. The most common configuration
@@ -17,13 +33,15 @@ Vagrant.configure("2") do |config|
   # please see the online documentation at vagrantup.com.
 
   # Every Vagrant virtual environment requires a box to build off of.
-  config.vm.box = "g0v"
-  config.vm.provision :shell, :inline => $script
+  config.vm.box = "hashicorp/precise64"
+  config.vm.provision :shell, :inline => $setup_script, :privileged => false
+  # Remove the `, :run => 'always'` for Vagrant 1.3 ~ 1.5
+  config.vm.provision :shell, :inline => $up_script, :privileged => false, :run => 'always'
   config.vm.network :forwarded_port, host: 6987, guest: 3333
 
   # The url from where the 'config.vm.box' box will be fetched if it
   # doesn't already exist on the user's system.
-   config.vm.box_url = "https://dl.dropboxusercontent.com/u/4339854/g0v/g0v-ubuntu-precise64.box"
+  # config.vm.box_url = "https://dl.dropboxusercontent.com/u/4339854/g0v/g0v-ubuntu-precise64.box"
 
   # Create a forwarded port mapping which allows access to a specific port
   # within the machine from a port on the host machine. In the example below,
