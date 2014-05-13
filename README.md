@@ -52,7 +52,7 @@ To setup up work environment:
 
     % vagrant up
 
-It will several minutes for the first time, since it will have to configure its Ubuntu VM image. After the operation is finished, browse to `http://localhost:6987/` in your favorite browser. You are all set!
+It will take several minutes for the first time, since it will have to configure its Ubuntu VM image. After the operation is finished, browse to `http://localhost:6987/` in your favorite browser. You are all set!
 
 `vagrant halt` if you need to shut down the Vagrant VM. For more information about Vagrant, see the [documentation of Vagrant](http://docs.vagrantup.com).
 
