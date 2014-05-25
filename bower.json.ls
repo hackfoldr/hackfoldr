@@ -16,6 +16,7 @@ dependencies:
   "angular-scenario": "1.2.4"
   "bootstrap-stylus": "2.3.2"
   "csv-js": "*"
+  "tabletop": "1.3.5"
 
 overrides:
   "angular":

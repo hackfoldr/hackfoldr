@@ -224,7 +224,9 @@ angular.module 'app.controllers' <[ui.state ngCookies]>
     getIndex: (id, force, cb) ->
       return cb docs if hackId is id and !force
       retry = 0
-      doit = ~>
+      if id is /^\w{40}\w*$/ then doit = ~>
+        console?log "TODO: TableTop here"
+      else doit = ~>
         csv <~ $http.get "https://www.ethercalc.org/_/#{id}/csv"
         .error -> return if ++retry > 3; setTimeout doit, 1000ms
         .success
