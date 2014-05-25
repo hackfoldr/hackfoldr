@@ -225,7 +225,12 @@ angular.module 'app.controllers' <[ui.state ngCookies]>
       return cb docs if hackId is id and !force
       retry = 0
       if id is /^\w{40}\w*$/ then doit = ~>
-        console?log "TODO: TableTop here"
+        callback = ~> for own k, sheet of it
+          docs.length = 0
+          hackId := id
+          @process-csv sheet.toArray!, cb
+          return
+        Tabletop.init { key: id, callback, -simpleSheet }
       else doit = ~>
         csv <~ $http.get "https://www.ethercalc.org/_/#{id}/csv"
         .error -> return if ++retry > 3; setTimeout doit, 1000ms
@@ -251,10 +256,13 @@ angular.module 'app.controllers' <[ui.state ngCookies]>
       cb folder-title, docs, tree
 
     load-csv: (csv, docs, tree, cb) ->
-      csv -= /^\"?#.*\n/gm
+      data = csv
+      if typeof data is \string
+        csv -= /^\"?#.*\n/gm
+        data = CSV.parse(csv)
       var folder-title
       folder-opts = {}
-      entries = for line in CSV.parse(csv)
+      entries = for line in data | line.length
         [url, title, opts, tags, summary, ...rest] = line
         continue unless title
         title -= /^"|"$/g
