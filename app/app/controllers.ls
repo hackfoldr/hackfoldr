@@ -71,7 +71,7 @@ angular.module 'app.controllers' <[ui.state ngCookies]>
         folder-title, docs, tree <- HackFolder.load-remote-csv doc.id
         [entry] = [entry for entry in HackFolder.tree when entry.id is docId]
         entry.tagFilter = entry.tags?0?content
-        unless entry.chidlren
+        unless entry.children
           entry.children ?= tree?0.children
           HackFolder.docs.splice docs.length, 0, ...docs
         $scope.indexDocs = docs
@@ -224,7 +224,7 @@ angular.module 'app.controllers' <[ui.state ngCookies]>
     getIndex: (id, force, cb) ->
       return cb docs if hackId is id and !force
       retry = 0
-      if id is /^\w{40}\w*$/ then doit = ~>
+      if id is /^[-\w]{40}[-\w]*$/ then doit = ~>
         callback = ~> for own k, sheet of it
           docs.length = 0
           hackId := id
