@@ -29,13 +29,13 @@ For example, with an index like http://ethercalc.org/g0v-hackath2n, you'll get h
 
 Check it with the following commands:
 
-    % npm -v
-    % node -v
+    $ npm -v
+    $ node -v
 
 # Install
 
-    % npm i
-    % npm run start
+    $ npm i
+    $ npm start
 
 Then after the building message completes, connect to http://localhost:3333/.
 
@@ -50,7 +50,7 @@ To use Vagrant, you need to install:
 
 To setup up work environment:
 
-    % vagrant up
+    $ vagrant up
 
 It will take several minutes for the first time, since it will have to configure its Ubuntu VM image. After the operation is finished, browse to `http://localhost:6987/` in your favorite browser. You are all set!
 
