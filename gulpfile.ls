@@ -1,7 +1,11 @@
-GITHUB_ACCOUNT = 'hackfoldr'         # YOUR GITHUB ACCOUNT HERE
-HACKFOLDR_ID   = 'congressoccupied'  # YOUR HACKFOLDR ID HERE
-DOMAIN_NAME    = 'hackfoldr.org'     # YOUR DOMAIN NAME HERE
-GA_ID          = 'UA-39804485-1'     # YOUR Google Analytics ID HERE
+env-override = (json) ->
+  for key of json when process.env[key]?
+    json[key] = that
+  json
+
+require! fs
+require-json = -> JSON.parse fs.readFileSync it, \utf-8
+config = env-override require-json('./app/config.jsenv')
 
 paths =
   pub: '_public'
@@ -103,10 +107,7 @@ gulp.task 'test:karma' ->
 require! <[gulp-json-editor gulp-insert gulp-commonjs gulp-uglify]>
 gulp.task 'js:app' ->
   env = gulp.src paths.js-env
-    .pipe gulp-json-editor (json) ->
-      for key of json when process.env[key]?
-        json[key] = that
-      json
+    .pipe gulp-json-editor env-override
     .pipe gulp-insert.prepend 'module.exports = '
     .pipe gulp-commonjs!
 
@@ -162,8 +163,8 @@ gulp.task 'index' ->
     .pipe gulp-jade do
       pretty: pretty
       locals:
-        googleAnalytics: GA_ID
-        domainName: DOMAIN_NAME
+        googleAnalytics: config.GA_ID
+        domainName: config.DOMAIN_NAME
     .pipe gulp.dest '_public'
     .pipe livereload!
 
@@ -188,17 +189,17 @@ require! <[gulp-replace]>
 
 gulp.task 'replace', ->
   gulp.src 'templates/deploy'
-    .pipe gulp-replace /GITHUB_ACCOUNT/, GITHUB_ACCOUNT
+    .pipe gulp-replace /GITHUB_ACCOUNT/, config.GITHUB_ACCOUNT
     .pipe gulp.dest '.'
 
   gulp.src 'templates/app.ls'
-    .pipe gulp-replace /HACKFOLDR_ID/, HACKFOLDR_ID
+    .pipe gulp-replace /HACKFOLDR_ID/, config.HACKFOLDR_ID
     .pipe gulp.dest 'app'
 
   gulp.src 'templates/controllers.ls'
-    .pipe gulp-replace /HACKFOLDR_ID/, HACKFOLDR_ID
+    .pipe gulp-replace /HACKFOLDR_ID/, config.HACKFOLDR_ID
     .pipe gulp.dest 'app/app'
 
   gulp.src 'templates/CNAME'
-    .pipe gulp-replace /DOMAIN_NAME/, DOMAIN_NAME
+    .pipe gulp-replace /DOMAIN_NAME/, config.DOMAIN_NAME
     .pipe gulp.dest 'app/assets'
