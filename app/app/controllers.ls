@@ -1,3 +1,6 @@
+folder-whitelist = (name) ->
+  return true
+
 angular.module 'app.controllers' <[ui.state ngCookies]>
 .controller AppCtrl: <[$scope $window $state $rootScope $timeout]> ++ ($scope, $window, $state, $rootScope, $timeout) ->
   $scope.$watch '$state.current.name' ->
@@ -63,6 +66,8 @@ angular.module 'app.controllers' <[ui.state ngCookies]>
     reload: (hackId) -> HackFolder.getIndex hackId, true ->
 
   $scope.$watch 'hackId' (hackId) ->
+    unless folder-whitelist hackId
+      return $window.location.href = "http://hackfoldr.org/#{$window.location.pathname}"
     <- HackFolder.getIndex hackId, false
     $scope.$watch 'docId' (docId) ->
       doc = HackFolder.activate docId if docId
