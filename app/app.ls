@@ -9,7 +9,7 @@ angular.module \app <[ui app.templates app.controllers ui.state ui.bootstrap]>
       url: '/about'
       templateUrl: 'partials/about.html'
     .state 'hack' do
-      url: '/{hackId}'
+      url: '/{hackId:[^/]{1,}}'
       templateUrl: 'partials/hack.html'
       controller: \HackFolderCtrl
       onEnter: ->
