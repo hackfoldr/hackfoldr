@@ -15,7 +15,7 @@
     "angular-cookies": "1.2.4",
     "angular-animate": "1.2.4",
     "angular-ui-sortable": "0.12.2",
-    "angular-ui-router": "0.2.0",
+    "angular-ui-router": "0.2.10",
     "angular-ui": "0.4.0",
     "angular-mocks": "1.2.4",
     "angular-scenario": "1.2.4",
