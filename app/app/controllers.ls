@@ -70,6 +70,10 @@ angular.module 'app.controllers' <[ui.state ngCookies]>
       return $window.location.href = "http://hackfoldr.org/#{$window.location.pathname}"
     <- HackFolder.getIndex hackId, false
     $scope.$watch 'docId' (docId) ->
+      if HackFolder.docs.0?id
+        if docId and docId is that
+          $state.transitionTo 'hack.doc', { docId: null, hackId: $scope.hackId }
+        docId ?= that
       doc = HackFolder.activate docId if docId
       if doc?type is \hackfoldr
         $scope.show-index = true
@@ -85,9 +89,6 @@ angular.module 'app.controllers' <[ui.state ngCookies]>
         $scope.show-index = false
     $scope.show-index = $state.current.name is \hack.index
     return if $scope.show-index
-    unless $scope.docId
-      if HackFolder.docs.0?id
-        $state.transitionTo 'hack.doc', { docId: that, hackId: $scope.hackId}
 
   $scope.collapsed = $cookies.collapsed ? $window.innerWidth < 768
   $scope.$watch 'collapsed' -> if it?
