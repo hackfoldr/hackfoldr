@@ -74,6 +74,9 @@ angular.module 'app.controllers' <[ui.state ngCookies]>
         if HackFolder.docs.0?id
           $scope.docId ?= that
           return
+      else
+        if $state.params.docId  is HackFolder.docs.0?id
+          $state.transitionTo 'hack.doc', { docId: null, hackId: $scope.hackId }
       doc = HackFolder.activate docId if docId
       if doc?type is \hackfoldr
         $scope.show-index = true
