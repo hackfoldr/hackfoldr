@@ -84,6 +84,9 @@ body
       display inline-block
       text-overflow ellipsis
       vertical-align middle
+      word-wrap break-word
+      white-space initial
+      padding-right 1em
     a.haschildren
     span.haschildren
       max-width: 85%
@@ -115,10 +118,14 @@ body
       background-color #ddd
       margin-bottom 10px
       padding 15px 0 10px $pad
+      white-space nowrap
+      position relative
       i
         margin-top 4px
       small
-        float right
+        position absolute
+        right: 0
+        bottom: 14px
         font-size 16px
         margin-right $pad
         a
