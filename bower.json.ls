@@ -14,22 +14,19 @@ dependencies:
   "angular-ui": "0.4.0"
   "angular-mocks": "1.2.4"
   "angular-scenario": "1.2.4"
-  "bootstrap-stylus": "2.3.2"
   "csv-js": "*"
   "tabletop": "1.3.5"
+  "semantic-ui": "~0.18.0"
 
 overrides:
   "angular":
     dependencies: jquery: "*"
   "angular-mocks":
     main: "README.md"
-  # FIX a typo in bootstrap-stylus 2.3.2
-  "bootstrap-stylus":
-    main:
-      * "stylus/bootstrap.styl"
-      * "stylus/responsive.styl"
   "angular-scenario":
     main: "README.md"
   "angular-ui":
     main:
       * "build/angular-ui.js"
+  "semantic-ui":
+    main: "build/packaged/**/*"
