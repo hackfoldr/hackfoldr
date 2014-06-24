@@ -18,6 +18,7 @@
 body
   margin 0
   font-size 16px
+  color #333
   background url(/img/tiles.png)
   @media (max-width: 767px)
     padding-left 0
@@ -36,6 +37,9 @@ body
       color #fff!important
       text-shadow 0 0px 16px rgba(128,128,128,1)
       background-color rgba(255,255,255,0.1)
+  .container
+    width 940px
+    margin 0 auto
 .navbar .build-id
   margin-top 10px
   color hsl(0, 0%, 75%)
@@ -280,22 +284,3 @@ body
       font-weight normal
       font-size 1rem
 
-/* hack.g0v.tw/tag/ */
-// FIXME: not DRY
-body.about
-  overflow auto
-.about
-  width 80%
-  max-width 800px
-  margin 0 auto 8rem auto
-  padding-top 3rem
-  h1
-    margin 0 0 1rem 0
-  h2
-    font-size 1.5rem
-    margin-top 2rem
-    box-shadow #ccc 0 1px 0, #fff 0 2px 0
-  h3
-    font-size 1rem
-  p, ol, ul, li
-    line-height 1.5rem

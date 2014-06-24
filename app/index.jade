@@ -26,13 +26,15 @@ html(lang='en')
   body(ng-controller='AppCtrl',data-spy="scroll")
     .wrapper
       .ui.fixed.inverted.menu.visible-desktop
-        //a.item(data-toggle='collapse')
-          span.icon-bar
-          span.icon-bar
-          span.icon-bar
-        a.right.item(href="http://github.com/hackfoldr/hackfoldr",target="_blank",title='fork me on github')
-          .small.badge.badge-inverse.pull-right.build-id Source
-        span(ng-include="'partials/nav.html'")
+        .container
+          //a.item(data-toggle='collapse')
+            span.icon-bar
+            span.icon-bar
+            span.icon-bar
+          a.right.item(href="http://github.com/hackfoldr/hackfoldr",target="_blank",title='fork me on github')
+            i.icon.github
+            | Source
+          span(ng-include="'partials/nav.html'")
       .main-content
         div(ui-view)
       .push
