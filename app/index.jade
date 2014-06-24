@@ -25,17 +25,14 @@ html(lang='en')
     script(src='//apis.google.com/js/client.js?onload=googleOnLoadCallback')
   body(ng-controller='AppCtrl',data-spy="scroll")
     .wrapper
-      .navbar.navbar-inverse.navbar-fixed-top.visible-desktop
-        .navbar-inner
-          .container
-            a.btn.btn-navbar(data-toggle='collapse', data-target='.nav-collapse')
-              span.icon-bar
-              span.icon-bar
-              span.icon-bar
-            a(href="http://github.com/hackfoldr/hackfoldr",target="_blank",title='fork me on github')
-              .small.badge.badge-inverse.pull-right.build-id Source
-            .nav-collapse
-              div(ng-include="'partials/nav.html'")
+      .ui.fixed.inverted.menu.visible-desktop
+        //a.item(data-toggle='collapse')
+          span.icon-bar
+          span.icon-bar
+          span.icon-bar
+        a.right.item(href="http://github.com/hackfoldr/hackfoldr",target="_blank",title='fork me on github')
+          .small.badge.badge-inverse.pull-right.build-id Source
+        span(ng-include="'partials/nav.html'")
       .main-content
         div(ui-view)
       .push

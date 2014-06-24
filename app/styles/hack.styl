@@ -16,6 +16,7 @@
   top -2px
 
 body
+  margin 0
   font-size 16px
   background url(/img/tiles.png)
   @media (max-width: 767px)
@@ -23,18 +24,18 @@ body
     padding-right 0
   &.hide-overflow
     overflow hidden
-.navbar
+.ui.fixed.inverted.menu
+  //margin 0
   margin-bottom 0px
   box-shadow 0px 1px 8px rgba(0,0,0,0.5)
-.navbar-inner
   background-image -webkit-linear-gradient(top,#444,#111)!important
-.navbar-inverse .nav > li > a
-  color #ccc!important
-  text-shadow 0 0 1px rgba(255,255,255,0.3)
-.navbar-inverse .nav > li > a:hover
-  color #fff!important
-  text-shadow 0 0px 16px rgba(128,128,128,1)
-  background-color rgba(255,255,255,0.1)
+  a.item
+    color #ccc!important
+    text-shadow 0 0 1px rgba(255,255,255,0.3)
+    &:hover
+      color #fff!important
+      text-shadow 0 0px 16px rgba(128,128,128,1)
+      background-color rgba(255,255,255,0.1)
 .navbar .build-id
   margin-top 10px
   color hsl(0, 0%, 75%)
@@ -280,13 +281,14 @@ body
       font-size 1rem
 
 /* hack.g0v.tw/tag/ */
-
+// FIXME: not DRY
 body.about
   overflow auto
 .about
   width 80%
   max-width 800px
-  margin 3rem auto 8rem auto
+  margin 0 auto 8rem auto
+  padding-top 3rem
   h1
     margin 0 0 1rem 0
   h2

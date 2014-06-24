@@ -9,6 +9,7 @@ config = env-override require-json('./app/config.jsenv')
 
 paths =
   pub: '_public'
+  index: 'app/*.jade'
   template: 'app/partials/**/*.jade'
   assets: 'app/assets/**'
   js-vendor: 'vendor/scripts/*.js'
@@ -44,6 +45,7 @@ gulp.task 'build' <[assets template fonts:vendor images:vendor js:app js:vendor 
 gulp.task 'dev' <[build httpServer]> ->
   port = 35729
   livereload-server.listen port, -> gutil.log it if it
+  gulp.watch paths.index, <[index]>
   gulp.watch paths.template, <[template]>
   gulp.watch paths.assets, <[assets]>
   gulp.watch [paths.js-env, paths.ls-app] <[js:app]>
@@ -171,13 +173,13 @@ require! <[gulp-angular-templatecache gulp-jade]>
 
 gulp.task 'index' ->
   pretty = yes if gutil.env.env isnt 'production'
-  gulp.src ['app/*.jade']
+  gulp.src paths.index
     .pipe gulp-jade do
       pretty: pretty
       locals:
         googleAnalytics: config.GA_ID
         domainName: config.DOMAIN_NAME
-    .pipe gulp.dest '_public'
+    .pipe gulp.dest "#{paths.pub}"
     .pipe livereload!
 
 gulp.task 'template' <[index]> ->
