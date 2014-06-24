@@ -1,0 +1,39 @@
+/**
+ * Try to mimic responsive behaviors in bootstrap.
+ */
+
+// Large desktop
+@media (min-width: 1200px)
+  .visible
+    &.phone
+      display none
+    &.tablet
+      display none
+  .hidden
+    &.desktop
+      display none
+
+// Portrait tablet to landscape and desktop
+@media (min-width: 768px) and (max-width: 979px)
+  .visible
+    &.phone
+      display none
+    &.desktop
+      display none
+  .hidden
+    &.tablet
+      display none
+
+// Landscape phone to portrait tablet
+@media (max-width: 767px)
+  .visible
+    &.tablet
+      display none
+    &.desktop
+      display none
+  .hidden
+    &.phone
+      display none
+
+// Landscape phones and down
+//@media (max-width: 480px)
