@@ -155,7 +155,7 @@ angular.module 'app.controllers' <[ui.state ngCookies]>
   link: ($scope, element, attrs) ->
     cb = $parse attrs.ngxClickMeta
 
-    is-meta = if navigator.appVersion.match /Win/
+    is-meta = if navigator.appVersion.match /(Win|X11)/
       -> it.ctrlKey
     else
       -> it.metaKey
