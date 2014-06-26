@@ -16,6 +16,10 @@
         a.item(ng-click="toggleSidebar()")
           i.icon.reorder
         #brand.center.item(ng-bind="$state.current.title", href="#")
+        // FIXME: duplicated codes, see index.jade
+        a.right.item(href="http://github.com/hackfoldr/hackfoldr",target="_blank",title='fork me on githu      b')
+          i.icon.github
+          | Source
 
       article.pad(ng-show='showIndex',ng-include="'partials/hackindex.html'")
       article.pad(ng-repeat='(key, iframe) in iframes',ng-show='docId == key',ng-if="docId == key || iframe.doc.type != 'video'")
