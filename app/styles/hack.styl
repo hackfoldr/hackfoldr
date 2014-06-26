@@ -45,14 +45,12 @@ body
   color hsl(0, 0%, 75%)
 
 /* hide nav labels when window.width < 1200px */
+// FIXME: what should I hide in semantic ui?
 @media (max-width: 1200px)
   .navbar ul.nav span.label
     display none
 
 #brand
-  float right
-  margin-left 5px
-  padding 0
   img
     height 38px
 
@@ -195,7 +193,7 @@ body
     flex 20
     article
       @media (max-width: 979px)
-        top 51px
+        top 43px
       -webkit-overflow-scrolling touch
       position absolute
       top 0

@@ -55,6 +55,9 @@ angular.module 'app.controllers' <[ui.state ngCookies]>
       $sce.trustAsResourceUrl src
     iframeCallback: (doc={}) -> (status) -> $scope.$apply ->
       console?log \iframecb status, doc
+      # set current title for phone and tablet view,
+      # please also check hack.jade.
+      $state.current.title = doc.title
       document.title = "#{doc.title} – hackfoldr" if doc.title
       if status is \fail
         doc.noiframe = true
@@ -175,7 +178,7 @@ angular.module 'app.controllers' <[ui.state ngCookies]>
   (scope, element, attrs) ->
     has-scrollbar = ->
       $index = $('.index')
-      scope.has-scrollbar = $index.get(0).scrollHeight > $window.innerHeight - $('.navbar').height()
+      scope.has-scrollbar = $index.get(0).scrollHeight > $window.innerHeight - $('.ui.menu').height()
     angular.element $window .bind \resize ->
       scope.$apply has-scrollbar
     scope.$watch 'docs' has-scrollbar

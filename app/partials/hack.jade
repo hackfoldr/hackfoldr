@@ -12,12 +12,10 @@
             li(ng-repeat='doc in doc.children | filter:doc.tagFilter:tags', ng-title="{{doc.title || doc.id}}",ngx-noclick,ng-class='{active: doc.id == docId}')
               .entry(ng-include="'partials/hackitem.html'")
     .pad-container(ng-style='{height: contentHeight}')
-      .ui.fixed.inverted.menu.navbar.hidden.desktop
-        aa.item(ng-click="toggleSidebar()")
-          span.icon.bar
-          span.icon.bar
-          span.icon.bar
-        #brand(ng-bind="$state.current.title", href="#")
+      .ui.fixed.inverted.menu.hidden.desktop
+        a.item(ng-click="toggleSidebar()")
+          i.icon.reorder
+        #brand.center.item(ng-bind="$state.current.title", href="#")
 
       article.pad(ng-show='showIndex',ng-include="'partials/hackindex.html'")
       article.pad(ng-repeat='(key, iframe) in iframes',ng-show='docId == key',ng-if="docId == key || iframe.doc.type != 'video'")
