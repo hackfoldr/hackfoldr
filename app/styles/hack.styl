@@ -3,14 +3,14 @@
 @import "nib/flex"
 
 
-.navbar .nav > li.dropdown-split-left > a
+.ui.menu > li.dropdown-split-left > a
   padding-right 5px
 
-.navbar .nav > li.dropdown-split-right > a
+.ui.menu > li.dropdown-split-right > a
   padding-left 5px
   padding-right 5px
 
-.navbar .label
+.ui.menu .label
   margin 0 0 -10px 3px
   position relative
   top -2px
@@ -40,15 +40,12 @@ body
   .container
     width 940px
     margin 0 auto
-.navbar .build-id
+.ui.menu .build-id
   margin-top 10px
   color hsl(0, 0%, 75%)
 
 /* hide nav labels when window.width < 1200px */
-// FIXME: what should I hide in semantic ui?
-@media (max-width: 1200px)
-  .navbar ul.nav span.label
-    display none
+// using .only.desktop now, please see responsive.styl
 
 #brand
   img
@@ -66,8 +63,6 @@ body
   a
     text-shadow 0px 0px 2px rgba(32,32,32,0.2)
     color #333
-  .label
-    margin-left 5px
   .index
     @media (max-width: 979px)
       display none
@@ -138,6 +133,7 @@ body
 
     ul
       margin 0
+      padding 0
       li
         list-style none
         padding 0
@@ -165,6 +161,12 @@ body
             height 16px
             margin-right 5px
             vertical-align -2px
+          .ui.label
+            padding 2px 4px
+            margin 0 5px 3px 5px
+            font-size 0.666rem
+            font-weight 900
+            line-height 1rem
         li .link
           padding-left $pad+22px
           &:hover
@@ -177,17 +179,11 @@ body
           vertical-align text-bottom
 
   .pad-container
-    .navbar
+    .ui.menu
       margin 0
-      .btn-navbar
-        float left
       #brand
         @media (max-width: 360px)
           margin-left 10px
-        color #fff
-        width 250px
-        margin 10px auto
-        float none
     position relative
     background url(/img/ps_neutral.png) #f4f4f4
     flex 20

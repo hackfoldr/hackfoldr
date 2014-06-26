@@ -12,7 +12,7 @@
             li(ng-repeat='doc in doc.children | filter:doc.tagFilter:tags', ng-title="{{doc.title || doc.id}}",ngx-noclick,ng-class='{active: doc.id == docId}')
               .entry(ng-include="'partials/hackitem.html'")
     .pad-container(ng-style='{height: contentHeight}')
-      .ui.fixed.inverted.menu.hidden.desktop
+      .ui.fixed.inverted.menu.never.desktop
         a.item(ng-click="toggleSidebar()")
           i.icon.reorder
         #brand.center.item(ng-bind="$state.current.title", href="#")

@@ -4,36 +4,37 @@
 
 // Large desktop
 @media (min-width: 1200px)
-  .visible
+  // .visible will be conflict with .ui.label.visible
+  .only
     &.phone
-      display none
+      display none!important
     &.tablet
-      display none
-  .hidden
+      display none!important
+  .never
     &.desktop
-      display none
+      display none!important
 
 // Portrait tablet to landscape and desktop
 @media (min-width: 768px) and (max-width: 979px)
-  .visible
+  .only
     &.phone
-      display none
+      display none!important
     &.desktop
-      display none
-  .hidden
+      display none!important
+  .never
     &.tablet
-      display none
+      display none!important
 
 // Landscape phone to portrait tablet
 @media (max-width: 767px)
-  .visible
+  .only
     &.tablet
-      display none
+      display none!important
     &.desktop
-      display none
-  .hidden
+      display none!important
+  .never
     &.phone
-      display none
+      display none!important
 
 // Landscape phones and down
 //@media (max-width: 480px)

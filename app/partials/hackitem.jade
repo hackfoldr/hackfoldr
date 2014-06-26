@@ -5,5 +5,5 @@ a.link(ng-click='godoc(doc)',ngx-click-meta='open(doc)',ngx-final,ng-if="doc.typ
   img(ng-src="{{doc.icon}}")
   span.expanded-content {{doc.title || doc.id}}
   span.expanded-content(ng-show='doc.tagFilter') [{{doc.tagFilter}}]
-  span.label(ng-repeat='tag in doc.tags',class="label-{{tag.class}}") {{tag.content}}
+  span.ui.label.only.desktop(ng-repeat='tag in doc.tags',class="{{tag.class}}") {{tag.content}}
 span.collapser(ng-if='doc.children',ng-class='{collapsed: !doc.expand}',ng-click='doc.expand=!doc.expand',title="{{ {'true': (doc.title || doc.id), 'false': ''}[!!collapsed] }}") {{ {"true": "&#x25B8;", "false": "&#x25BE;"}[!doc.expand] }}
