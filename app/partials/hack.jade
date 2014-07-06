@@ -25,7 +25,9 @@
       article.pad(ng-repeat='(key, iframe) in iframes',ng-show='docId == key',ng-if="docId == key || iframe.doc.type != 'video'")
         span.docmode(ng-show="hasViewMode(iframe.doc.type) && iframe.mode != 'edit'",ng-click="activate(iframe.doc.id, true)") edit
         span.docmode(ng-show="(iframe.doc.type=='hackpad') && showSaveBtn()",ng-click='showSaveModal(true,false,$event)') save / 存檔
-        .ui.modal(modal="saveModalOpen",close="showSaveModal(false)",options="saveModalOpts")
+        // FIXME: not sure if I should remove saveModalOpts or not
+        .ui.modal.save(options="saveModalOpts")
+          i.close.icon(ng-click="showSaveModal(flase)")
           .header
             h3#saveModalLabel 歡迎來到二十一世紀
           .content
@@ -34,9 +36,8 @@
             p 如果不能理解的話，你可以把他當成是自動存檔，只是你的任何編輯都會隨時被自動存檔到網站上。
             p 總而言之，歡迎來到二十一世紀。
           .actions
-             button.ui.button(ng-click="showSaveModal(false,true)") 我瞭解了
-             span |
-             button.ui.button(ng-click="showSaveModal(false)") 我不管，我就是要存檔
+             button.ui.positive.button(ng-click="showSaveModal(false,true)") 我瞭解了
+             button.ui.negative.button(ng-click="showSaveModal(false)") 我不管，我就是要存檔
 
         .noiframe.unsure(ng-if="iframe.doc.iframeunsure") 按以下連結，可開啟到新頁籤:
           br

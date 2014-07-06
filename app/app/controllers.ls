@@ -40,9 +40,8 @@ angular.module 'app.controllers' <[ui.state ngCookies]>
         console?log \folder!!
     saveBtn: void
     saveModalOpts: dialogFade: true
-    saveModalOpen: false
     showSaveModal: (show,rm,e)->
-      $scope.saveModalOpen = show
+      $ '.ui.modal.save' .modal \toggle, show
       if e => $scope.saveBtn = $ e.target
       if rm =>
         $cookies.savebtn = \consumed
