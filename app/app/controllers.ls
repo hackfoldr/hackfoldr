@@ -373,3 +373,10 @@ angular.module 'app.controllers' <[ui.state ngCookies]>
         it
       tree.splice 0, tree.length, ...nested
       cb folder-title, docs
+
+.directive \ngxTooltip ->
+  ($scope, element, attrs) ->
+    $ element .popup do
+      position: "right center"
+      duration: 1ms # the popup will not close if you set this to 0
+
