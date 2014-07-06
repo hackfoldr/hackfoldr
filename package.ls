@@ -47,6 +47,7 @@ devDependencies:
   #"gulp-cssmin": '~0.1.0' # failed with gulp-if
   'gulp-csso': '~0.2.6'
   "gulp-filter": '~0.2.1'
+  "gulp-flatten": '0.0.2'
   "gulp-mocha": '~0.4.1'
   "gulp-karma": '^0.0.4'
   "gulp-livereload": '~1.1.1'

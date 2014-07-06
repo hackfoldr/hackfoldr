@@ -40,9 +40,8 @@ angular.module 'app.controllers' <[ui.state ngCookies]>
         console?log \folder!!
     saveBtn: void
     saveModalOpts: dialogFade: true
-    saveModalOpen: false
     showSaveModal: (show,rm,e)->
-      $scope.saveModalOpen = show
+      $ '.ui.modal.save' .modal \toggle, show
       if e => $scope.saveBtn = $ e.target
       if rm =>
         $cookies.savebtn = \consumed
@@ -55,6 +54,9 @@ angular.module 'app.controllers' <[ui.state ngCookies]>
       $sce.trustAsResourceUrl src
     iframeCallback: (doc={}) -> (status) -> $scope.$apply ->
       console?log \iframecb status, doc
+      # set current title for phone and tablet view,
+      # please also check hack.jade.
+      $state.current.title = doc.title
       document.title = "#{doc.title} – hackfoldr" if doc.title
       if status is \fail
         doc.noiframe = true
@@ -155,7 +157,7 @@ angular.module 'app.controllers' <[ui.state ngCookies]>
   link: ($scope, element, attrs) ->
     cb = $parse attrs.ngxClickMeta
 
-    is-meta = if navigator.appVersion.match /Win/
+    is-meta = if navigator.appVersion.match /(Win|X11)/
       -> it.ctrlKey
     else
       -> it.metaKey
@@ -175,7 +177,7 @@ angular.module 'app.controllers' <[ui.state ngCookies]>
   (scope, element, attrs) ->
     has-scrollbar = ->
       $index = $('.index')
-      scope.has-scrollbar = $index.get(0).scrollHeight > $window.innerHeight - $('.navbar').height()
+      scope.has-scrollbar = $index.get(0).scrollHeight > $window.innerHeight - $('.ui.menu').height()
     angular.element $window .bind \resize ->
       scope.$apply has-scrollbar
     scope.$watch 'docs' has-scrollbar
@@ -371,3 +373,10 @@ angular.module 'app.controllers' <[ui.state ngCookies]>
         it
       tree.splice 0, tree.length, ...nested
       cb folder-title, docs
+
+.directive \ngxTooltip ->
+  ($scope, element, attrs) ->
+    $ element .popup do
+      position: "right center"
+      duration: 1ms # the popup will not close if you set this to 0
+

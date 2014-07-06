@@ -9,6 +9,7 @@ config = env-override require-json('./app/config.jsenv')
 
 paths =
   pub: '_public'
+  index: 'app/*.jade'
   template: 'app/partials/**/*.jade'
   assets: 'app/assets/**'
   js-vendor: 'vendor/scripts/*.js'
@@ -40,10 +41,11 @@ gulp.task \httpServer ->
   http-server.listen port, ->
     gutil.log "Running on " + gutil.colors.bold.inverse "http://localhost:#port"
 
-gulp.task 'build' <[assets template js:app js:vendor css]>
+gulp.task 'build' <[assets template fonts:vendor images:vendor js:app js:vendor css]>
 gulp.task 'dev' <[build httpServer]> ->
   port = 35729
   livereload-server.listen port, -> gutil.log it if it
+  gulp.watch paths.index, <[index]>
   gulp.watch paths.template, <[template]>
   gulp.watch paths.assets, <[assets]>
   gulp.watch [paths.js-env, paths.ls-app] <[js:app]>
@@ -120,12 +122,24 @@ gulp.task 'js:app' ->
     .pipe gulp-if production, gulp-uglify!
     .pipe gulp.dest "#{paths.pub}/js"
 
-require! <[gulp-filter gulp-bower gulp-bower-files gulp-stylus gulp-csso]>
+require! <[gulp-filter gulp-bower gulp-bower-files gulp-stylus gulp-csso gulp-flatten]>
 gulp.task 'bower' -> gulp-bower!
+
+gulp.task 'fonts:vendor' <[bower]> ->
+  gulp-bower-files!
+    .pipe gulp-filter <[**/*.eof **/*.ttf **/*.svg **/*.woff]>
+    .pipe gulp-flatten!
+    .pipe gulp.dest "#{paths.pub}/fonts"
+
+gulp.task 'images:vendor' <[bower]> ->
+  gulp-bower-files!
+    .pipe gulp-filter <[**/*.jpg **/*.jpeg **/*.png **/*.gif]>
+    .pipe gulp-flatten!
+    .pipe gulp.dest "#{paths.pub}/images"
 
 gulp.task 'js:vendor' <[bower]> ->
   bower = gulp-bower-files!
-    .pipe gulp-filter (.path is /\.js$/)
+    .pipe gulp-filter <[**/*.js !**/*.min.js]>
 
   s = streamqueue { +objectMode }
     .done bower, gulp.src paths.js-vendor
@@ -138,7 +152,7 @@ gulp.task 'css' <[bower]> ->
   vendor = gulp.src paths.css-vendor
 
   bower = gulp-bower-files!
-    .pipe gulp-filter (.path is /\.css$/)
+    .pipe gulp-filter <[**/*.css !**/*.min.css]>
 
   bower-styl = gulp-bower-files!
     .pipe gulp-filter (.path is /\.styl$/)
@@ -159,13 +173,13 @@ require! <[gulp-angular-templatecache gulp-jade]>
 
 gulp.task 'index' ->
   pretty = yes if gutil.env.env isnt 'production'
-  gulp.src ['app/*.jade']
+  gulp.src paths.index
     .pipe gulp-jade do
       pretty: pretty
       locals:
         googleAnalytics: config.GA_ID
         domainName: config.DOMAIN_NAME
-    .pipe gulp.dest '_public'
+    .pipe gulp.dest "#{paths.pub}"
     .pipe livereload!
 
 gulp.task 'template' <[index]> ->

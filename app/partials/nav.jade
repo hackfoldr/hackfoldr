@@ -1,7 +1,5 @@
-ul.nav
-  li
-    a(ng-href='/') Home
+a.item(ng-href='/') Home
 
-ul.nav.pull-right
+ul.right.menu
   li(ng-class="{ active: $state.includes('about') }")
-    a(ng-href='http://hackfoldr.org/about') About
+    a.item(ng-href='/about') About
