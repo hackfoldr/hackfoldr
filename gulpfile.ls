@@ -122,8 +122,14 @@ gulp.task 'js:app' ->
     .pipe gulp-if production, gulp-uglify!
     .pipe gulp.dest "#{paths.pub}/js"
 
-require! <[gulp-filter gulp-bower gulp-bower-files gulp-stylus gulp-csso gulp-flatten]>
-gulp.task 'bower' -> gulp-bower!
+require! <[gulp-filter bower gulp-bower-files gulp-stylus gulp-csso gulp-flatten]>
+gulp.task 'bower' ->
+  bower.commands.install!on \end (results) ->
+    for pkg, data of results
+      gutil.log do
+        gutil.colors.magenta data.pkgMeta.name
+        gutil.colors.cyan data.pkgMeta.version
+        "installed"
 
 gulp.task 'fonts:vendor' <[bower]> ->
   gulp-bower-files!
