@@ -122,7 +122,7 @@ gulp.task 'js:app' ->
     .pipe gulp-if production, gulp-uglify!
     .pipe gulp.dest "#{paths.pub}/js"
 
-require! <[gulp-filter bower gulp-bower-files gulp-stylus gulp-csso gulp-flatten]>
+require! <[gulp-filter bower main-bower-files gulp-stylus gulp-csso gulp-flatten]>
 gulp.task 'bower' ->
   bower.commands.install!on \end (results) ->
     for pkg, data of results
@@ -132,19 +132,19 @@ gulp.task 'bower' ->
         "installed"
 
 gulp.task 'fonts:vendor' <[bower]> ->
-  gulp-bower-files!
+  gulp.src main-bower-files!
     .pipe gulp-filter <[**/*.eof **/*.ttf **/*.svg **/*.woff]>
     .pipe gulp-flatten!
     .pipe gulp.dest "#{paths.pub}/fonts"
 
 gulp.task 'images:vendor' <[bower]> ->
-  gulp-bower-files!
+  gulp.src main-bower-files!
     .pipe gulp-filter <[**/*.jpg **/*.jpeg **/*.png **/*.gif]>
     .pipe gulp-flatten!
     .pipe gulp.dest "#{paths.pub}/images"
 
 gulp.task 'js:vendor' <[bower]> ->
-  bower = gulp-bower-files!
+  bower = gulp.src main-bower-files!
     .pipe gulp-filter <[**/*.js !**/*.min.js]>
 
   s = streamqueue { +objectMode }
@@ -157,10 +157,10 @@ gulp.task 'js:vendor' <[bower]> ->
 gulp.task 'css' <[bower]> ->
   vendor = gulp.src paths.css-vendor
 
-  bower = gulp-bower-files!
+  bower = gulp.src main-bower-files!
     .pipe gulp-filter <[**/*.css !**/*.min.css]>
 
-  bower-styl = gulp-bower-files!
+  bower-styl = gulp.src main-bower-files!
     .pipe gulp-filter (.path is /\.styl$/)
     .pipe gulp-stylus use: <[nib]>
 
