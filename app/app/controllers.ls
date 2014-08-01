@@ -234,12 +234,22 @@ angular.module 'app.controllers' <[ui.state ngCookies]>
 
     getIndex: (id, force, cb) ->
       return cb docs if hackId is id and !force
+
+      if local-storage[id] and !force
+        csv = try JSON.parse local-storage[id]
+        if csv
+          hackId := id
+          folder-title, docs <- @load-csv csv, docs, tree
+          self.folder-title = folder-title
+          cb docs
+
       retry = 0
       if id is /^[-\w]{40}[-\w]*$/ then doit = ~>
         callback = ~> for own k, sheet of it
           docs.length = 0
           hackId := id
-          @process-csv sheet.toArray!, cb
+          csv = sheet.to-array!
+          @process-csv csv, id, cb
           return
         Tabletop.init { key: id, callback, -simpleSheet }
       else doit = ~>
@@ -249,11 +259,15 @@ angular.module 'app.controllers' <[ui.state ngCookies]>
 
         hackId := id
         docs.length = 0
-        @process-csv csv, cb
+        @process-csv csv, id, cb
       doit!
 
 
-    process-csv: (csv, cb) ->
+    process-csv: (csv, id, cb) ->
+      if typeof csv is \string
+        csv -= /^\"?#.*\n/gm
+        csv = CSV.parse(csv)
+      local-storage[id] = JSON.stringify csv
       folder-title, docs <- @load-csv csv, docs, tree
       self.folder-title = folder-title
       cb docs
@@ -268,9 +282,6 @@ angular.module 'app.controllers' <[ui.state ngCookies]>
 
     load-csv: (csv, docs, tree, cb) ->
       data = csv
-      if typeof data is \string
-        csv -= /^\"?#.*\n/gm
-        data = CSV.parse(csv)
       var folder-title
       folder-opts = {}
       entries = for line in data | line?length
