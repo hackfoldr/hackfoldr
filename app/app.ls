@@ -33,7 +33,7 @@ angular.module \app <[ui app.templates app.controllers ui.state]>
   $rootScope._build = require 'config.jsenv' .BUILD
   $rootScope.$on \$stateChangeSuccess (e, {name}) ->
     window?ga? 'send' 'pageview' page: $location.$$url, title: name
-  $rootScope.safeApply = ($scope, fn) ->
+  $rootScope.$safeApply = ($scope, fn) ->
     phase = $scope.$root.$$phase
     if (phase is '$apply' || phase is '$digest')
       fn?!

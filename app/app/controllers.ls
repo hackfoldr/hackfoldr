@@ -71,7 +71,7 @@ angular.module 'app.controllers' <[ui.state ngCookies]>
     unless folder-whitelist hackId
       return $window.location.href = "http://hackfoldr.org/#{$window.location.pathname}"
     <- HackFolder.getIndex hackId, false
-    <- $scope.$apply
+    <- $scope.$safeApply $scope
     $scope.$watch 'docId' (docId) ->
       unless docId
         if HackFolder.docs.0?id
