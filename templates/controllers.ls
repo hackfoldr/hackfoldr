@@ -248,8 +248,8 @@ angular.module 'app.controllers' <[ui.state ngCookies]>
       csv -= /^\"?#.*\n/gm
       var folder-title
       folder-opts = {}
-      entries = for line in CSV.parse(csv)
-        [url, title, opts, tags, summary, ...rest] = line
+      entries = for line in CSV.parse(csv) | line.length
+        try [url, title, opts, tags, summary, ...rest] = line
         continue unless title
         title -= /^"|"$/g
         opts -= /^"|"$/g if opts

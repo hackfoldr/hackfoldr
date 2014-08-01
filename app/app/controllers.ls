@@ -273,7 +273,7 @@ angular.module 'app.controllers' <[ui.state ngCookies]>
         data = CSV.parse(csv)
       var folder-title
       folder-opts = {}
-      entries = for line in data | line.length
+      entries = for line in data | line?length
         [url, title, opts, tags, summary, ...rest] = line
         continue unless title
         title -= /^"|"$/g
@@ -282,7 +282,9 @@ angular.module 'app.controllers' <[ui.state ngCookies]>
           opts = try JSON.parse opts.replace /""/g '"'
         opts ?= {}
         tags -= /^"|"$/g if tags
-        [_, prefix, url, hashtag] = url.match /^"?(\s*)(\S+?)?(#\S+?)?\s*"?$/
+        matched = url.match /^"?(\s*)(\S+?)?(#\S+?)?\s*"?$/
+        continue unless matched?length
+        [_, prefix, url, hashtag] = matched
         entry = { summary, hashtag, url, title, indent: prefix.length, opts: {} <<< folder-opts <<< opts } <<< match url
         | void
             unless folder-title
