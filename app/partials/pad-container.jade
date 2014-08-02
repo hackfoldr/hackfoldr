@@ -1,0 +1,40 @@
+.ui.fixed.inverted.menu.never.desktop
+  a.item(ng-click="toggleSidebar()")
+    i.icon.reorder
+  #brand.center.item(ng-bind="$state.current.title", href="#")
+  // FIXME: duplicated codes, see index.jade
+  a.right.item(href="http://github.com/hackfoldr/hackfoldr",target="_blank",title='fork me on githu      b')
+    i.icon.github
+    | Source
+
+article.pad(ng-show='showIndex',ng-include="'partials/hackindex.html'")
+article.pad(ng-repeat='(key, iframe) in iframes',ng-show='docId == key',ng-if="docId == key || iframe.doc.type != 'video'")
+  span.docmode(ng-show="hasViewMode(iframe.doc.type) && iframe.mode != 'edit'",ng-click="activate(iframe.doc.id, true)") edit
+  span.docmode(ng-show="(iframe.doc.type=='hackpad') && showSaveBtn()",ng-click='showSaveModal(true,false,$event)') save / 存檔
+  // FIXME: not sure if I should remove saveModalOpts or not
+  .ui.modal.save(options="saveModalOpts")
+    i.close.icon(ng-click="showSaveModal(flase)")
+    .header
+      h3#saveModalLabel 歡迎來到二十一世紀
+    .content
+      p 在這個時代，存檔是不需要的。
+      p 你所要做的就是把你想要寫的東西寫上去，別人就能看到了。若有同時在編輯同份文件的人，他甚至會看到你打的字一個接一個的出現。
+      p 如果不能理解的話，你可以把他當成是自動存檔，只是你的任何編輯都會隨時被自動存檔到網站上。
+      p 總而言之，歡迎來到二十一世紀。
+    .actions
+       button.ui.positive.button(ng-click="showSaveModal(false,true)") 我瞭解了
+       button.ui.negative.button(ng-click="showSaveModal(false)") 我不管，我就是要存檔
+
+  .noiframe.unsure(ng-if="iframe.doc.iframeunsure") 按以下連結，可開啟到新頁籤:
+    br
+    span.link
+      img(ng-src="{{iframe.doc.icon}}",title="{{iframe.doc.title || iframe.doc.id}}")
+      a(ng-href="{{iframe.src}}",target="{{iframe.doc.id}}") {{iframe.src}}
+    .icon.icon-close(ng-click='iframe.doc.iframeunsure = false') &#x274c;
+  .noiframe(ng-if="iframe.doc.noiframe") 按以下連結，可開啟到新頁籤:
+    br
+    span.link
+      img(ng-src="{{iframe.doc.icon}}",title="{{iframe.doc.title || iframe.doc.id}}")
+      a(ng-href="{{iframe.src}}",target="{{iframe.doc.id}}") {{iframe.src}}
+  iframe.bar(ng-if="iframe.doc.opts.bar && iframe.doc.opts.enable_bar[iframe.doc.type]", src="{{barframeSrc(iframe.doc)}}",style="position: fixed; z-index: 99; background: black",width="100%",height="36px",marginwidth="0",marginheight="0",scrolling="no",frameborder="0")
+  iframe.embed(ng-show='!iframe.doc.noiframe',ng-src='{{iframe.src}}',ngx-iframe="iframeCallback(iframe.doc)")

@@ -31,8 +31,7 @@ html(lang='en')
             i.icon.github
             | Source
           span.nav-collapse(ng-include="'partials/nav.html'")
-      .main-content
-        div(ui-view)
+      .main-content(ui-view)
       .push
     - if (typeof(segmentio) !== 'undefined')
       script(type="text/javascript").

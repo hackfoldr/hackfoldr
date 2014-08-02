@@ -22,6 +22,12 @@ angular.module \app <[ui app.templates app.controllers ui.state ui.router.stateH
           url: '/__index'
         * name: 'doc'
           url: '/{docId}'
+          views:
+            'hack-index':
+              template-url: 'partials/hack-index.html'
+            'pad-container':
+              template-url: 'partials/pad-container.html'
+
 
   $urlRouterProvider
     .otherwise('/about')
