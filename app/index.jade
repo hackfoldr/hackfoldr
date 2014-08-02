@@ -27,16 +27,11 @@ html(lang='en')
     .wrapper
       .ui.fixed.inverted.menu.only.desktop
         .container
-          // old responsive design
-          //a.item(data-toggle='collapse' data-target='.nav-collapse')
-            i.icon.reorder
-          // FIXME: not DRY, duplicated codes in partials/hack.jade
           a.right.item(href="http://github.com/hackfoldr/hackfoldr",target="_blank",title='fork me on github')
             i.icon.github
             | Source
           span.nav-collapse(ng-include="'partials/nav.html'")
-      .main-content
-        div(ui-view)
+      .main-content(ui-view)
       .push
     - if (typeof(segmentio) !== 'undefined')
       script(type="text/javascript").
