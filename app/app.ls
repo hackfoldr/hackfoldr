@@ -2,24 +2,26 @@
 
 angular.module('scroll', []).value('$anchorScroll', angular.noop)
 
-angular.module \app <[ui app.templates app.controllers ui.state]>
-.config <[$stateProvider $urlRouterProvider $locationProvider]> ++ ($stateProvider, $urlRouterProvider, $locationProvider) ->
-  $stateProvider
-    .state 'about' do
+angular.module \app <[ui app.templates app.controllers ui.state ui.router.stateHelper]>
+.config <[stateHelperProvider $urlRouterProvider $locationProvider]> ++ (stateHelperProvider, $urlRouterProvider, $locationProvider) ->
+  stateHelperProvider.setNestedState do
+      name: 'about'
       url: '/about'
-      templateUrl: 'partials/about.html'
-    .state 'hack' do
+      template-url: 'partials/about.html'
+  stateHelperProvider.setNestedState do
+      name: 'hack'
       url: '/{hackId:[^/]{1,}}'
-      templateUrl: 'partials/hack.html'
-      controller: \HackFolderCtrl
+      template-url: 'partials/hack.html'
+      controller: 'HackFolderCtrl'
       onEnter: ->
         $ \body .addClass \hide-overflow
       onExit: ->
         $ \body .removeClass \hide-overflow
-    .state 'hack.index' do
-      url: '/__index'
-    .state 'hack.doc' do
-      url: '/{docId}'
+      children:
+        * name: 'index'
+          url: '/__index'
+        * name: 'doc'
+          url: '/{docId}'
 
   $urlRouterProvider
     .otherwise('/about')
