@@ -98,8 +98,10 @@ angular.module 'app.controllers' <[ui.state ngCookies]>
     return if $scope.show-index
 
   $scope.collapsed = $cookies.collapsed ? $window.innerWidth < 768
+  $scope.collapsed = false if $scope.collapsed is 'false'
+
   $scope.$watch 'collapsed' -> if it?
-    $cookies.collapsed = it
+    $cookies.collapsed = !!it
 
   $scope.hackId = if $state.params.hackId => that else 'congressoccupied'
   $scope.$watch '$state.params.docId' (docId) ->
