@@ -63,121 +63,6 @@ body
   a
     text-shadow 0px 0px 2px rgba(32,32,32,0.2)
     color #333
-  .index
-    @media (max-width: 979px)
-      display none
-      &.index_show
-        display block
-    $bar-width = 16px
-    $pad = 15px
-    $width = 250px
-    &,a,li
-      color #333
-      line-height 25px
-    a:hover
-      color black
-      text-decoration none
-    a
-      overflow hidden
-      display inline-block
-      text-overflow ellipsis
-      vertical-align middle
-      word-wrap break-word
-      white-space initial
-      padding-right 1em
-    a.haschildren
-    span.haschildren
-      max-width: 85%
-      whitespace: no-wrap
-      text-overflow ellipsis
-      overflow hidden
-    background-color white
-    border-right 3px solid #888
-    cursor w-resize
-    font-family "XinGothic Citicpress", "Lantinghei TC", "Hiragino Kaku Gothic Pro", "Apple LiGothic", "Heiti TC", "LiHei Pro", "Microsoft YaHei", "微軟正黑體", "文泉驿正黑", sans-serif
-    font-size 16px
-    overflow-x hidden
-    overflow-y auto
-    transition .15s
-    width $width
-    &.collapsed
-      cursor e-resize
-      margin-left 27px - $width
-      .hackid i.small
-        margin-right 8px
-      img
-        margin-top 5px
-        position absolute
-        right 0
-      span.collapser
-        display none
-
-    .hackid
-      background-color #ddd
-      margin-bottom 10px
-      padding 15px 15px 10px $pad
-      white-space nowrap
-      position relative
-      i
-        margin-top 4px
-      i.small
-        position absolute
-        right: 0
-        bottom: 14px
-        font-size 16px
-        margin-right $pad
-        a
-          cursor pointer
-    &.scrollbar
-      width $width + $bar-width
-
-    ul
-      margin 0
-      padding 0
-      li
-        list-style none
-        padding 0
-        position relative
-        line-height 1.6
-        &.active .link
-          background-color #333
-          color #eee
-        .link
-          box-sizing border-box
-          cursor pointer
-          display inline-block
-          left 0
-          padding-left $pad
-          transition .15s
-          width $width
-          padding-top 5px
-          padding-bottom 5px
-          &:hover
-            background-color #444
-            // padding-left $pad+22px
-            color #fff
-          img
-            width 16px
-            height 16px
-            margin-right 5px
-            vertical-align -2px
-          .ui.label
-            padding 2px 4px
-            margin 0 5px 3px 5px
-            font-size 0.666rem
-            font-weight 900
-            line-height 1rem
-        li .link
-          padding-left $pad+22px
-          &:hover
-            // padding-left $pad+44px
-        span.collapser
-          position absolute
-          right $pad
-          top 0px
-        span.label
-          vertical-align text-bottom
-
   .pad-container
     .ui.menu
       margin 0
@@ -241,6 +126,120 @@ body
         padding 3px
         cursor pointer
 
+nav#topbar
+  .index
+    @media (max-width: 979px)
+      display none
+      &.index_show
+        display block
+    $bar-width = 16px
+    $pad = 15px
+    $width = 250px
+    &,a,li
+      color #333
+      line-height 25px
+    a:hover
+      color black
+      text-decoration none
+    a
+      overflow hidden
+      display inline-block
+      text-overflow ellipsis
+      vertical-align middle
+      word-wrap break-word
+      white-space initial
+      padding-right 1em
+    a.haschildren
+    span.haschildren
+      max-width: 85%
+      whitespace: no-wrap
+      text-overflow ellipsis
+      overflow hidden
+    background-color white
+    cursor w-resize
+    font-family "XinGothic Citicpress", "Lantinghei TC", "Hiragino Kaku Gothic Pro", "Apple LiGothic", "Heiti TC", "LiHei Pro", "Microsoft YaHei", "微軟正黑體", "文泉驿正黑", sans-serif
+    font-size 16px
+    overflow-x hidden
+    overflow-y auto
+    transition .15s
+    &.collapsed
+      cursor e-resize
+      margin-left 27px - $width
+      .hackid i.small
+        margin-right 8px
+      img
+        margin-top 5px
+        position absolute
+        right 0
+      span.collapser
+        display none
+
+    .hackid
+      background-color #ddd
+      margin-bottom 10px
+      padding 15px 15px 10px $pad
+      white-space nowrap
+      position relative
+      i
+        margin-top 4px
+      i.small
+        position absolute
+        right: 0
+        bottom: 14px
+        font-size 16px
+        margin-right $pad
+        a
+          cursor pointer
+    &.scrollbar
+      width $width + $bar-width
+
+    ul
+      margin 0
+      padding 0
+      li
+        list-style none
+        padding 0
+        position relative
+        line-height 1.6
+        &.active .link
+          background-color #333
+          color #eee
+        .link
+          box-sizing border-box
+          cursor pointer
+          display block
+          left 0
+          padding-left $pad
+          transition .15s
+          padding-top 5px
+          padding-bottom 5px
+          &:hover
+            background-color #444
+            // padding-left $pad+22px
+            color #fff
+          img
+            width 16px
+            height 16px
+            margin-right 5px
+            vertical-align -2px
+          .ui.label
+            padding 2px 4px
+            margin 0 5px 3px 5px
+            font-size 0.666rem
+            font-weight 900
+            line-height 1rem
+        li .link
+          padding-left $pad+22px
+          &:hover
+            // padding-left $pad+44px
+        span.collapser
+          position absolute
+          right $pad
+          top 0px
+        span.label
+          vertical-align text-bottom
+
+
 .ui.popup
   font-family "XinGothic Citicpress", "Lantinghei TC", "Hiragino Kaku Gothic Pro", "Apple LiGothic", "Heiti TC", "LiHei Pro", "Microsoft YaHei", "微軟正黑體", "文泉驿正黑", sans-serif
   font-size 16px
@@ -269,4 +268,3 @@ body
     .name
       font-weight normal
       font-size 1rem
-

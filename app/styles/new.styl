@@ -1,0 +1,233 @@
+@import 'nib'
+
+html
+  font-size: 18px
+  font-family: '微軟正黑體', sans-serif
+  color: #333
+  background-color: #d0d0d0
+
+html, body, div, nav, section, article, header, footer, h1, h2, h3, h4
+  margin: 0
+  padding: 0
+  line-height: 1em
+  box-sizing: border-box
+
+p
+  line-height: 1.5em
+
+a, a:link
+  text-decoration: none
+  color: inherit
+
+// for semantic ui
+
+.ui.menu
+  margin: 0
+
+.ui.label.white
+  background: none
+
+// custom semantic classes
+
+.no.margin
+  margin: 0
+
+.float.right
+  float: right
+
+.align.right
+  text-align: right
+
+.one.line.height
+  line-height: 1em
+
+.two.line.height
+  line-height: 2em
+
+.indent
+  margin-left: 2rem
+
+.hidden
+  display: none !important
+
+.inline.block
+  display: inline-block
+
+.desktop.only
+  @media screen and (max-width: 1024px)
+    display: none!important
+
+.mobile.only
+  @media screen and (min-width: 1025px)
+    display: none!important
+  @media screen and (max-width: 1024px)
+    display: ""
+
+.tablet.only
+  @media screen and (min-width: 1025px)
+    display: none!important
+  @media screen and (max-width: 1024px)
+    display: ""
+  @media screen and (min-width: 641px)
+    display: ""
+  @media screen and (max-width: 640px)
+    display: none!important
+
+.phone.only
+  @media screen and (min-width: 641px)
+    display: none!important
+  @media screen and (max-width: 640px)
+    display: ""
+
+.tiny.only
+  @media screen and (min-width: 481px)
+    display: none!important
+
+// layout
+
+#sidebar
+  width: 20rem
+  position: absolute
+  z-index: 1
+  left: 0
+  top: 0
+  bottom: 0
+  overflow-y: auto
+  overflow-x: hidden
+  background-image linear-gradient(left, #e0e0e0, #d0d0d0)
+  transition-duration 0.5s
+  transition-timing-function ease
+
+  @media screen and (max-width: 1024px)
+    width: 100%
+    height: 2.75rem
+    overflow: visible
+
+  #toc
+    &>.ui.menu
+      width: 100%
+      border-top: 2px rgba(#000,0.5) solid
+    @media screen and (max-width: 1024px)
+      display: none
+      .accordion
+        width: 100%
+
+  #toc, #topbar
+    &>.ui.menu
+      box-shadow: 0 0 0.25rem rgba(#000,0.25)
+
+  #topbar>.ui.menu
+    z-index: 2
+
+  #topbar
+    .title.item
+      font-weight: 700
+      width: 12rem
+      @media screen and (max-width: 1024px)
+        width: auto
+    .form.segment
+      background: none
+      @media screen and (max-width: 1024px)
+        background: #fff
+
+  #nav>.ui.menu
+    background-color: rgba(#fff,0)
+
+  #nav, #topbar
+    &>.menu
+      &>.dropdown.about .menu
+        width: 14rem
+      &>.dropdown.shortcuts, &>.dropdown.history
+        .menu
+          width: 14rem
+      &>.edit.table, &>.refresh.table
+        @media screen and (max-width: 480px)
+          display: none!important
+    .dropdown .menu
+      .item
+        i.icon
+          float: right
+          margin-right: 0
+    .zoom
+      @media screen and (max-width: 640px)
+        display: none
+      .menu
+        @media screen and (max-width: 1024px)
+          right: 0
+          left: auto
+    .meta
+      &>.menu
+        right: 0
+        left: auto
+        width: 6rem
+        &>.item>.menu
+          right: 100%
+          left: auto!important
+          width: 14rem
+
+#wrapper
+  position: absolute
+  padding-left: 20rem
+  left: 0
+  top: 0
+  bottom: 0
+  right: 0
+  width: 100%
+  height: 100%
+  transition-duration: 0.5s
+  transition-timing-function: ease
+
+  @media screen and (max-width: 1024px)
+    padding-top: 2.75rem
+    padding-left: 0
+    height: auto
+
+  .frame
+    position: relative
+    left: 0
+    top: 0
+    bottom: 0
+    right: 0
+
+    iframe
+      box-shadow: 0 0 0.5rem rgba(#000,0.5)
+      width: 100%
+      height: 100%
+      margin: 0 0 -5px 0
+      border: 0
+      position: relative
+      z-index: 3
+      background-color: #e9e9e9
+      @media screen and (max-width: 1024px)
+        z-index: 0
+
+// zoom iframe content
+
+.normal.size
+  &.frame
+    width: 100%
+    height: 100%
+    iframe
+      transform scale(1)
+      transform-origin 0 0
+
+.large.size
+  &.frame
+    width: 76%
+    height: 76%
+    iframe
+      transform scale(1.3)
+      transform-origin 0 0
+
+.larger.size
+  &.frame
+    width: 66%
+    height: 66%
+    iframe
+    iframe
+      transform scale(1.5)
+      transform-origin 0 0
+
+#sidebar
+  .ui.accordion>.content
+    padding: 0

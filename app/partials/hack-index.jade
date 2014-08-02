@@ -1,8 +1,3 @@
-div.hackid
-  i.icon.home
-  |&nbsp;
-  a.indexlink.expanded-content(ng-href="http://ethercalc.org/{{hackId}}",target="_blank",ngx-final) {{HackFolder.folderTitle || hackId}}
-  i.small.icon.triangle.visible.desktop(ng-class='{"right": collapsed, "left": !collapsed}')
 ul.wrap(ui-sortable='sortableOptions',ng-model='tree')
   li(ng-repeat='doc in tree', ng-title="{{doc.title || doc.id}}",ngx-noclick,ng-class='{active: doc.id == docId}')
     .entry(ng-include="'partials/hackitem.html'")
