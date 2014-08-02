@@ -73,14 +73,15 @@ angular.module 'app.controllers' <[ui.router ngCookies]>
 
   <- HackFolder.getIndex hackId, false
   <- $scope.$safeApply $scope
+  [first] = [d for d in HackFolder.docs when d.url]
   $scope.$watch 'docId' (docId) ->
     unless docId
-      if HackFolder.docs.0?id
+      if first?id
         $scope.docId ?= that
         $state.transitionTo 'hack.doc', { docId: null, hackId }
         return
     else
-      if $state.params.docId is HackFolder.docs.0?id
+      if $state.params.docId is first?id
         $state.transitionTo 'hack.doc', { docId: null, hackId }
     doc = HackFolder.activate docId if docId
     if doc?type is \hackfoldr

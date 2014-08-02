@@ -95,8 +95,8 @@ nav#sidebar
         input.new.instance(placeholder="hackpad 站台名稱",type="text",name="new-pad-instance",value="g0v",size="10")
         | .hackpad.com
       .ui.submit.button.green.small create and add to foldr
-    .sortable.index(ui-view="hack-index")
+    .sortable.index(ng-include="'partials/hack-index.html'")
 
 #wrapper.hackfolder
 
-  .pad-container.frame(ui-view="pad-container",xng-style='{height: contentHeight}')
+  .pad-container.frame(ng-include="'partials/pad-container.html'",xng-style='{height: contentHeight}')
