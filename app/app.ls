@@ -5,31 +5,30 @@ angular.module('scroll', []).value('$anchorScroll', angular.noop)
 angular.module \app <[ui app.templates app.controllers ct.ui.router.extras ui.router.stateHelper]>
 .config <[stateHelperProvider $urlRouterProvider $locationProvider]> ++ (stateHelperProvider, $urlRouterProvider, $locationProvider) ->
   stateHelperProvider.setNestedState do
-      name: 'about'
-      url: '/about'
-      template-url: 'partials/about.html'
+    name: 'about'
+    url: '/about'
+    template-url: 'partials/about.html'
   stateHelperProvider.setNestedState do
-      name: 'hack'
-      url: '/{hackId:[^/]{1,}}'
-      template-url: 'partials/hack.html'
-      controller: 'HackFolderCtrl'
-      onEnter: ->
-        $ \body .addClass \hide-overflow
-      onExit: ->
-        $ \body .removeClass \hide-overflow
-      children:
-        * name: 'index'
-          url: '/__index'
-        * name: 'doc'
-          url: '/{docId}'
-          sticky: true
-          deepStateRedirect: true
-          views:
-            'hack-index':
-              template-url: 'partials/hack-index.html'
-            'pad-container':
-              template-url: 'partials/pad-container.html'
-
+    name: 'hack'
+    url: '/{hackId:[^/]{1,}}'
+    template-url: 'partials/hack.html'
+    resolve:
+      hackId: <[$stateParams]> ++ (.hackId)
+    controller: 'HackFolderCtrl'
+    onEnter: ->
+      $ \body .addClass \hide-overflow
+    onExit: ->
+      $ \body .removeClass \hide-overflow
+    children:
+      * name: 'index'
+        url: '/__index'
+      * name: 'doc'
+        url: '/{docId}'
+        views:
+          'hack-index':
+            template-url: 'partials/hack-index.html'
+          'pad-container':
+            template-url: 'partials/pad-container.html'
 
   $urlRouterProvider
     .otherwise('/about')

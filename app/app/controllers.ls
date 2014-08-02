@@ -14,8 +14,9 @@ angular.module 'app.controllers' <[ui.router ngCookies]>
   <- $timeout _, 10s * 1000ms
   $rootScope.hideGithubRibbon = true
 
-.controller HackFolderCtrl: <[$scope $sce $window $state $cookies HackFolder]> ++ ($scope, $sce, $window, $state, $cookies, HackFolder) ->
+.controller HackFolderCtrl: <[$scope $sce $window $state $cookies HackFolder hackId]> ++ ($scope, $sce, $window, $state, $cookies, HackFolder, hackId) ->
   $scope <<< do
+    hackId: hackId
     hasViewMode: -> it?match /g(doc|present|draw)/
     sortableOptions: do
       update: -> console?log \notyetupdated
@@ -30,7 +31,7 @@ angular.module 'app.controllers' <[ui.router ngCookies]>
         window.open doc.url, doc.id
         return true
       else
-        $scope.go "/#{ $scope.hackId }/#{ decodeURIComponent doc.id }"
+        $scope.go "/#{ hackId }/#{ decodeURIComponent doc.id }"
     open: (doc) ->
       window.open doc.url, doc.id
       return false
@@ -65,37 +66,37 @@ angular.module 'app.controllers' <[ui.router ngCookies]>
       doc.iframeunsure = true if status is \unsure
 
     debug: -> console?log it, @
-    reload: (hackId) -> HackFolder.getIndex hackId, true ->
+    reload: -> HackFolder.getIndex hackId, true ->
 
-  $scope.$watch 'hackId' (hackId) ->
-    unless folder-whitelist hackId
-      return $window.location.href = "http://hackfoldr.org/#{$window.location.pathname}"
-    <- HackFolder.getIndex hackId, false
-    <- $scope.$safeApply $scope
-    $scope.$watch 'docId' (docId) ->
-      unless docId
-        if HackFolder.docs.0?id
-          $scope.docId ?= that
-          $state.transitionTo 'hack.doc', { docId: null, hackId: $scope.hackId }
-          return
-      else
-        if $state.params.docId is HackFolder.docs.0?id
-          $state.transitionTo 'hack.doc', { docId: null, hackId: $scope.hackId }
-      doc = HackFolder.activate docId if docId
-      if doc?type is \hackfoldr
-        $scope.show-index = true
-        folder-title, docs, tree <- HackFolder.load-remote-csv doc.id
-        [entry] = [entry for entry in HackFolder.tree when entry.id is docId]
-        entry.tagFilter = entry.tags?0?content
-        unless entry.children
-          entry.children ?= tree?0.children
-          HackFolder.docs.splice docs.length, 0, ...docs
-        $scope.indexDocs = docs
-        $scope.indexSearch = hackId.replace /^g0v-/,''
-      else
-        $scope.show-index = false
-    $scope.show-index = $state.current.name is \hack.index
-    return if $scope.show-index
+  unless folder-whitelist hackId
+    return $window.location.href = "http://hackfoldr.org/#{$window.location.pathname}"
+
+  <- HackFolder.getIndex hackId, false
+  <- $scope.$safeApply $scope
+  $scope.$watch 'docId' (docId) ->
+    unless docId
+      if HackFolder.docs.0?id
+        $scope.docId ?= that
+        $state.transitionTo 'hack.doc', { docId: null, hackId }
+        return
+    else
+      if $state.params.docId is HackFolder.docs.0?id
+        $state.transitionTo 'hack.doc', { docId: null, hackId }
+    doc = HackFolder.activate docId if docId
+    if doc?type is \hackfoldr
+      $scope.show-index = true
+      folder-title, docs, tree <- HackFolder.load-remote-csv doc.id
+      [entry] = [entry for entry in HackFolder.tree when entry.id is docId]
+      entry.tagFilter = entry.tags?0?content
+      unless entry.children
+        entry.children ?= tree?0.children
+        HackFolder.docs.splice docs.length, 0, ...docs
+      $scope.indexDocs = docs
+      $scope.indexSearch = hackId.replace /^g0v-/,''
+    else
+      $scope.show-index = false
+  $scope.show-index = $state.current.name is \hack.index
+  return if $scope.show-index
 
   $scope.collapsed = $cookies.collapsed ? $window.innerWidth < 768
   $scope.collapsed = false if $scope.collapsed is 'false'
@@ -103,7 +104,6 @@ angular.module 'app.controllers' <[ui.router ngCookies]>
   $scope.$watch 'collapsed' -> if it?
     $cookies.collapsed = !!it
 
-  $scope.hackId = if $state.params.hackId => that else 'congressoccupied'
   $scope.$watch '$state.params.docId' (docId) ->
     $scope.docId = encodeURIComponent docId if docId
   $scope.sidebar = false
