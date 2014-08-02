@@ -2,7 +2,7 @@
 
 angular.module('scroll', []).value('$anchorScroll', angular.noop)
 
-angular.module \app <[ui app.templates app.controllers ui.state ui.router.stateHelper]>
+angular.module \app <[ui app.templates app.controllers ui.router ui.router.stateHelper]>
 .config <[stateHelperProvider $urlRouterProvider $locationProvider]> ++ (stateHelperProvider, $urlRouterProvider, $locationProvider) ->
   stateHelperProvider.setNestedState do
       name: 'about'

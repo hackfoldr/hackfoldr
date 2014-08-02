@@ -1,7 +1,7 @@
 folder-whitelist = (name) ->
   return true
 
-angular.module 'app.controllers' <[ui.state ngCookies]>
+angular.module 'app.controllers' <[ui.router ngCookies]>
 .controller AppCtrl: <[$scope $window $state $rootScope $timeout]> ++ ($scope, $window, $state, $rootScope, $timeout) ->
   $scope.$watch '$state.current.name' ->
     $scope.irc-enabled = true if it is \irc
@@ -105,7 +105,7 @@ angular.module 'app.controllers' <[ui.state ngCookies]>
 
   $scope.hackId = if $state.params.hackId => that else 'congressoccupied'
   $scope.$watch '$state.params.docId' (docId) ->
-    $scope.docId = encodeURIComponent encodeURIComponent docId if docId
+    $scope.docId = encodeURIComponent docId if docId
   $scope.sidebar = false
   $scope.toggleSidebar = ->
     $scope.collapsed = false
