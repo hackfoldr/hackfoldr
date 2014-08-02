@@ -16,7 +16,7 @@
     "angular-animate": "1.2.21",
     "angular-ui-sortable": "0.12.2",
     "angular-ui-router": "0.2.10",
-    "angular-ui-router.stateHelper": "1.1.0",
+    "angular-ui-router.stateHelper": "git://github.com/clkao/ui-router.stateHelper#patch-1",
     "angular-ui": "0.4.0",
     "angular-mocks": "1.2.21",
     "angular-scenario": "1.2.21",
