@@ -72,13 +72,14 @@ angular.module 'app.controllers' <[ui.state ngCookies]>
       return $window.location.href = "http://hackfoldr.org/#{$window.location.pathname}"
     <- HackFolder.getIndex hackId, false
     <- $scope.$safeApply $scope
+    [first] = [d for d in HackFolder.docs when d.url]
     $scope.$watch 'docId' (docId) ->
       unless docId
-        if HackFolder.docs.0?id
+        if first?id
           $scope.docId ?= that
           return
       else
-        if $state.params.docId  is HackFolder.docs.0?id
+        if $state.params.docId is first?id
           $state.transitionTo 'hack.doc', { docId: null, hackId: $scope.hackId }
       doc = HackFolder.activate docId if docId
       if doc?type is \hackfoldr
@@ -393,4 +394,3 @@ angular.module 'app.controllers' <[ui.state ngCookies]>
     $ element .popup do
       position: "right center"
       duration: 1ms # the popup will not close if you set this to 0
-
