@@ -1,3 +1,3 @@
 .hackfolder(resize,ng-cloak)
-  .index(ui-view="hack-index",ng-class="{collapsed: collapsed, scrollbar: hasScrollbar, index_show: sidebar}",ng-click="collapsed=!collapsed",ng-style='{height: contentHeight}',scrollbar)
-  .pad-container(ui-view="pad-container",ng-style='{height: contentHeight}')
+  .index(ng-include="'partials/hack-index.html'",ng-class="{collapsed: collapsed, scrollbar: hasScrollbar, index_show: sidebar}",ng-click="collapsed=!collapsed",ng-style='{height: contentHeight}',scrollbar)
+  .pad-container(ng-include="'partials/pad-container.html'",ng-style='{height: contentHeight}')
