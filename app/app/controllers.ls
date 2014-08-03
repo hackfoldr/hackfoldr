@@ -14,7 +14,7 @@ angular.module 'app.controllers' <[ui.router ngCookies]>
   <- $timeout _, 10s * 1000ms
   $rootScope.hideGithubRibbon = true
 
-.controller HackFolderCtrl: <[$scope $sce $window $state $cookies HackFolder hackId]> ++ ($scope, $sce, $window, $state, $cookies, HackFolder, hackId) ->
+.controller HackFolderCtrl: <[$scope $sce $window $state $cookies $q HackFolder hackId]> ++ ($scope, $sce, $window, $state, $cookies, $q, HackFolder, hackId) ->
   $scope <<< do
     hackId: hackId
     hasViewMode: -> it?match /g(doc|present|draw)/
@@ -71,18 +71,18 @@ angular.module 'app.controllers' <[ui.router ngCookies]>
   unless folder-whitelist hackId
     return $window.location.href = "http://hackfoldr.org/#{$window.location.pathname}"
 
-  <- HackFolder.getIndex hackId, false
-  <- $scope.$safeApply $scope
-  [first] = [d for d in HackFolder.docs when d.url]
-  $scope.$watch 'docId' (docId) ->
-    unless docId
-      if first?id
-        $scope.docId ?= that
-        $state.transitionTo 'hack.doc', { docId: null, hackId }
-        return
+  $scope.$watch '$state.params.docId' (docId) ->
+    $scope.docId = encodeURIComponent docId if docId
+  loaded = $q.defer!
+  loaded.promise.then -> $scope.$watch 'docId' (docId) ->
+    if docId?
+      if $state.params.docId is $scope.first?id
+        $state.transitionTo 'hack.doc', { docId: "", hackId }
     else
-      if $state.params.docId is first?id
-        $state.transitionTo 'hack.doc', { docId: null, hackId }
+      if $scope.first?id
+        $scope.docId ?= that
+        $state.transitionTo 'hack.doc', { docId: "", hackId }
+        return
     doc = HackFolder.activate docId if docId
     if doc?type is \hackfoldr
       $scope.show-index = true
@@ -105,12 +105,14 @@ angular.module 'app.controllers' <[ui.router ngCookies]>
   $scope.$watch 'collapsed' -> if it?
     $cookies.collapsed = !!it
 
-  $scope.$watch '$state.params.docId' (docId) ->
-    $scope.docId = encodeURIComponent docId if docId
   $scope.sidebar = false
   $scope.toggleSidebar = ->
     $scope.collapsed = false
     $scope.sidebar = !$scope.sidebar
+  <- HackFolder.getIndex hackId, false
+  <- $scope.$safeApply $scope
+  [$scope.first] = [d for d in HackFolder.docs when d.url]
+  loaded.resolve!
 
 .directive 'resize' <[$window]> ++ ($window) ->
   (scope, element, attrs) ->
