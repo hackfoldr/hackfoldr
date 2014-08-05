@@ -250,15 +250,21 @@ angular.module 'app.controllers' <[ui.router ngCookies]>
           self.folder-title = folder-title
           cb docs
 
+      # TODO: This should obtain the redirected ID from A1
+      # See: https://github.com/hackfoldr/hackfoldr-2.0/issues/16
+      const EthercalcToGoogleDocMap = {
+        'Kaohsiung-explode-20140801': '1WVWrKC-Tbry3ltgouQPpZH2Cd2HkKeZ8DjLs4PWa1z4'
+      }
+
       retry = 0
-      if id is /^[-\w]{40}[-\w]*$/ then doit = ~>
+      if (EthercalcToGoogleDocMap[id] || id) is /^[-\w]{40}[-\w]*$/ then doit = ~>
         callback = ~> for own k, sheet of it
           docs.length = 0
           hackId := id
           csv = sheet.to-array!
           @process-csv csv, id, cb
           return
-        Tabletop.init { key: id, callback, -simpleSheet }
+        Tabletop.init { key: (EthercalcToGoogleDocMap[id] || id), callback, -simpleSheet }
       else doit = ~>
         csv <~ $http.get "https://www.ethercalc.org/_/#{id}/csv"
         .error -> return if ++retry > 3; setTimeout doit, 1000ms
