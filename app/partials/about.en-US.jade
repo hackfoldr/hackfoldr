@@ -1,0 +1,40 @@
+.about
+    h1 Welcome to Hackfoldr
+    p Hackfoldr is your hacking briefcase. You only need a url to share all those documents of your project.
+    h2 Creating hackfoldr for your project
+    h3 Creating hackfoldr
+    ol
+        li Choose the URL slug for your project (eg. your-project-name)
+        li Opening "hackfoldr.org/(your project slug)" with browser's URL bar
+    p Congradulate, you'd already created your hackfoldr!
+    h3 Customing hackfoldr
+    ol
+        li Click link on home icon at top-left, ethercalc will automatically opening in new tab
+        li Type your hackfoldr's name in column B2
+        li Add all of your links begin from line 3
+        li The format is: B3 - name of document; A3 - URL of the document
+        li Add all documents into ethercalc
+        li Swtich back to "hackfoldr.org/(your-project-slug)" browser tab
+        li Press F5 / Ctrl + R to reload the page
+    p Congradulate, You'd customized your own hackfoldr!
+    h3 Advanced into hackfoldr
+    ol
+        li Column 3 is used for options. Some typical option are: '{"expand":true} Default open folder, false is close；'{"target":"_blank"} Open new window for the link
+        li Column 4 is comments. There are 3 type of comment, warning, important, issue. eg., 'comment:type
+        li If you add a space in front of column 1, it will befome subfolder. eg., A3 is 'www.example.com, A4 is ' www.google.com, A3 will become folder and A4 as subfolder
+    p Note: You don't need to logged-in in order to use ethercalc, it will automatic save after your edit. If you want to rename the name of ethercalc, just open new ethercalc.org url and paste old content.
+    h3 Using Google Spreadsheet to managing hackfoldr
+    p In some special case you'll need to avoid ethercalc's "No login & everyone can edit" feature affecting your collobration progress. After gathering links in the beginning, you can switching to Google Spreadsheet to limiting the edit priviledge as below:
+    ol
+        li Open a Google Spreadsheet, select "File" > "Publish to the web...", click "Start publishing", "OK".
+        li Get the published URL, eg.,
+          blockquote
+            a(href='https://docs.google.com/spreadsheets/d/1Wbk0HiD4yRVus3qXzA2d8a7LmZ3wYWCSWWdGD39sWsU/pubhtml') https://docs.google.com/spreadsheets/d/1Wbk0HiD4yRVus3qXzA2d8a7LmZ3wYWCSWWdGD39sWsU/pubhtml
+        li The spreadsheet ID is string between /d/ and next /. The URL is hackfoldr.org/(spreadsheet ID) eg.,
+          blockquote
+            a(href='http://hackfoldr.org/1Wbk0HiD4yRVus3qXzA2d8a7LmZ3wYWCSWWdGD39sWsU') http://hackfoldr.org/1Wbk0HiD4yRVus3qXzA2d8a7LmZ3wYWCSWWdGD39sWsU
+        li Using redirect service such as bit.ly to customized your domain
+    p The content format is the same as ethercalc. But we do not support empty line for now. The content below first empty line will be ignore.
+    h3 hackfoldr
+    p hackfoldr is developed by clkao for g0v Hackathon events. The source code are available at
+        a(href="https://github.com/hackfoldr/hackfoldr") github
