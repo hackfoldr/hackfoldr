@@ -296,16 +296,17 @@ angular.module 'app.controllers' <[ui.state ngCookies]>
             type: \video
             provider: \youtube
             id: that.1
-            icon: "http://g.etfv.co/#{ url }"
+            icon: "https://www.google.com/s2/favicons?domain=#{ url }"
         | // https?:\/\/(?:www\.)?ustream\.tv/(?:embed|channel)/([-\w]+) //
             type: \video
             provider: \ustream
+
             id: that.1
-            icon: "http://g.etfv.co/#{ url }"
+            icon: "https://www.google.com/s2/favicons?domain=#{ url }"
         | // ^(https?:\/\/[^/]+) //
             type: \url
             id: encodeURIComponent encodeURIComponent url
-            icon: "http://g.etfv.co/#{ that.1 }"
+            icon: "https://www.google.com/s2/favicons?domain=#{ that.1 }"
         | otherwise => console?log \unrecognized url
 
         if entry.type is \dummy and !entry.title?length
