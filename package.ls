@@ -21,7 +21,7 @@ dependencies: {}
 devDependencies:
   express: '3.4.x'
   LiveScript: '1.1.x'
-  'karma': '>= 0.11.13'
+  'karma': '~0.12.x'
   'karma-live-preprocessor': '>= 0.2.2'
   'karma-mocha': '~0.1.0'
   'karma-chai': '~0.0.2'
