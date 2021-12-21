@@ -23,7 +23,8 @@ For example, with an index like http://ethercalc.org/g0v-hackath2n, you'll get h
 * Google Drawing
 * Hackpad
 * EtherCalc
-
+* Modify this
+* Home_made
 # Prerequisites
 [Node.js](http://nodejs.org/) is required on your system.
 
